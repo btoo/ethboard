@@ -35,13 +35,13 @@ contract Board {
 
   // }
 
-  function viewIPC() returns (string) {
+  function viewIPC() constant returns (bytes32) {
       return initPostContent;
   }
 
-  string public initPostContent;
+  bytes32 public initPostContent;
 
-  function Board(string ipc) {
+  function Board(bytes32 ipc) {
     initPostContent = ipc;
     
 

@@ -19,7 +19,7 @@ BoardContract.new(
   (err, deployedContract) => { if(deployedContract.address) {
 
     const contractInstance = BoardContract.at(deployedContract.address)
-    console.log(contractInstance.viewIPC.call())
+    console.log(web3.toAscii(contractInstance.viewIPC()))
     // console.log(contractInstance.viewOPAddress())
     // console.log(contractInstance.viewInitalPostContent)
 
