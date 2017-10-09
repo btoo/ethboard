@@ -1,0 +1,10 @@
+{
+  "name": "decentralizer",
+  "version": "1.0.0",
+  "main": "rpc.js",
+  "author": "asdf",
+  "license": "MIT",
+  "dependencies": {
+    "solc": "^0.4.17"
+  }
+}
