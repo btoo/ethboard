@@ -2,7 +2,7 @@
   "name": "decentralizer",
   "version": "1.0.0",
   "main": "rpc.js",
-  "author": "asdf",
+  "author": "brian",
   "license": "MIT",
   "dependencies": {
     "ethereumjs-testrpc": "^4.1.3",
