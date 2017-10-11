@@ -1,7 +1,7 @@
 const fs = require('fs')
     , Web3 = require('web3')
     , web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
-    , code = fs.readFileSync('Voting.sol').toString()
+    , code = fs.readFileSync('contracts/Voting.sol').toString()
     , solc = require('solc')
     , compiledCode = solc.compile(code)
     , abiDefinition = JSON.parse(compiledCode.contracts[':Voting'].interface)

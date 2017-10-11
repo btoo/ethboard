@@ -1,15 +1,19 @@
 const fs = require('fs')
     , Web3 = require('web3')
-    , web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
-    , code = fs.readFileSync('Board.sol').toString()
+    , {
+        eth,
+        toAscii
+      } = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+    , code = fs.readFileSync('contracts/Board.sol').toString()
     , solc = require('solc')
     , compiledCode = solc.compile(code)
     , abiDefinition = JSON.parse(compiledCode.contracts[':Board'].interface)
-    , BoardContract = web3.eth.contract(abiDefinition)
+    , BoardContract = eth.contract(abiDefinition)
     
 
+console.log(abiDefinition)
 const data = compiledCode.contracts[':Board'].bytecode
-    , from = web3.eth.accounts[0] // deploy the contract from the first test account
+    , from = eth.accounts[0] // deploy the contract from the first test account
     , gas = 4700000 // the from address is paying the gas (just some estimate)
 
 console.log('from: ', from)
@@ -18,8 +22,10 @@ BoardContract.new(
   { data, from, gas },
   (err, deployedContract) => { if(deployedContract.address) {
 
+    console.log(deployedContract.address)
+
     const contractInstance = BoardContract.at(deployedContract.address)
-    console.log(web3.toAscii(contractInstance.viewIPC()))
+    console.log(toAscii(contractInstance.viewIPC()))
     // console.log(contractInstance.viewOPAddress())
     // console.log(contractInstance.viewInitalPostContent)
 
