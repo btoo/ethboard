@@ -82,8 +82,8 @@ module.exports = {
         include: srcPath,
         use: [
           'style-loader', // Adds CSS to the DOM by injecting a <style> tag
-          { loader: 'css-loader', options: { importLoaders: 1 } }, //  interprets @import and url() like import/require() and will resolve them.
-          'postcss-loader'
+          'css-loader', //  interprets @import and url() like import/require() and will resolve them.
+          { loader: 'postcss-loader', options: { plugins: [precss, autoprefixer] } }
         ]
       },
       {
