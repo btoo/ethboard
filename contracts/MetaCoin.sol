@@ -1,4 +1,4 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.8;
 import "./ConvertLib.sol";
 
 // This is just a simple example of a coin-like contract.
@@ -14,7 +14,9 @@ contract MetaCoin {
 	}
 
 	function sendCoin(address receiver, uint amount) returns(bool sufficient) {
-		if (balances[msg.sender] < amount) return false;
+		if(balances[msg.sender] < amount) {
+			return false;
+		}
 		balances[msg.sender] -= amount;
 		balances[receiver] += amount;
 		return true;
