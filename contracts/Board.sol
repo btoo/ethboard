@@ -3,29 +3,29 @@ pragma solidity ^0.4.8;
 contract Board {
 
   // original poster (the poster of the very first post)
-  address public op;
+  // address public op;
 
-  struct Member {
-    Post[] posts;
-    address memberAddress;
-  }
+  // struct Member {
+  //   Post[] posts;
+  //   address memberAddress;
+  // }
 
-  struct Post {
-    bytes32 content;
-    address poster;
-  }
+  // struct Post {
+  //   bytes32 content;
+  //   address poster;
+  // }
 
-  Post[] posts;
+  // Post[] posts;
 
-  mapping(address => Member) public members;
+  // mapping(address => Member) public members;
 
-  function viewOPAddress() public constant returns(address memberAddress) {
-    return members[op].memberAddress;
-  }
+  // function viewOPAddress() public constant returns(address memberAddress) {
+  //   return members[op].memberAddress;
+  // }
 
-  function viewInitalPostContent() public constant returns(bytes32 initalPostContent) {
-    return posts[0].content;
-  }
+  // function viewInitalPostContent() public constant returns(bytes32 initalPostContent) {
+  //   return posts[0].content;
+  // }
 
   // function new Post(){
 
@@ -35,15 +35,45 @@ contract Board {
 
   // }
 
-  function viewIPC() public constant returns(bytes32) {
-      return initPostContent;
+  // function viewIPC() public constant returns(bytes32) {
+  //     // return initPostContent;
+  // }
+
+  // bytes32 public initPostContent;
+
+  struct Ad {
+    address advertiser;
+    bytes32 text;
+    bytes32 url;
   }
 
-  bytes32 public initPostContent;
+  Ad[] ads;
 
-  function Board(bytes32 ipc) public {
-    initPostContent = ipc;
-    
+  function getAdsLength() constant returns (uint) {
+    return ads.length;
+  }
+
+  function getAd(uint index) returns (address advertiser, bytes32 text, bytes32 url) {
+    if (index > ads.length - 1) {
+      advertiser = msg.sender;
+      text = "asdf";
+      url = "asdf";
+    } else {
+      advertiser = ads[index].advertiser;
+      text = ads[index].text;
+      url = ads[index].url;
+    }
+  }
+
+  // function Board(bytes32 ipc) public {
+  //   initPostContent = ipc;
+  function Board(bytes32 initAdText, bytes32 initAdUrl) public {
+
+    ads.push(Ad({
+      advertiser: msg.sender,
+      text: initAdText,
+      url: initAdUrl
+    }));
 
     // op = msg.sender;
     // members[op]

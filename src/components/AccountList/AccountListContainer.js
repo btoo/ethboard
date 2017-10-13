@@ -3,7 +3,7 @@ import AccountList from 'components/AccountList/AccountList'
 import SendCoin from 'components/SendCoin/SendCoin'
 
 import MetaCoin from 'contracts/MetaCoin.sol';
-import Web3 from 'web3';
+// import Web3 from 'web3';
 
 
 class AccountListContainer extends Component {
@@ -20,7 +20,7 @@ class AccountListContainer extends Component {
   }
 
   componentWillMount(){
-    MetaCoin.setProvider(this.props.web3.currentProvider);    
+    MetaCoin.setProvider(this.props.web3.currentProvider)
   }
 
   _getAccountBalance (account) {

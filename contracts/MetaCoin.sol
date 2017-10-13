@@ -22,7 +22,7 @@ contract MetaCoin {
 		return true;
 	}
 
-	function getBalanceInEth(address addr) returns(uint){
+	function getBalanceInEth(address addr) returns(uint) {
 		return ConvertLib.convert(getBalance(addr),2);
 	}
 
