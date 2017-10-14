@@ -2,45 +2,6 @@ pragma solidity ^0.4.8;
 
 contract Board {
 
-  // original poster (the poster of the very first post)
-  // address public op;
-
-  // struct Member {
-  //   Post[] posts;
-  //   address memberAddress;
-  // }
-
-  // struct Post {
-  //   bytes32 content;
-  //   address poster;
-  // }
-
-  // Post[] posts;
-
-  // mapping(address => Member) public members;
-
-  // function viewOPAddress() public constant returns(address memberAddress) {
-  //   return members[op].memberAddress;
-  // }
-
-  // function viewInitalPostContent() public constant returns(bytes32 initalPostContent) {
-  //   return posts[0].content;
-  // }
-
-  // function new Post(){
-
-  // }
-    
-  // function viewParticipants() constant returns (bytes32[] participants) {
-
-  // }
-
-  // function viewIPC() public constant returns(bytes32) {
-  //     // return initPostContent;
-  // }
-
-  // bytes32 public initPostContent;
-
   struct Ad {
     address advertiser;
     bytes32 text;
@@ -48,6 +9,31 @@ contract Board {
   }
 
   Ad[] ads;
+
+  function Board(bytes32 initAdText, bytes32 initAdUrl) public {
+
+    ads.push(Ad({
+      advertiser: msg.sender,
+      text: "le first ad",
+      url: "le first url"
+    }));
+
+    ads.push(Ad({
+      advertiser: msg.sender,
+      text: initAdText,
+      url: initAdUrl
+    }));
+
+  }
+
+  function postAd(bytes32 newAdText, bytes32 newAdUrl) returns (bool) {
+    ads.push(Ad({
+      advertiser: msg.sender,
+      text: newAdText,
+      url: newAdUrl
+    }));
+    return true;
+  }
 
   function getAdsLength() constant returns (uint) {
     return ads.length;
@@ -63,33 +49,6 @@ contract Board {
       text = ads[index].text;
       url = ads[index].url;
     }
-  }
-
-  // function Board(bytes32 ipc) public {
-  //   initPostContent = ipc;
-  function Board(bytes32 initAdText, bytes32 initAdUrl) public {
-
-    ads.push(Ad({
-      advertiser: msg.sender,
-      text: initAdText,
-      url: initAdUrl
-    }));
-
-    // op = msg.sender;
-    // members[op]
-
-    // Post memory initialPost = Post({
-    //   content: initPostContent,
-    //   poster: op
-    // });
-
-    // posts.push(initialPost);
-    
-    // members[op] = Member({
-    //   posts: posts,
-    //   memberAddress: op
-    // });
-    
   }
 
   // /* mapping field below is equivalent to an associative array or hash.

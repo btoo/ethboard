@@ -15,9 +15,9 @@ class BoardContainer extends Component {
     // this._getAccountBalances = this._getAccountBalances.bind(this)
   }
 
-  componentWillMount(){
-    // MetaCoin.setProvider(this.props.web3.currentProvider);    
-  }
+  // componentWillMount(){
+  //   MetaCoin.setProvider(this.props.web3.currentProvider);    
+  // }
 
   // _getAccountBalance (account) {
   //   var meta = MetaCoin.deployed()
@@ -56,60 +56,46 @@ class BoardContainer extends Component {
   //   }.bind(this))
   // }
 
-  componentDidMount() {
+  async componentDidMount() {
 
     console.log('to be removed in production because the ethboard contract will already have been instantiated');
-    (async _ => {
-      const {
-              toAscii
-            } = this.props.web3
-          , gas = 4700000
-          , accounts = await new Promise((resolve, reject) => this.props.web3.eth.getAccounts((err, accounts) => resolve(accounts)))
-          , from = accounts[0]
+    const {
+            toAscii
+          } = this.props.web3
+        , gas = 4700000
+        , accounts = await new Promise((resolve, reject) => this.props.web3.eth.getAccounts((err, accounts) => resolve(accounts)))
+        , from = accounts[0]
 
-      Board.defaults({from, gas})
-      Board.setProvider(this.props.web3.currentProvider)
+    Board.defaults({from, gas})
+    Board.setProvider(this.props.web3.currentProvider)
 
-      const board = await Board.new('test init text', 'test init url')
-          , adsLength = await board.getAdsLength.call()
-          , initAd = await board.getAd.call(0)
-          , nonexistantAd = await board.getAd.call(88)
-      
-      // console.log(board)
-      console.log(adsLength.toString(10))
-      console.log(initAd.map(hex => toAscii(hex)))
-      console.log(nonexistantAd.map(hex => toAscii(hex)))
-      
-    })()
+    const board = await Board.at("0x56149132cde98f4510a944278d73691788cb9168")
+    // const board = await Board.new('test init text', 'test init url')
+        , adsLength = (await board.getAdsLength()).toNumber()
     
+    console.log(board)
+    console.log(adsLength)
+
+    // post new ad
+    await board.postAd(`test text #${adsLength + 1}`, `test url #${adsLength + 1}`, {from})
     
-    // const board = Board.deployed()
-    new Promise((resolve, reject) => {
-      // console.log(board.getAd)
-      // board.getBalance.call(account, {from: account}).then(function (value) {
-      //   resolve({ account: value.valueOf() })
-      // }).catch(function (e) {
-      //   console.log(e)
-      //   reject()
-      // })
-    })
+    const ads = await Promise.all([...Array(adsLength).keys()].map(async adIndex => {
+      const ad = await board.getAd.call(adIndex)
+      return {
+        address: ad[0],
+        text: toAscii(ad[1]),
+        url: toAscii(ad[2])
+      }
+    }))
+    
+    this.setState({ads})
+    console.log(this.state.ads)
 
-    // const refreshBalances = () => {
-    //   this._getAccountBalances()
-    // }
-
-    // refreshBalances()
-
-    // setInterval(()=>{
-    //   refreshBalances();
-    //   return refreshBalances
-    // }, 5000)
   }
 
   render() {
     return (
       <div>
-        niqua
         {/* <AccountList accounts={this.state.accounts} /> */}
         {/* <SendCoin sender={this.state.coinbase} /> */}
       </div>

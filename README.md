@@ -1,6 +1,6 @@
 # EthBoard
 
-EthBoard is an online billboard hosted on the Ethereum Virtual Machine
+EthBoard is an online billboard hosted on the Ethereum Virtual Machine.
 
 To get your own EthBoard running locally, first install ethereum's testrpc and run it:
 ```
