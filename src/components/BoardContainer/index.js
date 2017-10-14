@@ -2,12 +2,15 @@ import React, { Component } from 'react'
 // import SendCoin from 'components/SendCoin/SendCoin'
 
 import Board from 'contracts/Board.sol'
+import Ad from 'contracts/Ad.sol'
 // import Web3 from 'web3'
 
 class BoardContainer extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
+      ads: []
       // accounts: [],
       // coinbase: ''
     }
@@ -15,9 +18,10 @@ class BoardContainer extends Component {
     // this._getAccountBalances = this._getAccountBalances.bind(this)
   }
 
-  // componentWillMount(){
-  //   MetaCoin.setProvider(this.props.web3.currentProvider);    
-  // }
+  componentWillMount(){
+    Board.setProvider(this.props.web3.currentProvider)
+    Ad.setProvider(this.props.web3.currentProvider)
+  }
 
   // _getAccountBalance (account) {
   //   var meta = MetaCoin.deployed()
@@ -57,49 +61,72 @@ class BoardContainer extends Component {
   // }
 
   async componentDidMount() {
-
-    console.log(this.props.web3)
-
+    
     console.log('to be removed in production because the ethboard contract will already have been instantiated');
     const {
+            eth,
             toAscii
           } = this.props.web3
         , gas = 4476768
-        , accounts = await new Promise((resolve, reject) => this.props.web3.eth.getAccounts((err, accounts) => resolve(accounts)))
+        , accounts = await new Promise((resolve, reject) => eth.getAccounts((err, accounts) => resolve(accounts)))
         , from = accounts[0]
 
     Board.defaults({from, gas})
-    Board.setProvider(this.props.web3.currentProvider)
-
-    const board = await Board.at("0xde981ffeb8ddc50e6c1cf7689a2c3c82258c2b3c")
-    // const board = await Board.new('test init text', 'test init url')
+    
+    
+    // const board = await Board.at("0xda296be026f6ded2483f67aff93a2ee1ef4b2dd8")
+    const board = await Board.new('test init title', 'test init img', 'test init href', 22)
         , adsLength = (await board.getAdsLength()).toNumber()
     
     console.log(board)
     console.log(adsLength)
 
     // post new ad
-    await board.postAd(`test text #${adsLength + 1}`, `test url #${adsLength + 1}`, {from})
+    await board.postAd(
+      `test title #${adsLength + 1}`,
+      `test img #${adsLength + 1}`,
+      `test href #${adsLength + 1}`,
+      22,
+      {from}
+    )
     
-    const ads = await Promise.all([...Array(adsLength).keys()].map(async adIndex => {
-      const ad = await board.getAd.call(adIndex)
-      return {
-        address: ad[0],
-        text: toAscii(ad[1]),
-        url: toAscii(ad[2])
+    const ads = await Promise.all([...Array(adsLength).keys()].map(
+      async adIndex => {
+        const adAddress = await board.getAdAddress.call(adIndex)
+        return await Ad.at(adAddress)
       }
-    }))
+    ))
     
     this.setState({ads})
     console.log(this.state.ads)
+
+    const contributions = await Promise.all(ads.map(
+      async ad => (await ad.getTotalContributions.call()).toNumber()
+    ))
+    
+    console.log(contributions)
+
+    eth.accounts.map(account => {
+      console.log(account)
+      // console.log(eth.getBalance(account).toNumber())
+    })
 
   }
 
   render() {
     return (
       <div>
-        {/* <AccountList accounts={this.state.accounts} /> */}
-        {/* <SendCoin sender={this.state.coinbase} /> */}
+        {this.state.ads.map((ad, i) => (
+          'yo'
+          // <a key={i} href={ad.href}>
+          //   <article>
+          //     <img src={ad.img} alt={ad.title}/>
+          //     <h2>
+          //       {ad.title}  
+          //     </h2>
+          //   </article>
+          // </a>
+        ))}
       </div>
     )
   }

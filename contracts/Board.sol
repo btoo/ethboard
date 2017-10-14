@@ -1,103 +1,63 @@
 pragma solidity ^0.4.8;
 
+import "./Ad.sol";
+
 contract Board {
 
-  struct Ad {
-    address advertiser;
-    bytes32 text;
-    bytes32 url;
-  }
-
+  address owner;
   Ad[] ads;
+  mapping(address => Ad) adSpaces;
 
-  function Board(bytes32 initAdText, bytes32 initAdUrl) public {
-
-    ads.push(Ad({
-      advertiser: msg.sender,
-      text: "le first ad",
-      url: "le first url"
-    }));
-
-    ads.push(Ad({
-      advertiser: msg.sender,
-      text: initAdText,
-      url: initAdUrl
-    }));
-
+  function Board(bytes32 initAdTitle, bytes32 initAdImg, bytes32 initAdHref, uint contribution) {
+    owner = msg.sender;
+    ads.push(new Ad(initAdTitle, initAdImg, initAdHref, contribution));
+  }
+  
+  function postAd(bytes32 newAdTitle, bytes32 newAdImg, bytes32 newAdHref, uint contribution) returns (address) {
+    owner.transfer(contribution);
+    ads.push(new Ad(newAdTitle, newAdImg, newAdHref, contribution));
+    adSpaces[address(ads[ads.length - 1])] = ads[ads.length - 1];
+    return address(ads[ads.length - 1]);
   }
 
-  function postAd(bytes32 newAdText, bytes32 newAdUrl) returns (bool) {
-    ads.push(Ad({
-      advertiser: msg.sender,
-      text: newAdText,
-      url: newAdUrl
-    }));
-    return true;
-  }
+  // function postAd(bytes32 newAdTitle, bytes32 newAdImg, bytes32 newAdHref) returns (bool) {
+  //   ads.push(Ad({
+  //     advertiser: msg.sender,
+  //     title: newAdTitle,
+  //     img: newAdImg,
+  //     href: newAdHref
+  //   }));
+  //   return true;
+  // }
 
   function getAdsLength() constant returns (uint) {
     return ads.length;
   }
 
-  function getAd(uint index) returns (address advertiser, bytes32 text, bytes32 url) {
-    if (index > ads.length - 1) {
-      advertiser = msg.sender;
-      text = "asdf";
-      url = "asdf";
-    } else {
-      advertiser = ads[index].advertiser;
-      text = ads[index].text;
-      url = ads[index].url;
+
+  modifier published (uint index) {
+    if (index >= 0 && index <= ads.length - 1) {
+      _;
     }
   }
 
-  // /* mapping field below is equivalent to an associative array or hash.
-  // The key of the mapping is candidate name stored as type bytes32 and value is
-  // an unsigned integer to store the vote count
-  // */
-  
-  // mapping (bytes32 => uint8) public votesReceived;
-  
-  // /* Solidity doesn't let you pass in an array of strings in the constructor (yet).
-  // We will use an array of bytes32 instead to store the list of candidates
-  // */
-  
-  // bytes32[] public candidateList;
+  function getAdAddress(uint index) published(index) returns (address ad) {
+    return address(ads[index]);
+  }
 
-  // /* This is the constructor which will be called once when you
-  // deploy the contract to the blockchain. When we deploy the contract,
-  // we will pass an array of candidates who will be contesting in the election
-  // */
-  // function Voting(bytes32[] candidateNames) {
-  //   candidateList = candidateNames;
-  // }
-
-  // // This function returns the total votes a candidate has received so far
-  // function totalVotesFor(bytes32 candidate) returns (uint8) {
-  //   if (validCandidate(candidate) == false) {
-  //     revert();
+  // // @TODO: make address private
+  // function getAd(uint index) returns (address advertiser, bytes32 title, bytes32 img, bytes32 href) {
+  //   if (index > ads.length - 1) {
+  //     advertiser = msg.sender;
+  //     title = "asdf";
+  //     img = "asdf";
+  //     href = "asdf";
+  //   } else {
+  //     advertiser = ads[index].advertiser;
+  //     title = ads[index].title;
+  //     img = ads[index].img;
+  //     href = ads[index].href;
   //   }
-  //   return votesReceived[candidate];
   // }
-
-  // // This function increments the vote count for the specified candidate. This
-  // // is equivalent to casting a vote
-  // function voteForCandidate(bytes32 candidate) {
-  //   if (validCandidate(candidate) == false) {
-  //     revert();
-  //   }
-    
-  //   votesReceived[candidate] += 1;
-  // }
-
-  // function validCandidate(bytes32 candidate) returns (bool) {
-  //   for (uint i = 0; i < candidateList.length; i++) {
-  //     if (candidateList[i] == candidate) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
-
 
 }
