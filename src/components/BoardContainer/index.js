@@ -58,18 +58,20 @@ class BoardContainer extends Component {
 
   async componentDidMount() {
 
+    console.log(this.props.web3)
+
     console.log('to be removed in production because the ethboard contract will already have been instantiated');
     const {
             toAscii
           } = this.props.web3
-        , gas = 4700000
+        , gas = 4476768
         , accounts = await new Promise((resolve, reject) => this.props.web3.eth.getAccounts((err, accounts) => resolve(accounts)))
         , from = accounts[0]
 
     Board.defaults({from, gas})
     Board.setProvider(this.props.web3.currentProvider)
 
-    const board = await Board.at("0x56149132cde98f4510a944278d73691788cb9168")
+    const board = await Board.at("0xde981ffeb8ddc50e6c1cf7689a2c3c82258c2b3c")
     // const board = await Board.new('test init text', 'test init url')
         , adsLength = (await board.getAdsLength()).toNumber()
     

@@ -67,10 +67,10 @@ class AccountListContainer extends Component {
 
     refreshBalances()
 
-    setInterval(()=>{
-      refreshBalances();
-      return refreshBalances
-    }, 5000)
+    // setInterval(()=>{
+    //   refreshBalances();
+    //   return refreshBalances
+    // }, 5000)
   }
 
   render() {
