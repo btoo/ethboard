@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <BoardContainer web3={this.props.web3} />
-        <AccountListContainer web3={this.props.web3} />
+        {/* <AccountListContainer web3={this.props.web3} /> */}
       </div>
     )
   }

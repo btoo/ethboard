@@ -5,6 +5,8 @@ import Board from 'contracts/Board.sol'
 import Ad from 'contracts/Ad.sol'
 // import Web3 from 'web3'
 
+import './index.css'
+
 class BoardContainer extends Component {
   constructor(props) {
     super(props)
@@ -72,10 +74,11 @@ class BoardContainer extends Component {
         , from = accounts[0]
 
     Board.defaults({from, gas})
+    // console.log(accounts)
+    // console.log(from)
     
-    
-    // const board = await Board.at("0xda296be026f6ded2483f67aff93a2ee1ef4b2dd8")
-    const board = await Board.new('test init title', 'test init img', 'test init href', 22)
+    const board = await Board.at("0x5fada42d0103ed2d9cd292969c33bf682b9dbbd4")
+    // const board = await Board.new('test init title', 'test init img', 'test init href', 22222222)
         , adsLength = (await board.getAdsLength()).toNumber()
     
     console.log(board)
@@ -86,29 +89,30 @@ class BoardContainer extends Component {
       `test title #${adsLength + 1}`,
       `test img #${adsLength + 1}`,
       `test href #${adsLength + 1}`,
-      22,
+      8,
       {from}
     )
     
     const ads = await Promise.all([...Array(adsLength).keys()].map(
       async adIndex => {
-        const adAddress = await board.getAdAddress.call(adIndex)
-        return await Ad.at(adAddress)
+        const address = await board.getAdAddress.call(adIndex)
+            , contract = await Ad.at(address)
+            , [ titleHex, imgHex, hrefHex, totalBigNumber ] = await contract.getState()
+            , title = toAscii(titleHex)
+            , img = toAscii(imgHex)
+            , href = toAscii(hrefHex)
+            , total = totalBigNumber.toNumber()
+
+        return { address, contract, title, img, href, total }
       }
     ))
     
-    this.setState({ads})
+    this.setState({ ads })
     console.log(this.state.ads)
 
-    const contributions = await Promise.all(ads.map(
-      async ad => (await ad.getTotalContributions.call()).toNumber()
-    ))
-    
-    console.log(contributions)
-
     eth.accounts.map(account => {
-      console.log(account)
-      // console.log(eth.getBalance(account).toNumber())
+      // console.log(account)
+      console.log(eth.getBalance(account).toNumber())
     })
 
   }
@@ -117,15 +121,13 @@ class BoardContainer extends Component {
     return (
       <div>
         {this.state.ads.map((ad, i) => (
-          'yo'
-          // <a key={i} href={ad.href}>
-          //   <article>
-          //     <img src={ad.img} alt={ad.title}/>
-          //     <h2>
-          //       {ad.title}  
-          //     </h2>
-          //   </article>
-          // </a>
+          <a key={i} href={ad.href}>
+            <article>
+              <img src={ad.img} alt={ad.title}/>
+              <h2>{ad.title}</h2>
+              <h3>{ad.total}</h3>
+            </article>
+          </a>
         ))}
       </div>
     )

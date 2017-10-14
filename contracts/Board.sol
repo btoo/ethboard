@@ -1,3 +1,4 @@
+// pragma solidity ^0.4.11; // wtf m8 - Error: Source file requires different compiler version (current compiler is 0.4.8+commit.60cc1668.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
 pragma solidity ^0.4.8;
 
 import "./Ad.sol";
@@ -8,14 +9,16 @@ contract Board {
   Ad[] ads;
   mapping(address => Ad) adSpaces;
 
-  function Board(bytes32 initAdTitle, bytes32 initAdImg, bytes32 initAdHref, uint contribution) {
+  function Board(bytes32 initAdTitle, bytes32 initAdImg, bytes32 initAdHref, uint256 contribution) {
     owner = msg.sender;
-    ads.push(new Ad(initAdTitle, initAdImg, initAdHref, contribution));
+    ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, contribution));
   }
   
-  function postAd(bytes32 newAdTitle, bytes32 newAdImg, bytes32 newAdHref, uint contribution) returns (address) {
-    owner.transfer(contribution);
-    ads.push(new Ad(newAdTitle, newAdImg, newAdHref, contribution));
+  function postAd(bytes32 newAdTitle, bytes32 newAdImg, bytes32 newAdHref, uint256 contribution) returns (address) {
+    // if (!owner.send(contribution)) {
+    //   throw;
+    // }
+    ads.push(new Ad(owner, newAdTitle, newAdImg, newAdHref, contribution));
     adSpaces[address(ads[ads.length - 1])] = ads[ads.length - 1];
     return address(ads[ads.length - 1]);
   }
