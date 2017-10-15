@@ -1,4 +1,10 @@
 article {
+  display: flex;
+  > * {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
   h2 {
     flex: 1;
   }

@@ -14,11 +14,11 @@ contract Board {
     ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, contribution));
   }
   
-  function postAd(bytes32 newAdTitle, bytes32 newAdImg, bytes32 newAdHref, uint256 contribution) returns (address) {
-    // if (!owner.send(contribution)) {
-    //   throw;
-    // }
-    ads.push(new Ad(owner, newAdTitle, newAdImg, newAdHref, contribution));
+  function postAd(bytes32 newAdTitle, bytes32 newAdImg, bytes32 newAdHref/* , uint256 contribution */) payable returns (address) {
+    if (!owner.send(msg.value)) {
+      throw;
+    }
+    ads.push(new Ad(owner, newAdTitle, newAdImg, newAdHref, msg.value));
     adSpaces[address(ads[ads.length - 1])] = ads[ads.length - 1];
     return address(ads[ads.length - 1]);
   }
@@ -46,6 +46,10 @@ contract Board {
 
   function getAdAddress(uint index) published(index) returns (address ad) {
     return address(ads[index]);
+  }
+
+  function getOwner() returns (address) {
+    return owner;
   }
 
   // // @TODO: make address private

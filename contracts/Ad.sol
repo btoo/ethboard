@@ -29,11 +29,12 @@ contract Ad {
     adTotal = total;
   }
 
-  function addContribution(uint256 contribution) {
-    if (!owner.send(contribution)) {
+  function addContribution() payable returns (uint256) {
+    if (!owner.send(msg.value)) {
       throw;
     }
-    total += contribution;
+    total += msg.value;
+    return total;
   }
 
 }

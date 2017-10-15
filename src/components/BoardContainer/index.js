@@ -10,14 +10,9 @@ import './index.css'
 class BoardContainer extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       ads: []
-      // accounts: [],
-      // coinbase: ''
     }
-    // this._getAccountBalance = this._getAccountBalance.bind(this)
-    // this._getAccountBalances = this._getAccountBalances.bind(this)
   }
 
   componentWillMount(){
@@ -25,75 +20,37 @@ class BoardContainer extends Component {
     Ad.setProvider(this.props.web3.currentProvider)
   }
 
-  // _getAccountBalance (account) {
-  //   var meta = MetaCoin.deployed()
-  //   return new Promise((resolve, reject) => {
-  //     meta.getBalance.call(account, {from: account}).then(function (value) {
-  //       resolve({ account: value.valueOf() })
-  //     }).catch(function (e) {
-  //       console.log(e)
-  //       reject()
-  //     })
-  //   })
-  // }
-
-  // _getAccountBalances () {
-  //   this.props.web3.eth.getAccounts(function (err, accs) {
-  //     if (err != null) {
-  //       window.alert('There was an error fetching your accounts.')
-  //       console.error(err)
-  //       return
-  //     }
-
-  //     if (accs.length === 0) {
-  //       window.alert("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.")
-  //       return
-  //     }
-
-  //     this.setState({coinbase: accs[0]})
-
-  //     var accountsAndBalances = accs.map((account) => {
-  //       return this._getAccountBalance(account).then((balance) => { return { account, balance } })
-  //     })
-
-  //     Promise.all(accountsAndBalances).then((accountsAndBalances) => {
-  //       this.setState({accounts: accountsAndBalances, coinbaseAccount: accountsAndBalances[0]})
-  //     })
-  //   }.bind(this))
-  // }
 
   async componentDidMount() {
     
     console.log('to be removed in production because the ethboard contract will already have been instantiated');
-    const {
-            eth,
-            toAscii
-          } = this.props.web3
+    const { eth, toAscii } = this.props.web3
         , gas = 4476768
         , accounts = await new Promise((resolve, reject) => eth.getAccounts((err, accounts) => resolve(accounts)))
         , from = accounts[0]
 
     Board.defaults({from, gas})
-    // console.log(accounts)
-    // console.log(from)
     
-    const board = await Board.at("0x5fada42d0103ed2d9cd292969c33bf682b9dbbd4")
-    // const board = await Board.new('test init title', 'test init img', 'test init href', 22222222)
-        , adsLength = (await board.getAdsLength()).toNumber()
+    const board = await Board.at("0x86aba3f2a362f6687587ec7b41b7a50e35cf73cf")
+    // const board = await Board.new('test init title', 'test init img', 'test init href')
+        , oldAdsLength = (await board.getAdsLength()).toNumber()
+        
     
-    console.log(board)
-    console.log(adsLength)
+    console.log('board', board)
+    console.log('board owner', await board.getOwner.call())
 
     // post new ad
-    await board.postAd(
-      `test title #${adsLength + 1}`,
-      `test img #${adsLength + 1}`,
-      `test href #${adsLength + 1}`,
-      8,
-      {from}
-    )
+    const posted = await board.postAd(
+          `test title #${oldAdsLength + 1}`,
+          `test img #${oldAdsLength + 1}`,
+          `test href #${oldAdsLength + 1}`,
+          {from: '0x41f4370397d42bada75664d72b6bf4d0a2ff6780', value: 99999999999990000000}
+        )
+      , newAdsLength = (await board.getAdsLength()).toNumber()
+
+    console.log('adsLength', newAdsLength)
     
-    const ads = await Promise.all([...Array(adsLength).keys()].map(
+    const ads = await Promise.all([...Array(newAdsLength).keys()].map(
       async adIndex => {
         const address = await board.getAdAddress.call(adIndex)
             , contract = await Ad.at(address)
@@ -107,13 +64,17 @@ class BoardContainer extends Component {
       }
     ))
     
-    this.setState({ ads })
+    this.setState({ads})
     console.log(this.state.ads)
 
-    eth.accounts.map(account => {
-      // console.log(account)
-      console.log(eth.getBalance(account).toNumber())
+    eth.accounts.map(async account => {
+      const balance = await new Promise((resolve, reject) => eth.getBalance(account, (err, result) => resolve(result)))
+      console.log(balance.toNumber())
     })
+
+    // board owner 0xac7328f5f11bd698a0ca0f199b01e59ec6230ee1
+    // testrpc[0] public = 0x0ebe068998aabbcf570b98e45cb6520b644faaa9
+    // private f6f430e5aada6141a3149a31ad34ffb90e8e765672570c25f4de5a383859f7a8
 
   }
 
