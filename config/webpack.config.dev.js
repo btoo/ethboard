@@ -26,14 +26,12 @@ var provided = {
   'Web3': 'web3'
 }
 
-console.log(path.join(srcPath, 'index'))
-
 module.exports = {
   devtool: 'eval',
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
     require.resolve('webpack/hot/dev-server'),
-    path.join(srcPath, 'index')
+    path.join(srcPath, 'app')
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:

@@ -31,7 +31,7 @@ class BoardContainer extends Component {
 
     Board.defaults({from, gas})
     
-    const board = await Board.at("0x86aba3f2a362f6687587ec7b41b7a50e35cf73cf")
+    const board = await Board.at("0xb42f518d7dc4de7e7a24d5fae90191e6c75e1ddf")
     // const board = await Board.new('test init title', 'test init img', 'test init href')
         , oldAdsLength = (await board.getAdsLength()).toNumber()
         
@@ -44,7 +44,7 @@ class BoardContainer extends Component {
           `test title #${oldAdsLength + 1}`,
           `test img #${oldAdsLength + 1}`,
           `test href #${oldAdsLength + 1}`,
-          {from: '0x41f4370397d42bada75664d72b6bf4d0a2ff6780', value: 99999999999990000000}
+          {from: '0x6e23ef9c592916902334648a886972759c5dd908', value: 88}
         )
       , newAdsLength = (await board.getAdsLength()).toNumber()
 
