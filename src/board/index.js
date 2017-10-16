@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import SendCoin from 'components/SendCoin/SendCoin'
+import {connect} from 'react-redux'
 
 import Board from 'contracts/Board.sol'
 import Ad from 'contracts/Ad.sol'
@@ -7,6 +7,9 @@ import Ad from 'contracts/Ad.sol'
 
 import './index.css'
 
+@connect(store => ({ // set the props for this component
+  web3: store.web3
+}))
 class BoardContainer extends Component {
   constructor(props) {
     super(props)
@@ -85,8 +88,8 @@ class BoardContainer extends Component {
           <a key={i} href={ad.href}>
             <article>
               <img src={ad.img} alt={ad.title}/>
-              <h2>{ad.title}</h2>
-              <h3>{ad.total}</h3>
+              | <h2>{ad.title}</h2>
+              | <h3>{ad.total}</h3>
             </article>
           </a>
         ))}
