@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
-  fetchBoardContract
+  fetchBoardContract,
+  postNewAd
 } from './actions'
 
 import Board from 'contracts/Board.sol'
@@ -14,7 +15,8 @@ const mapStateToProps = store => { // set the props for this component
   return {
     web3: store.app.web3,
     boardAddress: store.board.boardAddress,
-    boardContract: store.board.boardContract
+    boardContract: store.board.boardContract,
+    txObj: store.app.txObj,
   }
 }
 
@@ -88,6 +90,14 @@ export default class BoardContainer extends Component {
   render() {
     return (
       <div>
+        <button onClick={postNewAd(this.props.txObj, this.props.boardContract)({
+          title: 'nititle',
+          img: 'niimg',
+          href: 'nihref',
+          contribution: 88
+        })}>
+          click this to post a new ad
+        </button>
         {
           this.props.boardContract
             ? Object.keys(this.props.boardContract).map(key => key)

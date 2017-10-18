@@ -13,23 +13,32 @@ export default (state = {
     ? new Web3(web3.currentProvider) // Use the Mist/wallet provider. eslint-disable-next-line     
     : new Web3(new Web3.providers.HttpProvider(`http://${truffleConfig.rpc.host}:${truffleConfig.rpc.port}`)),
   accounts: [], // accounts hosted on this node
-  from: null // <Address> for now just use the first account
+  txObj: {
+    from: null, // <Address> for now just use the first account
+    gas: 4700000
+  }
 }, action) => {
   
   Board.setProvider(state.web3.currentProvider)
   Ad.setProvider(state.web3.currentProvider)
   
   switch (action.type){
+
     case REQUEST_ETH_ACCOUNTS: return {
       ...state,
       fetchingEthAccounts: true
     }
+
     case RECEIVE_ETH_ACCOUNTS: return {
       ...state,
       fetchingEthAccounts: false,
       accounts: action.accounts,
-      from: action.accounts[0]
+      txObj: {
+        ...state.txObj,
+        from: action.accounts[0]
+      }
     }
+
     default: return state
   }
 }

@@ -9,12 +9,14 @@ export default async _ => {
     : new Web3(new Web3.providers.HttpProvider(`http://${truffleConfig.rpc.host}:${truffleConfig.rpc.port}`))
   
   Board.setProvider(web3.currentProvider)
+
   const { eth, toAscii } = web3
       , gas = 4476768
       , accounts = await new Promise((resolve, reject) => eth.getAccounts((err, accounts) => resolve(accounts)))
       , from = accounts[0]
+      , transactionObject = { from, gas }
 
-  Board.defaults({from, gas})
+  Board.defaults(transactionObject)
   const board = await Board.new('test init title', 'test init img', 'test init href')
   
   console.log('new EthBoard address:', board.address)

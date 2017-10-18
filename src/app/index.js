@@ -16,9 +16,11 @@ const mapStateToProps = store => {
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchEthAccounts
-}, dispatch)
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    fetchEthAccounts
+  }, dispatch)
+}
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
@@ -30,10 +32,14 @@ export default class App extends Component {
   render() { return (
     <div>
       header
+      <br/>
       <button onClick={createNewBoard}>
         click here to create a new board and then check your console to view its address
       </button>
+      <br/>
+      <br/>
       <BoardContainer />
+      <br/>
       footer
     </div>
   )}
