@@ -33,7 +33,7 @@ contract Board {
   //   return true;
   // }
 
-  function getAdsLength() constant returns (uint) {
+  function getAdsCount() constant returns (uint) {
     return ads.length;
   }
 

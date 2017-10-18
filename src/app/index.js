@@ -1,19 +1,40 @@
 import React, { Component } from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import store from '../store'
-import Web3 from 'web3'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import {
+  fetchEthAccounts
+} from './actions'
+
+import BoardContainer from 'board'
+import createNewBoard from 'new'
 import './index.css'
 
-import AccountListContainer from 'components/AccountList/AccountListContainer'
-import BoardContainer from 'board'
 
-window.addEventListener('load', _ => render(
-  <Provider store={store}>
-    <BoardContainer />
-    {/* <BoardContainer web3={web3Provided} /> */}
-    {/* <AccountListContainer web3={this.props.web3} /> */}
-  </Provider>,
-  document.getElementById('app')
-))
+const mapStateToProps = store => {
+  return {
+    eth: store.app.web3.eth
+  }
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchEthAccounts
+}, dispatch)
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class App extends Component {
+  
+  componentWillMount(){
+    this.props.fetchEthAccounts(this.props.eth)
+  }
+
+  render() { return (
+    <div>
+      header
+      <button onClick={createNewBoard}>
+        click here to create a new board and then check your console to view its address
+      </button>
+      <BoardContainer />
+      footer
+    </div>
+  )}
+}

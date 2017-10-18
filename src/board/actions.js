@@ -7,21 +7,26 @@ const requestBoardContract = boardAddress => ({
 })
 
 export const RECEIVE_BOARD_CONTRACT = 'RECEIVE_BOARD_CONTRACT'
-const receiveBoardContract = (boardAddress, boardContract) => {
+const receiveBoardContract = ({boardAddress, boardContract, adsCount}) => {
   return {
     type: RECEIVE_BOARD_CONTRACT,
     boardAddress,
-    boardContract
+    boardContract,
+    adsCount
   }
 }
 
 export const fetchBoardContract = boardAddress => async dispatch => {
   dispatch(requestBoardContract(boardAddress))
-  dispatch(receiveBoardContract(
+  const boardContract = await Board.at(boardAddress)
+  dispatch(receiveBoardContract({
     boardAddress,
-    await Board.at(boardAddress)
-  ))
+    boardContract,
+    adsCount: (await boardContract.getAdsCount()).toNumber()
+  }))
 }
+
+
 
 const shouldFetchBoardContract = (state, boardAddress) => {
   console.log(state)

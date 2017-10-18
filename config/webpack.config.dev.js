@@ -31,7 +31,7 @@ module.exports = {
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
     require.resolve('webpack/hot/dev-server'),
-    path.join(srcPath, 'app')
+    path.join(srcPath, '/')
   ],
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
