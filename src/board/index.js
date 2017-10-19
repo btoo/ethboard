@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
-  fetchBoardContract,
-  postNewAd
+  fetchAdsCountIfNeeded as fetchAdsCount,
+  postAd
 } from './actions'
 
 import Board from 'contracts/Board.sol'
@@ -21,14 +21,18 @@ const mapStateToProps = store => { // set the props for this component
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchBoardContract
+  fetchAdsCount,
+  postAd
 }, dispatch)
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class BoardContainer extends Component {
   
-  componentWillMount(){
-    this.props.fetchBoardContract(this.props.boardAddress)
+  async componentWillMount(){
+    
+    const res = await this.props.fetchAdsCount(this.props.boardContract)
+    console.log(res)
+    
   }
 
   // async componentDidMount() {
@@ -90,7 +94,7 @@ export default class BoardContainer extends Component {
   render() {
     return (
       <div>
-        <button onClick={postNewAd(this.props.txObj, this.props.boardContract)({
+        <button onClick={this.props.postAd(this.props.txObj, this.props.boardContract)({
           title: 'nititle',
           img: 'niimg',
           href: 'nihref',

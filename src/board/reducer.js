@@ -1,31 +1,39 @@
+import Board from 'contracts/Board.sol'
 import {
-  REQUEST_BOARD_CONTRACT,
-  RECEIVE_BOARD_CONTRACT,
+  REQUEST_ADS_COUNT,
+  RECEIVE_ADS_COUNT,
+  INVALIDATE_ADS_COUNT,
   POST_NEW_AD
 } from './actions'
 
+const boardAddress = '0xff45ccd2a0dfb7da3f2812e643ddb101fca1bae9'
+
 export default (state = {
-  boardAddress: "0xfbe6c062c3c45e5ee8b0af892190919f77ab5ae7",
-  boardContract: null,
-  fetchingBoardContract: false,
-  fetchedBoardContract: false,
-  fetchBoardError: null,
+  boardAddress,
+  boardContract: Board.at(boardAddress),
+  fetchingAdsCount: false,
+  fetchAdsCountError: null,
   adsCount: 0,
-  ads: []
+  ads: {}
 }, action) => {
 
   switch (action.type){
 
-    case REQUEST_BOARD_CONTRACT: return {
+    case REQUEST_ADS_COUNT: return {
       ...state,
-      fetchingBoardContract: true
+      fetchingAdsCount: true
     }
 
-    case RECEIVE_BOARD_CONTRACT: return {
+    case RECEIVE_ADS_COUNT: return {
       ...state,
-      fetchingBoardContract: false,
-      boardContract: action.boardContract,
+      fetchingAdsCount: false,
       adsCount: action.adsCount
+    }
+
+    case INVALIDATE_ADS_COUNT: return {
+      ...state,
+      fetchingAdsCount: false,
+      fetchAdsCountError: action.error
     }
 
     case POST_NEW_AD: return {

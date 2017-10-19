@@ -15,7 +15,19 @@ const receiveEthAccounts = (eth, accounts) => {
   }
 }
 
+export const INVALIDATE_ETH_ACCOUNTS = 'INVALIDATE_ETH_ACCOUNTS'
+function invalidateEthAccounts(eth) {
+  return {
+    type: INVALIDATE_ETH_ACCOUNTS,
+    eth
+  }
+}
+
 export const fetchEthAccounts = eth => dispatch => {
   dispatch(requestEthAccounts(eth))
-  eth.getAccounts((err, accounts) => dispatch(receiveEthAccounts(eth, accounts)))
+  eth.getAccounts((err, accounts) => {
+    err
+      ? dispatch(invalidateEthAccounts(eth))
+      : dispatch(receiveEthAccounts(eth, accounts))
+  })
 }
