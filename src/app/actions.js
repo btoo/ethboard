@@ -16,7 +16,7 @@ const receiveEthAccounts = (eth, accounts) => {
 }
 
 export const INVALIDATE_ETH_ACCOUNTS = 'INVALIDATE_ETH_ACCOUNTS'
-function invalidateEthAccounts(eth) {
+const invalidateEthAccounts = eth => {
   return {
     type: INVALIDATE_ETH_ACCOUNTS,
     eth

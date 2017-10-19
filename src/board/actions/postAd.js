@@ -1,17 +1,17 @@
-export const postAd = (txObj, boardContract) => ({title, img, href, contribution}) => async dispatch => {
+export const postAd = ({title, img, href, contribution}) => async (dispatch, getState) => {
   
-    // dispatch()
-  
-    const posted = await boardContract.postAd(
-      `test title`,
-      `test img`,
-      `test href`,
-      {
-        ...txObj,
-        value: contribution
-      }
-    )
-  
-    console.log(posted)
-  
-  }
+  const state = getState()
+
+  const posted = await state.board.boardContract.postAd(
+    title,
+    img,
+    href,
+    {
+      ...state.app.txObj,
+      value: contribution
+    }
+  )
+
+  console.log(posted)
+
+}

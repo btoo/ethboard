@@ -3,18 +3,22 @@ import {
   REQUEST_ADS_COUNT,
   RECEIVE_ADS_COUNT,
   INVALIDATE_ADS_COUNT,
-  POST_NEW_AD
+  REQUEST_ADS,
+  RECEIVE_ADS,
+  INVALIDATE_ADS
 } from './actions'
 
-const boardAddress = '0xff45ccd2a0dfb7da3f2812e643ddb101fca1bae9'
+const boardAddress = '0x58e0635d3c3dcaefc002d602a4d1489ab860b46d'
 
 export default (state = {
   boardAddress,
   boardContract: Board.at(boardAddress),
   fetchingAdsCount: false,
   fetchAdsCountError: null,
-  adsCount: 0,
-  ads: {}
+  adsCount: null,
+  fetchingAds: false,
+  fetchAdsError: null,
+  ads: [],
 }, action) => {
 
   switch (action.type){
@@ -36,12 +40,25 @@ export default (state = {
       fetchAdsCountError: action.error
     }
 
-    case POST_NEW_AD: return {
+    case REQUEST_ADS: return {
       ...state,
-      
+      fetchingAds: true
+    }
+
+    case RECEIVE_ADS: return {
+      ...state,
+      fetchingAds: false,
+      ads: action.ads
+    }
+
+    case INVALIDATE_ADS: return {
+      ...state,
+      fetchingAds: false,
+      fetchAdsError: action.error
     }
 
     default: return state
+    
   }
   
 }

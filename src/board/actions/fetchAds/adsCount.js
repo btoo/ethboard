@@ -1,5 +1,5 @@
 export const REQUEST_ADS_COUNT = 'REQUEST_ADS_COUNT'
-const requestBoardContract = _ => ({
+const requestAdsCount = _ => ({
   type: REQUEST_ADS_COUNT
 })
 
@@ -27,14 +27,15 @@ const shouldFetchAdsCount = state => {
 
 export const fetchAdsCountIfNeeded = boardContract => async (dispatch, getState) => {
   if(shouldFetchAdsCount(getState())){
+    dispatch(requestAdsCount())
     try {
       return dispatch(receiveAdsCount(
-        (await boardContract.getAdsCount()).toNumber()
+        (await boardContract.getAdsCount.call()).toNumber()
       ))
     } catch(error) {
       return dispatch(invalidateAdsCount(error))
     }
   } else {
-    return Promise.resolve(false)
+    return Promise.resolve('adsCount fetchin not needed')
   }
 }

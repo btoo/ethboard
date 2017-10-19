@@ -3,6 +3,10 @@ pragma solidity ^0.4.8;
 
 import "./Ad.sol";
 
+
+
+// we may be able to modify this so that ALL ad related data is kept inside the ad contract
+// and the only data being stored here is the list of ad ADDRESSES
 contract Board {
 
   address owner;
