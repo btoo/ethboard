@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
-  fetchAdsCountIfNeeded as fetchAdsCount,
   fetchAdsIfNeeded as fetchAds,
   postAd
 } from './actions'
@@ -23,7 +22,6 @@ const mapStateToProps = store => { // set the props for this component
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchAdsCount,
   fetchAds,
   postAd
 }, dispatch)
@@ -44,7 +42,7 @@ export default class BoardContainer extends Component {
 
         <button onClick={_ => {
           const newAdIndex = this.props.ads.length
-          this.props.postAd({
+          this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, this.props.ads, {
             title: `title #${newAdIndex}`,
             img: `img #${newAdIndex}`,
             href: `href #${newAdIndex}`,
@@ -60,10 +58,11 @@ export default class BoardContainer extends Component {
               <img src={ad.img} alt={ad.title}/>
               | <h2>{ad.title}</h2>
               | <h3>{ad.total}</h3>
+              | <p>{ad.address}</p>
             </article>
           </a>
         ))}
-        
+
       </div>
     )
   }

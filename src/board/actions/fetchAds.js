@@ -1,4 +1,5 @@
 import Ad from 'contracts/Ad.sol'
+import { constructAdFromIndex } from 'ad/util'
 
 export const REQUEST_ADS = 'REQUEST_ADS'
 const requestAds = _ => ({
@@ -21,7 +22,7 @@ const invalidateAds = error => {
   }
 }
 
-const shouldFetchAds = state => state.board.adsCount !== state.board.ads.length
+const shouldFetchAds = state => !state.board.ads.length
 
 export const fetchAdsIfNeeded = boardContract => async (dispatch, getState) => {
   
@@ -34,21 +35,9 @@ export const fetchAdsIfNeeded = boardContract => async (dispatch, getState) => {
 
       const adsCount = (await boardContract.getAdsCount.call()).toNumber()
 
-      const ads = await Promise.all([...Array(adsCount).keys()].map(
-        async adIndex => {
-          const address = await state.board.boardContract.getAdAddress.call(adIndex)
-              , contract = Ad.at(address)
-              , [
-                  titleHex, imgHex, hrefHex, totalBigNumber
-                ] = await contract.getState.call()
-              , title = toAscii(titleHex)
-              , img = toAscii(imgHex)
-              , href = toAscii(hrefHex)
-              , total = totalBigNumber.toNumber()
-  
-          return { address, contract, adIndex, title, img, href, total }
-        }
-      ))
+      const ads = await Promise.all([...Array(adsCount).keys()].map(async adIndex => (
+        await constructAdFromIndex(state.app.web3, boardContract)(adIndex)
+      )))
   
       return dispatch(receiveAds(ads))
     } catch(error) {
