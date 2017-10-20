@@ -1,4 +1,3 @@
-import Ad from 'contracts/Ad.sol'
 import { constructAdFromIndex } from 'ad/util'
 
 export const REQUEST_ADS = 'REQUEST_ADS'
@@ -34,7 +33,6 @@ export const fetchAdsIfNeeded = boardContract => async (dispatch, getState) => {
     try {
 
       const adsCount = (await boardContract.getAdsCount.call()).toNumber()
-
       const ads = await Promise.all([...Array(adsCount).keys()].map(async adIndex => (
         await constructAdFromIndex(state.app.web3, boardContract)(adIndex)
       )))

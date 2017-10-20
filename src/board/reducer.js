@@ -8,7 +8,7 @@ import {
   INVALIDATE_AD_DELIVERY
 } from './actions'
 
-const boardAddress = '0x6f359f9f496e5a96aa8fdf0c10fa32f2a95259b1'
+const boardAddress = '0xf2620a0a54386496a283c3c4f7dec975cb307b1b'
 
 export default (state = {
   boardAddress,

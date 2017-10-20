@@ -1,4 +1,3 @@
-import Ad from 'contracts/Ad.sol'
 import { constructAdFromIndex } from 'ad/util'
 
 export const SEND_AD = 'SEND_AD'
