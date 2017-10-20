@@ -32,18 +32,16 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default class BoardContainer extends Component {
   
   async componentWillMount(){
-    
-    const adsCount = await this.props.fetchAdsCount(this.props.boardContract)
     console.log(
       'fetching dem ads',
-      await this.props.fetchAds(adsCount)
+      await this.props.fetchAds(this.props.boardContract)
     )
-    
   }
 
   render() {
     return (
       <div>
+
         <button onClick={_ => {
           const newAdIndex = this.props.ads.length
           this.props.postAd({
@@ -55,11 +53,7 @@ export default class BoardContainer extends Component {
         }}>
           click this to post a new ad
         </button>
-        {
-          this.props.boardContract
-            ? Object.keys(this.props.boardContract).map(key => key)
-            : 'nuttin'
-        }
+
         {this.props.ads.map((ad, i) => (
           <a key={i} href={ad.href}>
             <article>
@@ -69,6 +63,7 @@ export default class BoardContainer extends Component {
             </article>
           </a>
         ))}
+        
       </div>
     )
   }

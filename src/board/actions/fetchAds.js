@@ -23,16 +23,18 @@ const invalidateAds = error => {
 
 const shouldFetchAds = state => state.board.adsCount !== state.board.ads.length
 
-export const fetchAdsIfNeeded = adsCount => async (dispatch, getState) => {
+export const fetchAdsIfNeeded = boardContract => async (dispatch, getState) => {
   
-  dispatch(requestAds())
-
   const state = getState()
       , { toAscii } = state.app.web3
-
+  
   if(shouldFetchAds(state)){
+    dispatch(requestAds())
     try {
-      const ads = await Promise.all([...Array(state.board.adsCount).keys()].map(
+
+      const adsCount = (await boardContract.getAdsCount.call()).toNumber()
+
+      const ads = await Promise.all([...Array(adsCount).keys()].map(
         async adIndex => {
           const address = await state.board.boardContract.getAdAddress.call(adIndex)
               , contract = Ad.at(address)
@@ -57,25 +59,3 @@ export const fetchAdsIfNeeded = adsCount => async (dispatch, getState) => {
     return Promise.resolve('ads fetchin not needed')
   }
 }
-
-
-
-
-
-// export 
-// const ads = await Promise.all([...Array(newAdsLength).keys()].map(
-//   async adIndex => {
-//     const address = await board.getAdAddress.call(adIndex)
-//         , contract = await Ad.at(address)
-//         , [ titleHex, imgHex, hrefHex, totalBigNumber ] = await contract.getState()
-//         , title = toAscii(titleHex)
-//         , img = toAscii(imgHex)
-//         , href = toAscii(hrefHex)
-//         , total = totalBigNumber.toNumber()
-
-//     return { address, contract, title, img, href, total }
-//   }
-// ))
-
-// // this.setState({ads})
-// // console.log(this.state.ads)
