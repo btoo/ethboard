@@ -33,10 +33,16 @@ export const fetchAdsIfNeeded = boardContract => async (dispatch, getState) => {
     try {
 
       const adsCount = (await boardContract.getAdsCount.call()).toNumber()
-      const ads = await Promise.all([...Array(adsCount).keys()].map(async adIndex => (
-        await constructAdFromIndex(state.app.web3, boardContract)(adIndex)
-      )))
-  
+      const ads = (await Promise
+        .all([...Array(adsCount).keys()]
+        .map(async adIndex => (
+          await constructAdFromIndex(state.app.web3, boardContract)(adIndex)
+        ))))
+        .reduce((acc, ad) => {
+          acc[ad.address] = ad
+          return acc
+        }, {})
+
       return dispatch(receiveAds(ads))
     } catch(error) {
       return dispatch(invalidateAds(error))

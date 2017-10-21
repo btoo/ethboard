@@ -8,7 +8,7 @@ import {
   INVALIDATE_AD_DELIVERY
 } from './actions'
 
-const boardAddress = '0xf2620a0a54386496a283c3c4f7dec975cb307b1b'
+const boardAddress = '0x35f1c6fd209cc964c4f6549bc0004c06b1e2da06'
 
 export default (state = {
   boardAddress,
@@ -18,7 +18,7 @@ export default (state = {
   adsCount: null,
   fetchingAds: false,
   fetchAdsError: null,
-  ads: [],
+  ads: []
 }, action) => {
 
   switch (action.type){
@@ -48,7 +48,10 @@ export default (state = {
     case AD_DELIVERED: return {
       ...state,
       postingAd: false,
-      ads: [...state.ads, action.postedAd]
+      ads: {
+        ...state.ads,
+        [action.postedAd.address]: action.postedAd
+      }
     }
 
     case INVALIDATE_AD_DELIVERY: return {

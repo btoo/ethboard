@@ -21,7 +21,7 @@ const invalidateAdDelivery = error => {
   }
 }
 
-export const postAd = (web3, txObj, boardContract, ads, {title, img, href, contribution}) => async dispatch => {
+export const postAd = (web3, txObj, boardContract, postedAdIndex, {title, img, href, contribution}) => async dispatch => {
   
   dispatch(sendAd())
   try {
@@ -35,7 +35,7 @@ export const postAd = (web3, txObj, boardContract, ads, {title, img, href, contr
       }
     )
 
-    const postedAd = await constructAdFromIndex(web3, boardContract)(ads.length)
+    const postedAd = await constructAdFromIndex(web3, boardContract)(postedAdIndex)
     dispatch(adDelivered(postedAd))
 
   } catch(error) {
