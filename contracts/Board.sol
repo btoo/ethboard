@@ -17,13 +17,28 @@ contract Board {
     owner = msg.sender;
     ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, contribution));
   }
-  
-  function postAd(bytes32 newAdTitle, bytes32 newAdImg, bytes32 newAdHref/* , uint256 contribution */) payable returns (address) {
+
+  // event AdPosted(
+  //   address indexed postedAdAddress,
+  //   uint indexed postedAdIndex,
+  //   bytes32 postedAdTitle,
+  //   bytes32 postedAdImg,
+  //   bytes32 postedAdHref
+  // );
+
+  function postAd(bytes32 postedAdTitle, bytes32 postedAdImg, bytes32 postedAdHref) payable returns (address) {
     if (!owner.send(msg.value)) {
       throw;
     }
-    ads.push(new Ad(owner, newAdTitle, newAdImg, newAdHref, msg.value));
+    ads.push(new Ad(owner, postedAdTitle, postedAdImg, postedAdHref, msg.value));
     adSpaces[address(ads[ads.length - 1])] = ads[ads.length - 1];
+    // AdPosted( // events arent working atm.. like why
+    //   address(ads[ads.length - 1]),
+    //   ads.length - 1,
+    //   postedAdTitle,
+    //   postedAdImg,
+    //   postedAdHref
+    // );
     return address(ads[ads.length - 1]);
   }
 

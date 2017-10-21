@@ -8,11 +8,20 @@ import {
   INVALIDATE_AD_DELIVERY
 } from './actions'
 
-const boardAddress = '0x35f1c6fd209cc964c4f6549bc0004c06b1e2da06'
+const boardAddress = '0x4afad1cae9cf3872198530c78e1fc31d54d1c0e7'
+    , boardContract = Board.at(boardAddress)
+
+console.log(boardContract.AdPosted)
+boardContract.allEvents().watch((error, result) => {
+  console.log('evented')
+  console.log(error, result)
+  // if (!error)
+  //     console.log(result);
+})
 
 export default (state = {
   boardAddress,
-  boardContract: Board.at(boardAddress),
+  boardContract,
   fetchingAdsCount: false,
   fetchAdsCountError: null,
   adsCount: null,
