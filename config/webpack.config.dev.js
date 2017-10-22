@@ -34,6 +34,11 @@ module.exports = {
     path.join(srcPath, '/')
   ],
   output: {
+    // library: 'lelib',
+    // libraryTarget: 'amd',
+    // libraryTarget: 'commonjs2',
+    // libraryTarget: 'commonjs',
+    // libraryExport: 'default',
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: buildPath,
     pathinfo: true,
@@ -51,10 +56,19 @@ module.exports = {
       contracts: path.resolve('contracts')
     }
   },
+  resolveLoader: {
+    alias: {
+      'truffle-contract-loader':  path.join(__dirname, '..', 'truffle-contract-loader.js')
+    }
+  },
   module: {
 
     // webpack 3
     rules: [
+      {
+        test: /\.test$/,
+        use: 'truffle-contract-loader'
+      },
       {
         test: /\.js$/,
         include: srcPath,
@@ -102,7 +116,7 @@ module.exports = {
         }]
       },
       {
-        test: /\.sol/,
+        test: /\.sol$/,
         loader: 'truffle-solidity-loader'
       }
     ],

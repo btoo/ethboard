@@ -1,3 +1,6 @@
+import Bo from 'contracts/Bo.test'
+console.log('the', Bo())
+
 import Board from 'contracts/Board.sol'
 import {
   REQUEST_ADS,
@@ -11,13 +14,13 @@ import {
 const boardAddress = '0x4afad1cae9cf3872198530c78e1fc31d54d1c0e7'
     , boardContract = Board.at(boardAddress)
 
-console.log(boardContract.AdPosted)
-boardContract.allEvents().watch((error, result) => {
-  console.log('evented')
-  console.log(error, result)
-  // if (!error)
-  //     console.log(result);
-})
+// console.log(boardContract.AdPosted)
+// boardContract.allEvents().watch((error, result) => {
+//   console.log('evented')
+//   console.log(error, result)
+//   // if (!error)
+//   //     console.log(result);
+// })
 
 export default (state = {
   boardAddress,

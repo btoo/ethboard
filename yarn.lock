@@ -75,7 +75,7 @@ ajv@^4.7.0, ajv@^4.9.1:
     co "^4.6.0"
     json-stable-stringify "^1.0.1"
 
-ajv@^5.0.0, ajv@^5.1.0, ajv@^5.1.5:
+ajv@^5.0.0, ajv@^5.1.0, ajv@^5.1.1, ajv@^5.1.5:
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.2.3.tgz#c06f598778c44c6b161abafe3466b81ad1814ed2"
   dependencies:
@@ -140,7 +140,7 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
 
-argparse@^1.0.7:
+argparse@^1.0.7, argparse@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.9.tgz#73d83bc263f86e97f8cc4f6bae1b0e90a7d22c86"
   dependencies:
@@ -252,7 +252,7 @@ async@^1.4.2, async@^1.5.0, async@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@^2.0.1, async@^2.1.2, async@^2.4.0:
+async@^2.0.1, async@^2.1.2, async@^2.1.4, async@^2.4.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/async/-/async-2.5.0.tgz#843190fd6b7357a0b9e1c956edddd5ec8462b54d"
   dependencies:
@@ -1100,6 +1100,10 @@ bignumber.js@^2.1.4:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-2.4.0.tgz#838a992da9f9d737e0f4b2db0be62bb09dd0c5e8"
 
+bignumber.js@^4.0.2:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-4.1.0.tgz#db6f14067c140bd46624815a7916c92d9b6c24b1"
+
 "bignumber.js@git+https://github.com/debris/bignumber.js#master":
   version "2.0.7"
   resolved "git+https://github.com/debris/bignumber.js#c7a38de919ed75e6fb6ba38051986e294b328df9"
@@ -1151,6 +1155,10 @@ block-stream@*:
 bluebird@^3.1.1, bluebird@^3.4.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
+
+bn.js@4.11.6:
+  version "4.11.6"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.6.tgz#53344adb14617a13f6e8dd2ce28905d1c0ba3215"
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.11.3, bn.js@^4.4.0, bn.js@^4.8.0:
   version "4.11.8"
@@ -1923,6 +1931,10 @@ crypto-js@^3.1.4:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.8.tgz#715f070bf6014f2ae992a98b3929258b713f08d5"
 
+crypto-js@^3.1.9-1:
+  version "3.1.9-1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
+
 css-color-function@^1.3.0:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/css-color-function/-/css-color-function-1.3.3.tgz#8ed24c2c0205073339fafa004bc8c141fccb282e"
@@ -2691,6 +2703,14 @@ ethereumjs-wallet@^0.6.0:
     utf8 "^2.1.1"
     uuid "^2.0.1"
 
+ethjs-abi@0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/ethjs-abi/-/ethjs-abi-0.1.8.tgz#cd288583ed628cdfadaf8adefa3ba1dbcbca6c18"
+  dependencies:
+    bn.js "4.11.6"
+    js-sha3 "0.5.5"
+    number-to-bn "1.7.0"
+
 ethjs-util@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/ethjs-util/-/ethjs-util-0.1.4.tgz#1c8b6879257444ef4d3f3fbbac2ded12cd997d93"
@@ -2919,7 +2939,7 @@ find-up@^1.0.0, find-up@^1.1.2:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
 
-find-up@^2.0.0:
+find-up@^2.0.0, find-up@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
   dependencies:
@@ -3190,7 +3210,7 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@~4.1.2:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-graphlib@^2.0.0:
+graphlib@^2.0.0, graphlib@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/graphlib/-/graphlib-2.1.1.tgz#42352c52ba2f4d035cb566eb91f7395f76ebc951"
   dependencies:
@@ -3751,6 +3771,10 @@ jade@0.26.3:
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.3.2.tgz#a79a923666372b580f8e27f51845c6f7e8fbfbaf"
+
+js-sha3@0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.5.5.tgz#baf0c0e8c54ad5903447df96ade7a4a1bca79a4a"
 
 js-sha3@^0.3.1:
   version "0.3.1"
@@ -4463,7 +4487,7 @@ node-abi@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.1.1.tgz#c9cda256ec8aa99bcab2f6446db38af143338b2a"
 
-node-dir@^0.1.10, node-dir@^0.1.11:
+node-dir@^0.1.10, node-dir@^0.1.11, node-dir@^0.1.16:
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/node-dir/-/node-dir-0.1.17.tgz#5f5665d93351335caabef8f1c554516cf5f1e4e5"
   dependencies:
@@ -4558,6 +4582,12 @@ node-sass@^3.4.2:
     request "^2.61.0"
     sass-graph "^2.1.1"
 
+nodegit-promise@~4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/nodegit-promise/-/nodegit-promise-4.0.0.tgz#5722b184f2df7327161064a791d2e842c9167b34"
+  dependencies:
+    asap "~2.0.3"
+
 noop-logger@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/noop-logger/-/noop-logger-0.1.1.tgz#94a2b1633c4f1317553007d8966fd0e841b6a4c2"
@@ -4632,6 +4662,13 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
+number-to-bn@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/number-to-bn/-/number-to-bn-1.7.0.tgz#bb3623592f7e5f9e0030b1977bd41a0c53fe1ea0"
+  dependencies:
+    bn.js "4.11.6"
+    strip-hex-prefix "1.0.0"
+
 oauth-sign@~0.8.1, oauth-sign@~0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
@@ -4704,7 +4741,7 @@ optionator@^0.8.1:
     type-check "~0.3.2"
     wordwrap "~1.0.0"
 
-original-require@^1.0.1:
+original-require@^1.0.0, original-require@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/original-require/-/original-require-1.0.1.tgz#0f130471584cd33511c5ec38c8d59213f9ac5e20"
 
@@ -4895,6 +4932,10 @@ pbkdf2@^3.0.3, pbkdf2@^3.0.9:
     ripemd160 "^2.0.1"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+pegjs@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/pegjs/-/pegjs-0.10.0.tgz#cf8bafae6eddff4b5a7efb185269eaaf4610ddbd"
 
 pegjs@^0.9.0:
   version "0.9.0"
@@ -5428,6 +5469,13 @@ promise@^7.1.1:
   resolved "https://registry.yarnpkg.com/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
   dependencies:
     asap "~2.0.3"
+
+promisify-node@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/promisify-node/-/promisify-node-0.4.0.tgz#32803874ec411784e4786c339902a87a179a469c"
+  dependencies:
+    nodegit-promise "~4.0.0"
+    object-assign "^4.0.1"
 
 prop-types@^15.5.10, prop-types@^15.5.4:
   version "15.6.0"
@@ -6072,7 +6120,7 @@ semaphore@>=1.0.1, semaphore@^1.0.3:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/semaphore/-/semaphore-1.1.0.tgz#aaad8b86b20fe8e9b32b16dc2ee682a8cd26a8aa"
 
-"semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@~5.4.1:
+"semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@~5.4.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
 
@@ -6259,6 +6307,16 @@ solc@0.4.15:
     semver "^5.3.0"
     yargs "^4.7.1"
 
+solc@0.4.17, solc@^0.4.17, solc@^0.4.2:
+  version "0.4.17"
+  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.17.tgz#75f93da6bc190becb89f6663076ab943ff95cd2f"
+  dependencies:
+    fs-extra "^0.30.0"
+    memorystream "^0.3.1"
+    require-from-string "^1.1.0"
+    semver "^5.3.0"
+    yargs "^4.7.1"
+
 solc@0.4.8:
   version "0.4.8"
   resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.8.tgz#96abbee1266341ae97fb4bdc3abcc9bc1b5052ab"
@@ -6277,22 +6335,20 @@ solc@^0.3.6:
     require-from-string "^1.1.0"
     yargs "^4.7.1"
 
-solc@^0.4.17, solc@^0.4.2:
-  version "0.4.17"
-  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.17.tgz#75f93da6bc190becb89f6663076ab943ff95cd2f"
-  dependencies:
-    fs-extra "^0.30.0"
-    memorystream "^0.3.1"
-    require-from-string "^1.1.0"
-    semver "^5.3.0"
-    yargs "^4.7.1"
-
 solidity-parser@^0.1.0, solidity-parser@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/solidity-parser/-/solidity-parser-0.1.1.tgz#0fb3b665ed7041bef4575962ee426e7cd9d0a90a"
   dependencies:
     mocha "^2.4.5"
     pegjs "^0.9.0"
+    yargs "^4.6.0"
+
+solidity-parser@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/solidity-parser/-/solidity-parser-0.4.0.tgz#a343f13da73c91683279034680e80c491de340fa"
+  dependencies:
+    mocha "^2.4.5"
+    pegjs "^0.10.0"
     yargs "^4.6.0"
 
 sort-keys@^1.0.0:
@@ -6733,6 +6789,57 @@ trim@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/trim/-/trim-0.0.1.tgz#5858547f6b290757ee95cccc666fb50084c460dd"
 
+truffle-blockchain-utils@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/truffle-blockchain-utils/-/truffle-blockchain-utils-0.0.3.tgz#ae8a111ec124d96504f0e042c6f205c0b3817e29"
+  dependencies:
+    web3 "^0.20.1"
+
+truffle-compile@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/truffle-compile/-/truffle-compile-3.0.1.tgz#a6360386f4c31bac457dc525b2a0ae98a5f24b53"
+  dependencies:
+    async "^2.1.4"
+    colors "^1.1.2"
+    graphlib "^2.1.1"
+    solc "0.4.17"
+    truffle-config "^1.0.2"
+    truffle-contract-sources "^0.0.1"
+    truffle-error "^0.0.2"
+    truffle-expect "^0.0.3"
+
+truffle-config@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/truffle-config/-/truffle-config-1.0.2.tgz#442b54cf1d867e09b88201a7bd8429bcf4a22492"
+  dependencies:
+    find-up "^2.1.0"
+    lodash "^4.17.4"
+    original-require "^1.0.0"
+    truffle-error "^0.0.2"
+    truffle-provider "^0.0.2"
+
+truffle-contract-schema@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/truffle-contract-schema/-/truffle-contract-schema-1.0.0.tgz#42978c02ee6fe60cb602c70155d1eb050c06cfbd"
+  dependencies:
+    ajv "^5.1.1"
+    crypto-js "^3.1.9-1"
+
+truffle-contract-sources@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/truffle-contract-sources/-/truffle-contract-sources-0.0.1.tgz#29b6270366c86109cbb0eb307418fc6b2795d7fd"
+  dependencies:
+    node-dir "^0.1.16"
+
+truffle-contract@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/truffle-contract/-/truffle-contract-3.0.0.tgz#354813e69c575a202dca614354bc5e49754c2881"
+  dependencies:
+    ethjs-abi "0.1.8"
+    truffle-blockchain-utils "^0.0.3"
+    truffle-contract-schema "^1.0.0"
+    web3 "^0.20.1"
+
 truffle-default-builder@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/truffle-default-builder/-/truffle-default-builder-1.0.3.tgz#ab557f59a1c9c844bdb3c4ffbf9886404babf194"
@@ -6756,6 +6863,21 @@ truffle-default-builder@^1.0.3:
     temp "^0.8.3"
     uglify-js "^2.6.1"
     web3 "^0.16.0"
+
+truffle-error@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/truffle-error/-/truffle-error-0.0.2.tgz#01b189b78505566ae1689c239c7ca2dd121cfe4c"
+
+truffle-expect@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/truffle-expect/-/truffle-expect-0.0.3.tgz#9b75cef343bd596e7e5dbc878f5f1b2e318a944c"
+
+truffle-provider@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/truffle-provider/-/truffle-provider-0.0.2.tgz#52614dc04bdaf878f64392b387e6432f9c9bcc6f"
+  dependencies:
+    truffle-error "^0.0.2"
+    web3 "^0.19.1"
 
 truffle-solidity-loader@0.0.8:
   version "0.0.8"
@@ -7091,6 +7213,26 @@ web3@^0.17.0-alpha:
     bignumber.js "git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
     crypto-js "^3.1.4"
     utf8 "^2.1.1"
+    xmlhttprequest "*"
+
+web3@^0.19.1:
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/web3/-/web3-0.19.1.tgz#e763d5b1107c4bc24abd4f8cbee1ba3659e6eb31"
+  dependencies:
+    bignumber.js "^4.0.2"
+    crypto-js "^3.1.4"
+    utf8 "^2.1.1"
+    xhr2 "*"
+    xmlhttprequest "*"
+
+web3@^0.20.1:
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/web3/-/web3-0.20.2.tgz#c54dac5fc0e377399c04c1a6ecbb12e4513278d6"
+  dependencies:
+    bignumber.js "git+https://github.com/frozeman/bignumber.js-nolookahead.git"
+    crypto-js "^3.1.4"
+    utf8 "^2.1.1"
+    xhr2 "*"
     xmlhttprequest "*"
 
 webpack-dev-middleware@^1.4.0:

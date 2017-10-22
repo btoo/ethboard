@@ -1,12 +1,7 @@
-// pragma solidity ^0.4.11; // wtf m8 - Error: Source file requires different compiler version (current compiler is 0.4.8+commit.60cc1668.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
 pragma solidity ^0.4.8;
 
 import "./Ad.sol";
 
-
-
-// we may be able to modify this so that ALL ad related data is kept inside the ad contract
-// and the only data being stored here is the list of ad ADDRESSES
 contract Board {
 
   address owner;

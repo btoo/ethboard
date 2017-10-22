@@ -1,3 +1,6 @@
+// import Bo from './Bo.test'
+// console.log('the', Bo)
+
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
