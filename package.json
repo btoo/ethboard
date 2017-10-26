@@ -27,10 +27,9 @@
     "redux-thunk": "^2.2.0",
     "semver": "^5.4.1",
     "solc": "^0.4.17",
-    "solidity-parser": "^0.4.0",
     "truffle": "^3.4.11",
-    "truffle-compile": "^3.0.1",
     "truffle-contract": "^3.0.0",
+    "truffle-contract-loader": "^1.0.4",
     "web3": "0.20.1",
     "webpack": "^3.7.1"
   },
@@ -68,7 +67,6 @@
     "temp": "^0.8.3",
     "truffle-solidity-loader": "0.0.8",
     "url-loader": "0.5.7",
-    "web3": "^0.17.0-alpha",
     "webpack-dev-server": "1.14.1"
   }
 }

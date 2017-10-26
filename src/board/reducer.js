@@ -1,7 +1,5 @@
-import Bo from 'contracts/Bo.test'
-console.log('the', Bo())
-
 import Board from 'contracts/Board.sol'
+
 import {
   REQUEST_ADS,
   RECEIVE_ADS,
@@ -11,16 +9,11 @@ import {
   INVALIDATE_AD_DELIVERY
 } from './actions'
 
-const boardAddress = '0x4afad1cae9cf3872198530c78e1fc31d54d1c0e7'
+const boardAddress = '0x6181123dcc7d86e95c4e34aa369a5a6977bfe0f9'
     , boardContract = Board.at(boardAddress)
 
-// console.log(boardContract.AdPosted)
-// boardContract.allEvents().watch((error, result) => {
-//   console.log('evented')
-//   console.log(error, result)
-//   // if (!error)
-//   //     console.log(result);
-// })
+// console.log(boardContract.AdPosted) // works
+// boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
 export default (state = {
   boardAddress,

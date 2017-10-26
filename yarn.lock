@@ -6343,9 +6343,9 @@ solidity-parser@^0.1.0, solidity-parser@^0.1.1:
     pegjs "^0.9.0"
     yargs "^4.6.0"
 
-solidity-parser@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/solidity-parser/-/solidity-parser-0.4.0.tgz#a343f13da73c91683279034680e80c491de340fa"
+solidity-parser@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/solidity-parser/-/solidity-parser-0.3.0.tgz#cab04f8e406bdc1f3c16512eec6aa87a1072f8b9"
   dependencies:
     mocha "^2.4.5"
     pegjs "^0.10.0"
@@ -6817,6 +6817,15 @@ truffle-config@^1.0.2:
     original-require "^1.0.0"
     truffle-error "^0.0.2"
     truffle-provider "^0.0.2"
+
+truffle-contract-loader@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/truffle-contract-loader/-/truffle-contract-loader-1.0.4.tgz#1267aa78c12fcbdf66d670602921c6ce3da5098a"
+  dependencies:
+    loader-utils "^1.1.0"
+    semver "^5.3.0"
+    solidity-parser "^0.3.0"
+    truffle-compile "^3.0.1"
 
 truffle-contract-schema@^1.0.0:
   version "1.0.0"

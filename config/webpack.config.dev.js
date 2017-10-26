@@ -34,11 +34,6 @@ module.exports = {
     path.join(srcPath, '/')
   ],
   output: {
-    // library: 'lelib',
-    // libraryTarget: 'amd',
-    // libraryTarget: 'commonjs2',
-    // libraryTarget: 'commonjs',
-    // libraryExport: 'default',
     // Next line is not used in dev but WebpackDevServer crashes without it:
     path: buildPath,
     pathinfo: true,
@@ -56,19 +51,10 @@ module.exports = {
       contracts: path.resolve('contracts')
     }
   },
-  resolveLoader: {
-    alias: {
-      'truffle-contract-loader':  path.join(__dirname, '..', 'truffle-contract-loader.js')
-    }
-  },
   module: {
 
     // webpack 3
     rules: [
-      {
-        test: /\.test$/,
-        use: 'truffle-contract-loader'
-      },
       {
         test: /\.js$/,
         include: srcPath,
@@ -115,42 +101,27 @@ module.exports = {
           }
         }]
       },
+      // {
+      //   test: /\.sol$/,
+      //   loader: 'truffle-solidity-loader'
+      // },
       {
         test: /\.sol$/,
-        loader: 'truffle-solidity-loader'
+        use: {
+          loader: 'truffle-contract-loader',
+          options: {
+            nocomment: true,
+            contracts_directory: './contracts',
+            solc: { // solc compiler options - ex. found here: http://solidity.readthedocs.io/en/develop/using-the-compiler.html
+              optimizer: {
+                enabled: true,
+                runs: 500
+              }
+            }
+          }
+        }
       }
     ],
-
-    // loaders: [
-    //   {
-    //     test: /\.js$/,
-    //     include: srcPath,
-    //     loader: 'babel',
-    //     query: require('./babel.dev')
-    //   },
-    //   {
-    //     test: /\.css$/,
-    //     include: srcPath,
-    //     loader: 'style!css!postcss'
-    //   },
-    //   {
-    //     test: /\.json$/,
-    //     loader: 'json'
-    //   },
-    //   {
-    //     test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
-    //     loader: 'file'
-    //   },
-    //   {
-    //     test: /\.(mp4|webm)$/,
-    //     loader: 'url?limit=10000'
-    //   },
-    //   {
-    //     test: /\.sol/,
-    //     loader: 'truffle-solidity'
-    //   }
-    // ]
-
   },
   plugins: [
     new HtmlWebpackPlugin({

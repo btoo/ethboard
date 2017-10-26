@@ -9,12 +9,21 @@ import {
   INVALIDATE_ETH_ACCOUNTS
 } from './actions'
 
+const web3 = typeof window.web3 !== 'undefined' // Supports Metamask and Mist, and other wallets that provide 'web3'.
+  ? new Web3(window.web3.currentProvider) // Use the Mist/wallet provider. eslint-disable-next-line
+  : new Web3(new Web3.providers.HttpProvider(`http://${truffleConfig.rpc.host}:${truffleConfig.rpc.port}`))
+
+const accounts = web3.eth.accounts
+    , from = accounts.length > 1
+        ? prompt(`Which account would you like to use?\n${
+            accounts.map(acc => acc).join('\n')
+          }`, accounts[0])
+        : accounts[0]
+
 export default (state = {
-  web3: typeof web3 !== 'undefined' // Supports Metamask and Mist, and other wallets that provide 'web3'.
-    ? new Web3(web3.currentProvider) // Use the Mist/wallet provider. eslint-disable-next-line     
-    : new Web3(new Web3.providers.HttpProvider(`http://${truffleConfig.rpc.host}:${truffleConfig.rpc.port}`)),
+  web3,
   txObj: {
-    from: null, // <Address> for now just use the first account
+    from,
     gas: 4700000
   },
   accounts: [], // accounts hosted on this node
