@@ -29,7 +29,7 @@
     "solc": "^0.4.17",
     "truffle": "^3.4.11",
     "truffle-contract": "^3.0.0",
-    "truffle-contract-loader": "^1.0.4",
+    "truffle-contract-loader": "https://github.com/btoo/truffle-contract-loader.git",
     "web3": "0.20.1",
     "webpack": "^3.7.1"
   },

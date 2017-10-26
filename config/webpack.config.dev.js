@@ -110,14 +110,7 @@ module.exports = {
         use: {
           loader: 'truffle-contract-loader',
           options: {
-            nocomment: true,
-            contracts_directory: './contracts',
-            solc: { // solc compiler options - ex. found here: http://solidity.readthedocs.io/en/develop/using-the-compiler.html
-              optimizer: {
-                enabled: true,
-                runs: 500
-              }
-            }
+            contracts_directory: './contracts'
           }
         }
       }

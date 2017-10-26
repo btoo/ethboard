@@ -6818,9 +6818,9 @@ truffle-config@^1.0.2:
     truffle-error "^0.0.2"
     truffle-provider "^0.0.2"
 
-truffle-contract-loader@^1.0.4:
+"truffle-contract-loader@https://github.com/btoo/truffle-contract-loader.git":
   version "1.0.4"
-  resolved "https://registry.yarnpkg.com/truffle-contract-loader/-/truffle-contract-loader-1.0.4.tgz#1267aa78c12fcbdf66d670602921c6ce3da5098a"
+  resolved "https://github.com/btoo/truffle-contract-loader.git#baf9b536e7a595c79bcea649ae6206cc2ff0b6b6"
   dependencies:
     loader-utils "^1.1.0"
     semver "^5.3.0"
