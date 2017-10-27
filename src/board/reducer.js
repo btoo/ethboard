@@ -1,6 +1,9 @@
 import Board from 'contracts/Board.sol'
 
 import {
+  SEND_BOARD,
+  BOARD_DELIVERED,
+  INVALIDATE_BOARD_DELIVERY,
   REQUEST_ADS,
   RECEIVE_ADS,
   INVALIDATE_ADS,
@@ -9,15 +12,13 @@ import {
   INVALIDATE_AD_DELIVERY
 } from './actions'
 
-const boardAddress = '0x6181123dcc7d86e95c4e34aa369a5a6977bfe0f9'
-    , boardContract = Board.at(boardAddress)
-
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
+const boardAddress = ''
+
 export default (state = {
-  boardAddress,
-  boardContract,
+  boardContract: null,
   fetchingAdsCount: false,
   fetchAdsCountError: null,
   adsCount: null,
@@ -25,9 +26,32 @@ export default (state = {
   fetchAdsError: null,
   ads: []
 }, action) => {
+  
+  if(boardAddress) state.boardContract = Board.at(boardAddress)
+  else {
+    console.log('not defined')
+  }
+  
 
   switch (action.type){
     
+    case SEND_BOARD: return {
+      ...state,
+      creatingBoard: true
+    }
+
+    case BOARD_DELIVERED: return {
+      ...state,
+      creatingBoard: false,
+      boardContract: action.boardContract
+    }
+
+    case INVALIDATE_BOARD_DELIVERY: return {
+      ...state,
+      creatingBoard: false,
+      createBoardError: action.error
+    }
+
     case REQUEST_ADS: return {
       ...state,
       fetchingAds: true

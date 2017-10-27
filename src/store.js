@@ -6,7 +6,7 @@ import promise from 'redux-promise-middleware'
 import app from 'app/reducer'
 import board from 'board/reducer'
 
-const reducers = combineReducers({
+export const reducers = combineReducers({
   app,
   board
 })

@@ -3,6 +3,7 @@ import AdContainer from 'ad'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
+  createBoard,
   fetchAdsIfNeeded as fetchAds,
   postAd
 } from './actions'
@@ -13,7 +14,6 @@ import './index.css'
 const mapStateToProps = store => { // set the props for this component
   return {
     web3: store.app.web3,
-    boardAddress: store.board.boardAddress,
     boardContract: store.board.boardContract,
     txObj: store.app.txObj,
     ads: store.board.ads
@@ -21,6 +21,7 @@ const mapStateToProps = store => { // set the props for this component
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  createBoard,
   fetchAds,
   postAd
 }, dispatch)
@@ -29,12 +30,17 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default class BoardContainer extends Component {
   
   async componentWillMount(){
-    await this.props.fetchAds(this.props.boardContract)
+    const fetchResult = await this.props.fetchAds(this.props.boardContract)
+    // console.log(fetchResult)
   }
 
   render() { return (
     <div>
 
+      <button onClick={this.props.createBoard(this.props.web3, this.props.txObj)}>
+        click here to create a new board and then check your console to view its address
+      </button>
+      <br/>
       <button onClick={_ => {
         const postedAdIndex = Object.keys(this.props.ads).length
         this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, postedAdIndex, {
@@ -46,7 +52,8 @@ export default class BoardContainer extends Component {
       }}>
         click this to post a new ad
       </button>
-
+      <br/>
+      
       {Object.values(this.props.ads).map((ad, i) => <AdContainer key={i} {...ad} />)}
 
     </div>
