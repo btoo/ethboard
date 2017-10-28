@@ -15,7 +15,7 @@ import {
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
-const boardAddress = '0xd532faa39f92f170f78ce42a5dcc25633a9b03be'
+const boardAddress = ''
 
 export default (state = {
   boardAddress,
@@ -38,7 +38,8 @@ export default (state = {
     case BOARD_DELIVERED: return {
       ...state,
       creatingBoard: false,
-      boardContract: action.boardContract
+      boardContract: action.boardContract,
+      boardAddress: action.boardContract.address
     }
 
     case INVALIDATE_BOARD_DELIVERY: return {

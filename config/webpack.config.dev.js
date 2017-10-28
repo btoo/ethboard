@@ -4,7 +4,7 @@ const path                     = require('path')
     , HtmlWebpackPlugin        = require('html-webpack-plugin')
     , ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
     , precss                   = require('precss')
-    , DashboardPlugin = require('webpack-dashboard/plugin')
+    , DashboardPlugin          = require('webpack-dashboard/plugin')
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.

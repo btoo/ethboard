@@ -11,9 +11,9 @@ contract Board {
   Ad[] ads;
   // mapping(address => Ad) adSpaces;
 
-  function Board(bytes32 initAdTitle, bytes32 initAdImg, bytes32 initAdHref, uint256 contribution) {
+  function Board(bytes32 initAdTitle, bytes32 initAdImg, bytes32 initAdHref) {
     owner = msg.sender;
-    ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, contribution));
+    ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, msg.value));
   }
 
   // event AdPosted(

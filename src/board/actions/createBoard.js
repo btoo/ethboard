@@ -4,9 +4,9 @@ const sendBoard = _ => { return {
 }}
 
 export const BOARD_DELIVERED = 'BOARD_DELIVERED'
-const boardDelivered = board => { return {
+const boardDelivered = boardContract => { return {
   type: BOARD_DELIVERED,
-  board
+  boardContract
 }}
 
 export const INVALIDATE_BOARD_DELIVERY = 'INVALIDATE_BOARD_DELIVERY'

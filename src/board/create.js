@@ -19,9 +19,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default class CreateBoardContainer extends Component {
   
   render() { return (
-    <button onClick={this.props.createBoard(this.props.web3, this.props.txObj)}>
-      click here to create a new board and then check your console to view its address
-    </button>
+    <div className="board">
+      <button onClick={this.props.createBoard(this.props.web3, this.props.txObj)}>
+        click here to create a new board and then check your console to view its address
+      </button>
+    </div>
   )}
   
 }
