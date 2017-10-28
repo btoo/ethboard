@@ -15,10 +15,11 @@ import {
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
-const boardAddress = ''
+const boardAddress = '0xd532faa39f92f170f78ce42a5dcc25633a9b03be'
 
 export default (state = {
-  boardContract: null,
+  boardAddress,
+  boardContract: boardAddress ? Board.at(boardAddress) : null,
   fetchingAdsCount: false,
   fetchAdsCountError: null,
   adsCount: null,

@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 
 // } from './actions'
 
-import BoardContainer from 'board'
-import CreateBoardContainer from 'board/create'
+import Nav from './nav'
+import BoardContainer, { CreateBoardContainer } from 'board'
 import './index.css'
 
 const mapStateToProps = store => { return {
@@ -23,16 +23,13 @@ const mapDispatchToProps = dispatch => { return bindActionCreators({
 export default class App extends Component {
   
   render() { return (
-    <div>
-      header
-      <br/>
+    <div className="app">
+      <Nav />
       {
         this.props.boardAddress
           ? <BoardContainer />
           : <CreateBoardContainer />
       }
-      <br/>
-      footer
     </div>
   )}
 }

@@ -29,11 +29,11 @@ export default class BoardContainer extends Component {
   
   async componentWillMount(){
     const fetchResult = await this.props.fetchAds(this.props.boardContract)
-    console.log(fetchResult)
+    // console.log(fetchResult)
   }
 
   render() { return (
-    <div>
+    <div className="board">
       <button onClick={_ => {
         const postedAdIndex = Object.keys(this.props.ads).length
         this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, postedAdIndex, {
@@ -50,3 +50,5 @@ export default class BoardContainer extends Component {
     </div>
   )}
 }
+
+export { default as CreateBoardContainer } from './create'

@@ -1,3 +1,16 @@
+.board {
+  // grid-area: board;
+  grid-column-start: board-start;
+  grid-column-end: board-end;
+  grid-row-start: board-start;
+  grid-row-end: board-end;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 article {
   display: flex;
   > * {

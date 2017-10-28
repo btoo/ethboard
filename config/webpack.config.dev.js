@@ -1,28 +1,25 @@
-var path              = require('path')
-var autoprefixer      = require('autoprefixer')
-var webpack           = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var precss            = require('precss')
+const path                     = require('path')
+    , autoprefixer             = require('autoprefixer')
+    , webpack                  = require('webpack')
+    , HtmlWebpackPlugin        = require('html-webpack-plugin')
+    , ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+    , precss                   = require('precss')
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
-var isInNodeModules = path.basename(path.resolve(path.join(__dirname, '..', '..'))) === 'node_modules'
-var relativePath    = isInNodeModules ? '../../..' : '..'
-var isInDebugMode   = process.argv.some(arg =>
-  arg.indexOf('--debug-template') > -1
-)
+const isInNodeModules = path.basename(path.resolve(path.join(__dirname, '..', '..'))) === 'node_modules'
+let relativePath      = isInNodeModules ? '../../..' : '..'
+const isInDebugMode   = process.argv.some(arg => arg.indexOf('--debug-template') > -1)
 
-if (isInDebugMode) {
-  relativePath = '../template'
-}
+if(isInDebugMode) relativePath = '../template'
 
-var srcPath         = path.resolve(__dirname, relativePath, 'src')
-var nodeModulesPath = path.join(__dirname, '..', 'node_modules')
-var indexHtmlPath   = path.resolve(__dirname, relativePath, 'index.html')
-var faviconPath     = path.resolve(__dirname, relativePath, 'favicon.ico')
-var buildPath       = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build')
+const srcPath         = path.resolve(__dirname, relativePath, 'src')
+const nodeModulesPath = path.join(__dirname, '..', 'node_modules')
+const indexHtmlPath   = path.resolve(__dirname, relativePath, 'index.html')
+const faviconPath     = path.resolve(__dirname, relativePath, 'favicon.ico')
+const buildPath       = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build')
 
-var provided = {
+const provided = {
   'Web3': 'web3'
 }
 
@@ -82,7 +79,7 @@ module.exports = {
           'style-loader', // Adds CSS to the DOM by injecting a <style> tag
           'css-loader', //  interprets @import and url() like import/require() and will resolve them.
           { loader: 'postcss-loader', options: { plugins: [precss, autoprefixer] } }
-        ]
+        ],
       },
       {
         test: /\.json$/,
@@ -122,6 +119,7 @@ module.exports = {
       template: indexHtmlPath,
       favicon: faviconPath
     }),
+    new ExtractTextWebpackPlugin({ filename: 'css/style.css', disable: false, allChunks: true }), // this means dist/css/style.css    
     new webpack.ProvidePlugin(provided),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"development"'

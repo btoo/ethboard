@@ -1,28 +1,26 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800);
 
-html,
-body {
-  height: 100%;
+html, body, #root, .app {
   width: 100%;
-}
-
-body {
+  height: 100vh;
   margin: 0;
   padding: 0;
+}
+
+.app {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica";
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: [board-start] 1fr [nav-start] 222px [board-end];
+  grid-template-rows: [board-start] 222px [nav-end] 1fr [baord-end];
+  // grid-template-areas:
+  //   "board nav"
+  //   "board board";
 }
 
-
-ul {
-  list-style: none;
-}
-
-
-table,
-thead {
-  width: 100%;
+.nav {
+  // grid-area: nav;
+  grid-column-start: nav-start;
+  grid-column-end: board-end;
+  grid-row-start: board-start;
+  grid-row-end: nav-end;
 }
