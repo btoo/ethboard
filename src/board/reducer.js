@@ -27,12 +27,6 @@ export default (state = {
   ads: []
 }, action) => {
   
-  if(boardAddress) state.boardContract = Board.at(boardAddress)
-  else {
-    console.log('not defined')
-  }
-  
-
   switch (action.type){
     
     case SEND_BOARD: return {

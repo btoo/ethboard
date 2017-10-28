@@ -1,5 +1,4 @@
-pragma solidity ^0.4.8;
-// pragma solidity ^0.4.8;
+pragma solidity ^0.4.15;
 
 // import "./Contribution.sol";
 
