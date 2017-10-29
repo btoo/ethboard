@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import {
-  scaleLinear, max, select
+  scaleLinear,
+  max,
+  select,
+  forceSimulation,
+  forceX, forceY, forceCollide
 } from 'd3'
 
 export default class Bubbles extends Component {
@@ -28,14 +32,34 @@ export default class Bubbles extends Component {
       .exit()
       .remove()
     
-    select(node)
+    const bubbles = select(node)
       .selectAll('.ad')
       .data(this.props.ads)
       .attr('fill', 'turquoise')
       .attr('cx', 100)
       .attr('cy', 300)
-      .attr('r', d => d.total)
+      // .attr('r', 88)
+      .attr('r', d => d.total / 10)
     
+    // for every tick of the d3 clock, run this function
+    const ticked = _ => {
+      console.log('ticked')
+      bubbles
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+    }
+
+    // the simulation is a collection of forces about where we want our circles to go and how we want our circles to interact
+    forceSimulation()
+      .force('x', forceX(this.props.width / 2).strength(0.05)) // bring to center on x-axis
+      .force('y', forceY(this.props.height / 2).strength(0.05)) // bring to center on y-axis
+      .force('collide', forceCollide(d => d.total / 10))
+      .nodes(this.props.ads)
+      .on('tick', ticked)
+
+    
+      
+
     // ==========================================
     
     // const dataMax = max(this.props.data)
@@ -69,8 +93,10 @@ export default class Bubbles extends Component {
     return (
       <svg
         ref={node => this.node = node}
-        height={'100vh'}
-        width={'100%'}
+        // height={'100vh'}
+        // width={'100%'}
+        height={this.props.height}
+        width={this.props.width}
       />
     )
   }

@@ -51,6 +51,8 @@ export default class BoardContainer extends Component {
         ads={this.props.ads}
         data={[5,10,1,3]}
         size={[500,500]}
+        height={500}
+        width={500}
       />
       {/* {this.props.ads.map((ad, i) => <AdContainer key={i} {...ad} />)} */}
     </div>
