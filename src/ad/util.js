@@ -11,6 +11,6 @@ export const constructAdFromIndex = (web3, boardContract) => async adIndex => {
       , img = toAscii(imgHex)
       , href = toAscii(hrefHex)
       , total = totalBigNumber.toNumber()
-
+  
   return { address, contract, adIndex, title, img, href, total }
 }

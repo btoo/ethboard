@@ -15,14 +15,13 @@ import {
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
-const boardAddress = '0xcf6caee5bf4cc4c254598d902fdd6e04ca38859d'
+const boardAddress = '0xf7aa24429d2f5d10fb013de455fef5bd8c022040'
 
 export default (state = {
   boardAddress,
   boardContract: boardAddress ? Board.at(boardAddress) : null,
   fetchingAdsCount: false,
   fetchAdsCountError: null,
-  adsCount: null,
   fetchingAds: false,
   fetchAdsError: null,
   ads: []
@@ -70,14 +69,20 @@ export default (state = {
       postingAd: true
     }
 
-    case AD_DELIVERED: return {
-      ...state,
-      postingAd: false,
-      ads: {
-        ...state.ads,
-        [action.postedAd.address]: action.postedAd
+    case AD_DELIVERED:
+
+      const postedAd = action.postedAd
+      const updatedAds = Object.assign([],
+        state.ads,
+        {[postedAd.address]: postedAd}
+      )
+      updatedAds.push(postedAd)
+
+      return {
+        ...state,
+        postingAd: false,
+        ads: updatedAds
       }
-    }
 
     case INVALIDATE_AD_DELIVERY: return {
       ...state,

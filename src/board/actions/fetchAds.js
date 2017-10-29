@@ -43,7 +43,7 @@ export const fetchAdsIfNeeded = boardContract => async (dispatch, getState) => {
         acc[ad.address] = ad
         return acc
       }, ads)
-
+      
       return dispatch(receiveAds(adsWithAddressKeys))
     } catch(error) {
       return dispatch(invalidateAds(error))

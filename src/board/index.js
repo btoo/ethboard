@@ -24,7 +24,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   postAd
 }, dispatch)
 
-// import createBubbleChart from './bubbles-old'
 import Bubbles from './bubbles'
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -35,18 +34,10 @@ export default class BoardContainer extends Component {
     // console.log(fetchResult)
   }
   
-  // componentDidMount(){ this.createBubbleChart() }
-  // componentDidUpdate(){ this.createBubbleChart() }
-
-  // createBubbleChart(){
-  //   console.log('creating')
-  //   createBubbleChart(this.node, this.props.ads)
-  // }
-
   render() { return (
-    <div className="board" ref={node => this.node = node}>
-      <button onClick={_ => {
-        const postedAdIndex = Object.keys(this.props.ads).length
+    <div className="board">
+      <button className="board--post-ad" onClick={_ => {
+        const postedAdIndex = this.props.ads.length
         this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, postedAdIndex, {
           title: `title #${postedAdIndex}`,
           img: `img #${postedAdIndex}`,
@@ -56,7 +47,6 @@ export default class BoardContainer extends Component {
       }}>
         click this to post a new ad
       </button>
-      <br/>
       <Bubbles
         ads={this.props.ads}
         data={[5,10,1,3]}
