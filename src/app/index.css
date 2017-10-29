@@ -23,4 +23,5 @@ html, body, #root, .app {
   grid-column-end: board-end;
   grid-row-start: board-start;
   grid-row-end: nav-end;
+  overflow: hidden;
 }

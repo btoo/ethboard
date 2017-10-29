@@ -6,7 +6,7 @@ import {
   fetchAdsIfNeeded as fetchAds,
   postAd
 } from './actions'
-
+import * as d3 from 'd3'
 import Board from 'contracts/Board.sol'
 import './index.css'
 
@@ -24,6 +24,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   postAd
 }, dispatch)
 
+// import createBubbleChart from './bubbles-old'
+import Bubbles from './bubbles'
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class BoardContainer extends Component {
   
@@ -31,9 +34,17 @@ export default class BoardContainer extends Component {
     const fetchResult = await this.props.fetchAds(this.props.boardContract)
     // console.log(fetchResult)
   }
+  
+  // componentDidMount(){ this.createBubbleChart() }
+  // componentDidUpdate(){ this.createBubbleChart() }
+
+  // createBubbleChart(){
+  //   console.log('creating')
+  //   createBubbleChart(this.node, this.props.ads)
+  // }
 
   render() { return (
-    <div className="board">
+    <div className="board" ref={node => this.node = node}>
       <button onClick={_ => {
         const postedAdIndex = Object.keys(this.props.ads).length
         this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, postedAdIndex, {
@@ -46,7 +57,12 @@ export default class BoardContainer extends Component {
         click this to post a new ad
       </button>
       <br/>
-      {Object.values(this.props.ads).map((ad, i) => <AdContainer key={i} {...ad} />)}
+      <Bubbles
+        ads={this.props.ads}
+        data={[5,10,1,3]}
+        size={[500,500]}
+      />
+      {/* {this.props.ads.map((ad, i) => <AdContainer key={i} {...ad} />)} */}
     </div>
   )}
 }

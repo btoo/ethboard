@@ -24,7 +24,7 @@ export default class App extends Component {
   
   render() { return (
     <div className="app">
-      <Nav />
+      <Nav boardAddress={this.props.boardAddress} />
       {
         this.props.boardAddress
           ? <BoardContainer />

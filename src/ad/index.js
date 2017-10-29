@@ -26,7 +26,7 @@ export default class AdContainer extends Component {
   render() {
     const {href, img, title, total, address} = this.props
     return (
-      <a href={href}>
+      <a href={href} className="ad">
         <article>
           <img src={img} alt={title}/>
           | <h2>{title}</h2>

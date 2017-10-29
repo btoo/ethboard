@@ -15,7 +15,7 @@ import {
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
-const boardAddress = ''
+const boardAddress = '0xcf6caee5bf4cc4c254598d902fdd6e04ca38859d'
 
 export default (state = {
   boardAddress,
