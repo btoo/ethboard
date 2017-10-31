@@ -4,9 +4,7 @@ import Board from 'contracts/Board.sol'
 import Ad from 'contracts/Ad.sol'
 
 import {
-  SEND_BOARD,
-  BOARD_DELIVERED,
-  INVALIDATE_BOARD_DELIVERY
+  GET_DIMENSIONS
 } from './actions'
 
 const web3 = typeof window.web3 !== 'undefined' // Supports Metamask and Mist, and other wallets that provide 'web3'.
@@ -29,13 +27,20 @@ export default (state = {
     from,
     // gas: 4700000
     gas: 4476768
-  }
+  },
+  height: window.innerHeight,
+  width: window.innerWidth
 }, action) => {
 
-  // switch(action.type){
+  switch(action.type){
 
-  // }
+    case GET_DIMENSIONS: return {
+      ...state,
+      height: action.height,
+      width: action.width
+    }
 
-  return state
-  
+    default: return state
+  }
+
 }

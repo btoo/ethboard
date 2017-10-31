@@ -15,7 +15,7 @@ import {
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
-const boardAddress = '0xf7aa24429d2f5d10fb013de455fef5bd8c022040'
+const boardAddress = "0xca727dd09b8794733644c2b9192428cc4e936412";
 
 export default (state = {
   boardAddress,
@@ -24,7 +24,9 @@ export default (state = {
   fetchAdsCountError: null,
   fetchingAds: false,
   fetchAdsError: null,
-  ads: []
+  ads: [],
+  height: window.innerHeight,
+  width: window.innerWidth
 }, action) => {
   
   switch (action.type){

@@ -15,7 +15,9 @@ const mapStateToProps = store => { // set the props for this component
     web3: store.app.web3,
     boardContract: store.board.boardContract,
     txObj: store.app.txObj,
-    ads: store.board.ads
+    ads: store.board.ads,
+    height: store.app.height,
+    width: store.app.width
   }
 }
 
@@ -35,7 +37,7 @@ export default class BoardContainer extends Component {
   }
   
   render() { return (
-    <div className="board">
+    <div className="board" ref={node => this.node = node}>
       <button className="board--post-ad" onClick={_ => {
         const postedAdIndex = this.props.ads.length
         this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, postedAdIndex, {
@@ -49,10 +51,8 @@ export default class BoardContainer extends Component {
       </button>
       <Bubbles
         ads={this.props.ads}
-        data={[5,10,1,3]}
-        size={[500,500]}
-        height={500}
-        width={500}
+        height={this.props.height}
+        width={this.props.width}
       />
       {/* {this.props.ads.map((ad, i) => <AdContainer key={i} {...ad} />)} */}
     </div>
