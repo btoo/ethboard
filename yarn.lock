@@ -6791,9 +6791,9 @@ solc@0.4.15:
     semver "^5.3.0"
     yargs "^4.7.1"
 
-solc@0.4.17, solc@^0.4.17, solc@^0.4.2:
-  version "0.4.17"
-  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.17.tgz#75f93da6bc190becb89f6663076ab943ff95cd2f"
+solc@0.4.18:
+  version "0.4.18"
+  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.18.tgz#83ac6d871dd16a9710e67dbb76dad7f614100702"
   dependencies:
     fs-extra "^0.30.0"
     memorystream "^0.3.1"
@@ -6817,6 +6817,16 @@ solc@^0.3.6:
   dependencies:
     memorystream "^0.3.1"
     require-from-string "^1.1.0"
+    yargs "^4.7.1"
+
+solc@^0.4.17, solc@^0.4.2:
+  version "0.4.17"
+  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.17.tgz#75f93da6bc190becb89f6663076ab943ff95cd2f"
+  dependencies:
+    fs-extra "^0.30.0"
+    memorystream "^0.3.1"
+    require-from-string "^1.1.0"
+    semver "^5.3.0"
     yargs "^4.7.1"
 
 solidity-parser@^0.1.0, solidity-parser@^0.1.1:
@@ -7287,22 +7297,23 @@ truffle-blockchain-utils@^0.0.3:
   dependencies:
     web3 "^0.20.1"
 
-truffle-compile@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/truffle-compile/-/truffle-compile-3.0.1.tgz#a6360386f4c31bac457dc525b2a0ae98a5f24b53"
+truffle-compile@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/truffle-compile/-/truffle-compile-3.0.2.tgz#d1933f20d1119c197324497b99513d19bbf79c3e"
   dependencies:
     async "^2.1.4"
     colors "^1.1.2"
+    debug "^3.1.0"
     graphlib "^2.1.1"
-    solc "0.4.17"
+    solc "0.4.18"
     truffle-config "^1.0.2"
     truffle-contract-sources "^0.0.1"
     truffle-error "^0.0.2"
     truffle-expect "^0.0.3"
 
 truffle-config@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/truffle-config/-/truffle-config-1.0.2.tgz#442b54cf1d867e09b88201a7bd8429bcf4a22492"
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/truffle-config/-/truffle-config-1.0.3.tgz#6738cb9e22a5a198d906d2723c8673503f9f0cc0"
   dependencies:
     find-up "^2.1.0"
     lodash "^4.17.4"
@@ -7311,18 +7322,18 @@ truffle-config@^1.0.2:
     truffle-provider "^0.0.2"
 
 truffle-contract-loader@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/truffle-contract-loader/-/truffle-contract-loader-1.0.6.tgz#cb59a763b693936554f11cd812a4660f2f18dbc8"
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/truffle-contract-loader/-/truffle-contract-loader-1.0.7.tgz#b5cb0ad9cf1c514c476cde0d88e7c77d53dc04aa"
   dependencies:
     loader-utils "^1.1.0"
     semver "^5.3.0"
     solidity-parser "^0.3.0"
-    truffle-compile "^3.0.1"
+    truffle-compile "^3.0.2"
     truffle-contract "^3.0.0"
 
 truffle-contract-schema@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/truffle-contract-schema/-/truffle-contract-schema-1.0.0.tgz#42978c02ee6fe60cb602c70155d1eb050c06cfbd"
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/truffle-contract-schema/-/truffle-contract-schema-1.0.1.tgz#08ceaefe71062a8ac9ab881a77a30fda3744176e"
   dependencies:
     ajv "^5.1.1"
     crypto-js "^3.1.9-1"
@@ -7334,8 +7345,8 @@ truffle-contract-sources@^0.0.1:
     node-dir "^0.1.16"
 
 truffle-contract@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/truffle-contract/-/truffle-contract-3.0.0.tgz#354813e69c575a202dca614354bc5e49754c2881"
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/truffle-contract/-/truffle-contract-3.0.1.tgz#7fd0395571b0c011afb809cbd6441d553e793201"
   dependencies:
     ethjs-abi "0.1.8"
     truffle-blockchain-utils "^0.0.3"

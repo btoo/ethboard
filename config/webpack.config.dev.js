@@ -86,12 +86,12 @@ module.exports = {
         test: /\.json$/,
         loader: 'json-loader'
       },
+      // {
+      //   test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
+      //   loader: 'file-loader'
+      // },
       {
-        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
-        loader: 'file-loader'
-      },
-      {
-        test: /\.(mp4|webm)$/,
+        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$/,
         use: [{
           loader: 'url-loader',
           options: {

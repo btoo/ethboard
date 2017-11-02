@@ -8,6 +8,8 @@ import {
   scaleSqrt
 } from 'd3'
 
+import testImg from 'board/img/test-1.png'
+
 export default class Bubbles extends Component {
 
   constructor(){
@@ -16,28 +18,29 @@ export default class Bubbles extends Component {
   }
 
   createBubbles() {
-    const node = this.node
+    const bubblesGroup = this.bubblesGroup;
     
-    select(node)
-      .selectAll('.ad')
+    bubblesGroup
+      .selectAll(".ad")
       .data(this.props.ads)
       .enter()
-      .append('circle')
-      .attr('class', 'ad')
+      .append("circle")
+      .attr("class", "ad");
     
-    select(node)
-      .selectAll('.ad')
+    bubblesGroup
+      .selectAll(".ad")
       .data(this.props.ads)
       .exit()
-      .remove()
+      .remove();
     
-    const bubbles = select(node)
-      .selectAll('.ad')
+    const bubbles = bubblesGroup
+      .selectAll(".ad")
       .data(this.props.ads)
-      .attr('fill', 'turquoise')
-      .attr('cx', this.props.width / 2)
-      .attr('cy', this.props.height / 2)
-      .attr('r', d => d.total / 10)
+      .attr("fill", "turquoise")
+      .attr("cx", this.props.width / 2)
+      .attr("cy", this.props.height / 2)
+      .attr("r", d => d.total / 10)
+      .attr('fill', d => `url(#ad-${d.address})`)
       
     // scale radii to fit screen dimensions
     // const radiusScale = scaleSqrt().domain()
@@ -60,15 +63,28 @@ export default class Bubbles extends Component {
   componentDidUpdate(){ this.createBubbles() }
 
   render(){
-    return (
-      <svg
-        ref={node => this.node = node}
-        // height={'100vh'}
-        // width={'100%'}
-        height={this.props.height}
-        width={this.props.width}
-      />
-    )
+    return <svg className="bubbles" height={this.props.height} width={this.props.width}>
+        <defs>
+          {this.props.ads.map((ad, i) => (
+            <pattern
+              key={i}
+              id={"ad-" + ad.address}
+              height="100%"
+              width="100%"
+              patternContentUnits="objectBoundingBox"
+            >
+              <image
+                height="1"
+                width="1"
+                preserveAspectRatio="none"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                xlinkHref={testImg}
+              />
+            </pattern>
+          ))}
+        </defs>
+        <g className="bubbles--group" ref={node => (this.bubblesGroup = select(node))} />
+      </svg>;
   }
 
 }
