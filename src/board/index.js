@@ -6,9 +6,9 @@ import {
   fetchAdsIfNeeded as fetchAds,
   postAd
 } from './actions'
-import * as d3 from 'd3'
 import Board from 'contracts/Board.sol'
 import './index.css'
+import Bubbles from "bubbles"
 
 const mapStateToProps = store => { // set the props for this component
   return {
@@ -25,8 +25,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchAds,
   postAd
 }, dispatch)
-
-import Bubbles from './bubbles'
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class BoardContainer extends Component {

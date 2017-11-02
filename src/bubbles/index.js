@@ -3,12 +3,12 @@ import {
   scaleLinear,
   max,
   select,
-  forceSimulation,
+  forceSimulation, drag,
   forceX, forceY, forceCollide,
-  scaleSqrt
+  scaleSqrt, event
 } from 'd3'
 
-import testImg from 'board/img/test-1.png'
+import testImg from './img/test-1.png'
 
 export default class Bubbles extends Component {
 
@@ -18,35 +18,10 @@ export default class Bubbles extends Component {
   }
 
   createBubbles() {
-    const bubblesGroup = this.bubblesGroup;
+    const bubblesGroup = this.bubblesGroup
     
-    bubblesGroup
-      .selectAll(".ad")
-      .data(this.props.ads)
-      .enter()
-      .append("circle")
-      .attr("class", "ad");
-    
-    bubblesGroup
-      .selectAll(".ad")
-      .data(this.props.ads)
-      .exit()
-      .remove();
-    
-    const bubbles = bubblesGroup
-      .selectAll(".ad")
-      .data(this.props.ads)
-      .attr("fill", "turquoise")
-      .attr("cx", this.props.width / 2)
-      .attr("cy", this.props.height / 2)
-      .attr("r", d => d.total / 10)
-      .attr('fill', d => `url(#ad-${d.address})`)
-      
-    // scale radii to fit screen dimensions
-    // const radiusScale = scaleSqrt().domain()
-
     // the simulation is a collection of forces about where we want our circles to go and how we want our circles to interact
-    forceSimulation()
+    const simulation = forceSimulation()
       .force('x', forceX(this.props.width / 2).strength(0.05)) // bring to center on x-axis
       .force('y', forceY(this.props.height / 2).strength(0.05)) // bring to center on y-axis
       .force('collide', forceCollide(d => d.total / 10))
@@ -57,6 +32,51 @@ export default class Bubbles extends Component {
           .attr('cy', d => d.y)
       })
 
+    bubblesGroup
+      .selectAll(".ad")
+      .data(this.props.ads)
+      .enter()
+      .append('circle')
+      .attr('class', 'ad')
+      .call(drag()
+        .on('start', d => {
+           if (!event.active) simulation.alphaTarget(0.3).restart()
+           d.fx = d.x
+           d.fy = d.y
+        })
+        .on('drag', d => {
+           d.fx = event.x
+           d.fy = event.y
+        })
+        .on('end', d => {
+           if (!event.active) simulation.alphaTarget(0)
+           d.fx = null
+           d.fy = null
+        })
+      )
+    
+    bubblesGroup
+      .selectAll('.ad')
+      .data(this.props.ads)
+      .exit()
+      .remove();
+    
+    const bubbles = bubblesGroup
+      .selectAll('.ad')
+      .data(this.props.ads)
+      .attr('fill', 'turquoise')
+      .attr('cx', this.props.width / 2)
+      .attr('cy', this.props.height / 2)
+      .attr('r', d => d.total / 10)
+      .attr('fill', d => `url(#ad-${d.address})`)
+      
+    // scale radii to fit screen dimensions
+    // const radiusScale = scaleSqrt().domain()
+
+  }
+
+  componentWillMount(){
+    
   }
 
   componentDidMount(){ this.createBubbles() }
