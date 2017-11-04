@@ -21,10 +21,13 @@ const accounts = web3.eth.accounts // accounts hosted on this node
           }`, accounts[0])
         : accounts[0]
 
+export const boardAddress = '0xc8a68c81eb4578d516c1a88a09a1ffda471e15ba'
+
 export default (state = {
   web3,
   txObj: {
     from,
+    to: boardAddress || undefined,
     // gas: 4700000
     gas: 4476768
   },

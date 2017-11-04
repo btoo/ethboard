@@ -1,4 +1,4 @@
-pragma solidity ^0.4.15;
+pragma solidity ^0.4.17;
 
 // import "./Contribution.sol";
 
@@ -7,13 +7,13 @@ contract Ad {
   address owner; // owner of billboard
 
   address publisher; // make private?
-  bytes32 title;
-  bytes32 img;
-  bytes32 href;
+  string title;
+  string img;
+  string href;
   uint256 total;
   // Contribution[] contributions;
 
-  function Ad(address newAdOwner, bytes32 newAdTitle, bytes32 newAdImg, bytes32 newAdHref, uint256 contribution) {
+  function Ad(address newAdOwner, string newAdTitle, string newAdImg, string newAdHref, uint256 contribution) {
     owner = newAdOwner;
     publisher = tx.origin;
     title = newAdTitle;
@@ -22,7 +22,7 @@ contract Ad {
     total = contribution;
   }
 
-  function getState() constant returns (bytes32 adTitle, bytes32 adImg, bytes32 adHref, uint256 adTotal) {
+  function getState() constant returns (string adTitle, string adImg, string adHref, uint256 adTotal) {
     adTitle = title;
     adImg = img;
     adHref = href;

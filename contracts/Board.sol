@@ -11,7 +11,7 @@ contract Board {
   Ad[] ads;
   // mapping(address => Ad) adSpaces;
 
-  function Board(bytes32 initAdTitle, bytes32 initAdImg, bytes32 initAdHref) {
+  function Board(string initAdTitle, string initAdImg, string initAdHref) {
     owner = msg.sender;
     ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, msg.value));
   }
@@ -24,7 +24,7 @@ contract Board {
   //   bytes32 postedAdHref
   // );
 
-  function postAd(bytes32 postedAdTitle, bytes32 postedAdImg, bytes32 postedAdHref) payable returns (address) {
+  function postAd(string postedAdTitle, string postedAdImg, string postedAdHref) payable returns (address) {
     if (!owner.send(msg.value)) {
       throw;
     }

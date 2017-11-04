@@ -40,7 +40,8 @@ export default class BoardContainer extends Component {
         const postedAdIndex = this.props.ads.length
         this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, postedAdIndex, {
           title: `title #${postedAdIndex}`,
-          img: `img #${postedAdIndex}`,
+          // img: `img #${postedAdIndex}`,
+          img: prompt('ad img url'),
           href: `href #${postedAdIndex}`,
           contribution: 88 * postedAdIndex
         })

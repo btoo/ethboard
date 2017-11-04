@@ -1,5 +1,5 @@
 import Board from 'contracts/Board.sol'
-
+import { boardAddress } from 'app/reducer'
 import {
   SEND_BOARD,
   BOARD_DELIVERED,
@@ -14,8 +14,6 @@ import {
 
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
-
-const boardAddress = "0x7d46a962f12f7f32f48f7404edc995b5a9679343";
 
 export default (state = {
   boardAddress,

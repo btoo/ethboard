@@ -25,6 +25,14 @@ export const postAd = (web3, txObj, boardContract, postedAdIndex, {title, img, h
   
   dispatch(sendAd())
   try {
+
+    // var result = web3.eth.estimateGas({
+    //   to: '0xc4abd0339eb8d57087278718986382264244252f',
+    //   data:
+    //     '0xc6888fa10000000000000000000000000000000000000000000000000000000000000003'
+    // })
+    // console.log(result)
+
     await boardContract.postAd(
       title,
       img,

@@ -24,23 +24,23 @@ export default class Bubbles extends Component {
     const simulation = forceSimulation()
       .force('x', forceX(this.props.width / 2).strength(0.05)) // bring to center on x-axis
       .force('y', forceY(this.props.height / 2).strength(0.05)) // bring to center on y-axis
-      .force('collide', forceCollide(d => d.total / 10))
+      .force('collide', forceCollide(d => (d.total / 10) + 1)) // extra 1px spacing
       .nodes(this.props.ads)
-      .on('tick', _ => { // for every tick of the d3 clock, run this function
+      .on('tick', d => { // for every tick of the d3 clock, run this function
         bubbles
           .attr('cx', d => d.x)
           .attr('cy', d => d.y)
       })
 
     bubblesGroup
-      .selectAll(".ad")
+      .selectAll('.ad')
       .data(this.props.ads)
       .enter()
       .append('circle')
       .attr('class', 'ad')
       .call(drag()
         .on('start', d => {
-           if (!event.active) simulation.alphaTarget(0.3).restart()
+           if(!event.active) simulation.alphaTarget(0.3).restart()
            d.fx = d.x
            d.fy = d.y
         })
@@ -49,7 +49,7 @@ export default class Bubbles extends Component {
            d.fy = event.y
         })
         .on('end', d => {
-           if (!event.active) simulation.alphaTarget(0)
+           if(!event.active) simulation.alphaTarget(0)
            d.fx = null
            d.fy = null
         })
@@ -59,7 +59,7 @@ export default class Bubbles extends Component {
       .selectAll('.ad')
       .data(this.props.ads)
       .exit()
-      .remove();
+      .remove()
     
     const bubbles = bubblesGroup
       .selectAll('.ad')
@@ -88,7 +88,7 @@ export default class Bubbles extends Component {
           {this.props.ads.map((ad, i) => (
             <pattern
               key={i}
-              id={"ad-" + ad.address}
+              id={'ad-' + ad.address}
               height="100%"
               width="100%"
               patternContentUnits="objectBoundingBox"
@@ -98,13 +98,17 @@ export default class Bubbles extends Component {
                 width="1"
                 preserveAspectRatio="none"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
-                xlinkHref={testImg}
+                // xlinkHref={testImg}
+                // xlinkHref="https://i.imgur.com/nqrrkT7.jpg"
+                xlinkHref={ad.img}
               />
             </pattern>
           ))}
         </defs>
-        <g className="bubbles--group" ref={node => (this.bubblesGroup = select(node))} />
-      </svg>;
+        <g className="bubbles--group" ref={node => {
+            this.bubblesGroup = select(node)
+          }} />
+      </svg>
   }
 
 }
