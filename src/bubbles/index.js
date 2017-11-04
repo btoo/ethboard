@@ -96,7 +96,7 @@ export default class Bubbles extends Component {
               <image
                 height="1"
                 width="1"
-                preserveAspectRatio="none"
+                preserveAspectRatio="xMaxYMax slice"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
                 // xlinkHref={testImg}
                 // xlinkHref="https://i.imgur.com/nqrrkT7.jpg"

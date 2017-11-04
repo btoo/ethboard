@@ -4,7 +4,8 @@ import Board from 'contracts/Board.sol'
 import Ad from 'contracts/Ad.sol'
 
 import {
-  GET_DIMENSIONS
+  GET_DIMENSIONS,
+  UPDATE_TO_ADDRESS
 } from './actions'
 
 const web3 = typeof window.web3 !== 'undefined' // Supports Metamask and Mist, and other wallets that provide 'web3'.
@@ -21,7 +22,7 @@ const accounts = web3.eth.accounts // accounts hosted on this node
           }`, accounts[0])
         : accounts[0]
 
-export const boardAddress = '0xc8a68c81eb4578d516c1a88a09a1ffda471e15ba'
+export const boardAddress = '0xcab569c59afc1a7bd44406a96ff0ba16f97530a2'
 
 export default (state = {
   web3,
@@ -41,6 +42,14 @@ export default (state = {
       ...state,
       height: action.height,
       width: action.width
+    }
+
+    case UPDATE_TO_ADDRESS: return {
+      ...state,
+      txObj: {
+        ...state.txObj,
+        to: action.to
+      }
     }
 
     default: return state

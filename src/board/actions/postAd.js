@@ -23,6 +23,9 @@ const invalidateAdDelivery = error => {
 
 export const postAd = (web3, txObj, boardContract, postedAdIndex, {title, img, href, contribution}) => async dispatch => {
   
+  // https://i.redd.it/kqteb5am5wvz.jpg
+  // https://i.redd.it/6gu72mpsxvvz.png
+
   dispatch(sendAd())
   try {
 
