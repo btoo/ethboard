@@ -6,7 +6,6 @@ import { createBoard } from './actions'
 const mapStateToProps = store => { // set the props for this component
   return {
     web3: store.app.web3,
-    boardAddress: store.board.boardAddress,
     txObj: store.app.txObj,
   }
 }

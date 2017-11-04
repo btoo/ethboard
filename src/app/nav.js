@@ -6,7 +6,11 @@ export default class Nav extends Component {
     <nav className="nav">
       this is the nav
       <br/>
-      address: {this.props.boardAddress}
+      {
+        this.props.boardContract
+          ? 'address: ' + this.props.boardContract.address
+          : ''
+      }
     </nav>
   )}
 

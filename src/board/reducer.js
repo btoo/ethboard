@@ -15,9 +15,10 @@ import {
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
+const initBoardAddress = '0xef2d2846eab0a9cb917110363a414f3ecfa94bbb'
+
 export default (state = {
-  boardAddress,
-  boardContract: boardAddress ? Board.at(boardAddress) : null,
+  boardContract: initBoardAddress ? Board.at(initBoardAddress) : null,
   fetchingAdsCount: false,
   fetchAdsCountError: null,
   fetchingAds: false,
@@ -34,12 +35,12 @@ export default (state = {
       creatingBoard: true
     }
 
-    case BOARD_DELIVERED: return {
-      ...state,
-      creatingBoard: false,
-      boardContract: action.boardContract,
-      boardAddress: action.boardContract.address
-    }
+    case BOARD_DELIVERED:
+      return {
+        ...state,
+        creatingBoard: false,
+        boardContract: action.boardContract
+      }
 
     case INVALIDATE_BOARD_DELIVERY: return {
       ...state,

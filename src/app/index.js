@@ -12,7 +12,7 @@ import './index.css'
 const mapStateToProps = store => { return {
   web3: store.app.web3,
   txObj: store.app.txObj,
-  boardAddress: store.board.boardAddress,
+  boardContract: store.board.boardContract,
 }}
 
 const mapDispatchToProps = dispatch => { return bindActionCreators({
@@ -24,9 +24,9 @@ export default class App extends Component {
   
   render() { return (
     <div className="app">
-      <Nav boardAddress={this.props.boardAddress} />
+      <Nav boardContract={this.props.boardContract} />
       {
-        this.props.boardAddress
+        this.props.boardContract
           ? <BoardContainer />
           : <CreateBoardContainer />
       }
