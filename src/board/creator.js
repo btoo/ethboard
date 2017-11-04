@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class CreateBoardContainer extends Component {
+export default class BoardCreator extends Component { // use class declaration for now because this babel decorator doesnt support decorators on anything else..
   
   render() { return (
     <div className="board">

@@ -10,10 +10,10 @@
   justify-content: center;
   align-items: center;
 
-  &--post-ad {
+  /* &--post-ad {
     position: absolute;
     top: 25vh;
-  }
+  } */
 }
 
 article {

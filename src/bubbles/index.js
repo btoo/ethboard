@@ -83,7 +83,8 @@ export default class Bubbles extends Component {
   componentDidUpdate(){ this.createBubbles() }
 
   render(){
-    return <svg className="bubbles" height={this.props.height} width={this.props.width}>
+    return (
+      <svg className="bubbles" height={this.props.height} width={this.props.width}>
         <defs>
           {this.props.ads.map((ad, i) => (
             <pattern
@@ -109,6 +110,7 @@ export default class Bubbles extends Component {
             this.bubblesGroup = select(node)
           }} />
       </svg>
+    )
   }
 
 }

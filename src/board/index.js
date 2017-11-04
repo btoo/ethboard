@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import AdContainer from 'ad'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
-  fetchAdsIfNeeded as fetchAds,
-  postAd
+  fetchAdsIfNeeded as fetchAds
 } from './actions'
 import Board from 'contracts/Board.sol'
 import './index.css'
@@ -22,8 +20,7 @@ const mapStateToProps = store => { // set the props for this component
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchAds,
-  postAd
+  fetchAds
 }, dispatch)
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -36,26 +33,13 @@ export default class BoardContainer extends Component {
   
   render() { return (
     <div className="board" ref={node => this.node = node}>
-      <button className="board--post-ad" onClick={_ => {
-        const postedAdIndex = this.props.ads.length
-        this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, postedAdIndex, {
-          title: `title #${postedAdIndex}`,
-          // img: `img #${postedAdIndex}`,
-          img: prompt('ad img url'),
-          href: `href #${postedAdIndex}`,
-          contribution: 88 * postedAdIndex
-        })
-      }}>
-        click this to post a new ad
-      </button>
       <Bubbles
         ads={this.props.ads}
         height={this.props.height}
         width={this.props.width}
       />
-      {/* {this.props.ads.map((ad, i) => <AdContainer key={i} {...ad} />)} */}
     </div>
   )}
 }
 
-export { default as CreateBoardContainer } from './create'
+export { default as BoardCreator } from './creator'

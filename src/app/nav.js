@@ -1,17 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { AdPoster } from 'ad'
 
-export default class Nav extends Component {
-  
-  render() { return (
-    <nav className="nav">
-      this is the nav
-      <br/>
-      {
-        this.props.boardContract
-          ? 'address: ' + this.props.boardContract.address
-          : ''
-      }
-    </nav>
-  )}
-
-}
+export default props => (
+  <nav className="nav">
+    this is the nav
+    <br/>
+    {
+      props.boardContract
+        ? (
+            <div>
+              address: {props.boardContract.address}
+              <AdPoster />
+            </div>
+          )
+        : ''
+    }
+  </nav>
+)

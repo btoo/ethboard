@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 // } from './actions'
 
 import Nav from './nav'
-import BoardContainer, { CreateBoardContainer } from 'board'
+import BoardContainer, { BoardCreator } from 'board'
 import './index.css'
 
 const mapStateToProps = store => { return {
@@ -28,7 +28,7 @@ export default class App extends Component {
       {
         this.props.boardContract
           ? <BoardContainer />
-          : <CreateBoardContainer />
+          : <BoardCreator />
       }
     </div>
   )}
