@@ -19,18 +19,92 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 @connect(mapStateToProps, mapDispatchToProps)
 export default class AdPoster extends Component { // use class declaration for now because this babel decorator doesnt support decorators on anything else..
   
+  constructor(props){
+    super(props)
+    this.state = {
+      title: '',
+      img: '',
+      href: '',
+      contribution: ''
+    }
+
+    this.placeholder = {
+      title: 'Ad title',
+      img: 'Ad image url',
+      href: 'Ad website',
+      contribution: 'Ad contribution (in gwei)'
+    }
+
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleInputChange(event) {
+    const target = event.target
+    this.setState({ [target.name]: target.value })
+  }
+
+
+  handleSubmit(event) {
+    const postedAdIndex = this.props.ads.length
+    this.props.postAd(
+      this.props.web3,
+      this.props.txObj,
+      this.props.boardContract,
+      postedAdIndex,
+      this.state
+    )
+    event.preventDefault()
+  }
+
   render() { return (
-    <button className="board--post-ad" onClick={_ => {
-      const postedAdIndex = this.props.ads.length
-      this.props.postAd(this.props.web3, this.props.txObj, this.props.boardContract, postedAdIndex, {
-        title: `title #${postedAdIndex}`,
-        img: prompt('ad img url'),
-        href: `href #${postedAdIndex}`,
-        contribution: 88 * postedAdIndex
-      })
-    }}>
-      click this to post a new ad
-    </button>
+    <form onSubmit={this.handleSubmit}>
+      <label>
+        Title
+        <input
+          name="title"
+          type="text"
+          value={this.state.title}
+          placeholder={this.placeholder.title}
+          onChange={this.handleInputChange}
+          />
+      </label>
+      <br />
+      <label>
+        Image
+        <input
+          name="img"
+          type="text"
+          value={this.state.img}
+          placeholder={this.placeholder.img}
+          onChange={this.handleInputChange}
+          />
+      </label>
+      <br />
+      <label>
+        Website
+        <input
+          name="href"
+          type="text"
+          value={this.state.href}
+          placeholder={this.placeholder.href}
+          onChange={this.handleInputChange}
+          />
+      </label>
+      <br />
+      <label>
+        Contribution (gwei)
+        <input
+          name="contribution"
+          type="number"
+          value={this.state.contribution}
+          placeholder={this.placeholder.contribution}
+          onChange={this.handleInputChange}
+          />
+      </label>
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
   )}
   
 }
