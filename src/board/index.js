@@ -32,13 +32,13 @@ export default class BoardContainer extends Component {
   }
   
   render() { return (
-    <div className="board" ref={node => this.node = node}>
+    <article className="board">
       <Bubbles
         ads={this.props.ads}
         height={this.props.height}
         width={this.props.width}
       />
-    </div>
+    </article>
   )}
 }
 

@@ -9,19 +9,23 @@ html, body, #root, .app {
 
 .app {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica";
+  overflow: hidden;
   display: grid;
-  grid-template-columns: [board-start] 1fr [nav-start] 222px [board-end];
-  grid-template-rows: [board-start] 222px [nav-end] 1fr [baord-end];
-  // grid-template-areas:
-  //   "board nav"
-  //   "board board";
+  
+  --header-width: 100vh;
+  @media (max-aspect-ratio: 1/1) {
+    --header-width: 100%;
+  }
+  
+  grid-template-columns: [board-start] 1fr [header-start] var(--header-width) [header-end] 1fr [board-end];
+  grid-template-rows: [board-start header-start] 50vh [header-end] 1fr [board-end];
+
 }
 
-.nav {
-  // grid-area: nav;
-  grid-column-start: nav-start;
-  grid-column-end: board-end;
-  grid-row-start: board-start;
-  grid-row-end: nav-end;
+.header {
   overflow: hidden;
+  grid-column-start: header-start;
+  grid-column-end: header-end;
+  grid-row-start: header-start;
+  grid-row-end: header-end;
 }

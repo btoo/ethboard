@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 // } from './actions'
 
-import Nav from './nav'
+import Header from './header'
 import BoardContainer, { BoardCreator } from 'board'
 import './index.css'
 
@@ -23,13 +23,9 @@ const mapDispatchToProps = dispatch => { return bindActionCreators({
 export default class App extends Component {
   
   render() { return (
-    <div className="app">
-      <Nav boardContract={this.props.boardContract} />
-      {
-        this.props.boardContract
-          ? <BoardContainer />
-          : <BoardCreator />
-      }
-    </div>
+    <main className="app">
+      <Header boardContract={this.props.boardContract} />
+      {this.props.boardContract ? <BoardContainer /> : ''}
+    </main>
   )}
 }
