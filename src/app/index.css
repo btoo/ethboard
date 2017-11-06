@@ -24,7 +24,7 @@ html, body, #root, .app {
 
 .header {
   // shape-outside: circle(30%);
-  z-index: 1;
+  // z-index: 1;
   overflow: hidden;
   grid-column-start: header-start;
   grid-column-end: header-end;

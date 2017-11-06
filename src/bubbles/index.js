@@ -10,6 +10,7 @@ import {
 import './index.css'
 
 const navBubbleDatum = { adIndex: -1 } // dummy data point for nav bubble
+    , forcePosition = d => d.adIndex === -1 ? 1 : 0.1
 
 export default class Bubbles extends Component {
 
@@ -21,14 +22,16 @@ export default class Bubbles extends Component {
   createBubbles() {
     const bubblesGroup = this.bubblesGroup
         , data = [...this.props.ads, navBubbleDatum]
+        , totalContributions = this.props.ads.reduce((acc, ad) => acc + ad.total, 0)
 
     // the simulation is a collection of forces about where we want our circles to go and how we want our circles to interact
     const simulation = forceSimulation()
-      .force('x', forceX(this.props.width / 2).strength(d => d.adIndex === -1 ? 2 : .05)) // bring to center on x-axis
-      .force('y', forceY(this.props.height / 2).strength(d => d.adIndex === -1 ? 2 : .05).y(d => d.adIndex === -1 ? 0 : this.props.height / 2)) // bring to center on y-axis
+      .force('x', forceX(this.props.width / 2).strength(forcePosition)) // bring to center on x-axis
+      .force('y', forceY(this.props.height / 2).strength(forcePosition).y(d => d.adIndex === -1 ? 0 : this.props.height / 2)) // bring to center on y-axis
       .force('collide', forceCollide(d => d.adIndex === -1
         ? this.props.height / 2
-        : (d.total / 10) + 1 // extra 1px spacing
+        // : (d.total / 10) + 1 // extra 1px spacing
+        : (d.total / totalContributions) * (this.props.width / 2) // extra 1px spacing
       ))
       .nodes(data)
       .on('tick', e => { // for every tick of the d3 clock, run this function
@@ -75,7 +78,8 @@ export default class Bubbles extends Component {
     const bubbles = bubblesGroup.selectAll('.ad').data(data)
       .attr('cx', this.props.width / 2)
       .attr('cy', this.props.height / 2)
-      .attr('r', d => d.total / 10)
+      // .attr('r', d => d.total / 10)
+      .attr('r', d => (d.total / totalContributions) * (this.props.width / 2))
       .attr('fill', d => `url(#ad-${d.address})`)
     
     // scale radii to fit screen dimensions
