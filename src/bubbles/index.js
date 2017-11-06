@@ -7,69 +7,77 @@ import {
   forceX, forceY, forceCollide,
   scaleSqrt, event
 } from 'd3'
+import './index.css'
 
-import testImg from './img/test-1.png'
+const navBubbleDatum = { adIndex: -1 } // dummy data point for nav bubble
 
 export default class Bubbles extends Component {
 
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.createBubbles = this.createBubbles.bind(this)
   }
 
   createBubbles() {
     const bubblesGroup = this.bubblesGroup
-    
+        , data = [...this.props.ads, navBubbleDatum]
+
     // the simulation is a collection of forces about where we want our circles to go and how we want our circles to interact
     const simulation = forceSimulation()
-      .force('x', forceX(this.props.width / 2).strength(0.05)) // bring to center on x-axis
-      .force('y', forceY(this.props.height / 2).strength(0.05)) // bring to center on y-axis
-      .force('collide', forceCollide(d => (d.total / 10) + 1)) // extra 1px spacing
-      .nodes(this.props.ads)
-      .on('tick', d => { // for every tick of the d3 clock, run this function
-        bubbles
+      .force('x', forceX(this.props.width / 2).strength(d => d.adIndex === -1 ? 2 : .05)) // bring to center on x-axis
+      .force('y', forceY(this.props.height / 2).strength(d => d.adIndex === -1 ? 2 : .05).y(d => d.adIndex === -1 ? 0 : this.props.height / 2)) // bring to center on y-axis
+      .force('collide', forceCollide(d => d.adIndex === -1
+        ? this.props.height / 2
+        : (d.total / 10) + 1 // extra 1px spacing
+      ))
+      .nodes(data)
+      .on('tick', e => { // for every tick of the d3 clock, run this function
+        bubblesGroup.selectAll('circle')
           .attr('cx', d => d.x)
           .attr('cy', d => d.y)
       })
 
-    bubblesGroup
-      .selectAll('.ad')
-      .data(this.props.ads)
+    bubblesGroup.selectAll('.nav--bubble').data(navBubbleDatum).enter()
+      .attr('r', '50vh')
+      .attr('fill', 'turquoise')
+
+    bubblesGroup.selectAll('.nav--bubble').data(navBubbleDatum).exit().remove()
+    
+    bubblesGroup.selectAll('.ad').data(data)
       .enter()
       .append('circle')
-      .attr('class', 'ad')
+      .attr('class', d => d.adIndex === -1 ? 'nav--bubble' : 'ad')
       .call(drag()
         .on('start', d => {
-           if(!event.active) simulation.alphaTarget(0.3).restart()
-           d.fx = d.x
-           d.fy = d.y
+          if(!event.active) simulation.alphaTarget(0.3).restart()
+          if(d.adIndex !== -1){
+            d.fx = d.x
+            d.fy = d.y
+          }
         })
         .on('drag', d => {
-           d.fx = event.x
-           d.fy = event.y
+          if(d.adIndex !== -1){
+            d.fx = event.x
+            d.fy = event.y
+          }
         })
         .on('end', d => {
-           if(!event.active) simulation.alphaTarget(0)
-           d.fx = null
-           d.fy = null
+          if(!event.active) simulation.alphaTarget(0)
+          if(d.adIndex !== -1){
+            d.fx = null
+            d.fy = null
+          }
         })
       )
     
-    bubblesGroup
-      .selectAll('.ad')
-      .data(this.props.ads)
-      .exit()
-      .remove()
+    bubblesGroup.selectAll('.ad').data(data).exit().remove()
     
-    const bubbles = bubblesGroup
-      .selectAll('.ad')
-      .data(this.props.ads)
-      .attr('fill', 'turquoise')
+    const bubbles = bubblesGroup.selectAll('.ad').data(data)
       .attr('cx', this.props.width / 2)
       .attr('cy', this.props.height / 2)
       .attr('r', d => d.total / 10)
       .attr('fill', d => `url(#ad-${d.address})`)
-      
+    
     // scale radii to fit screen dimensions
     // const radiusScale = scaleSqrt().domain()
 

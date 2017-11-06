@@ -16,16 +16,21 @@ html, body, #root, .app {
   @media (max-aspect-ratio: 1/1) {
     --header-width: 100%;
   }
-  
+
   grid-template-columns: [board-start] 1fr [header-start] var(--header-width) [header-end] 1fr [board-end];
   grid-template-rows: [board-start header-start] 50vh [header-end] 1fr [board-end];
 
 }
 
 .header {
+  // shape-outside: circle(30%);
+  z-index: 1;
   overflow: hidden;
   grid-column-start: header-start;
   grid-column-end: header-end;
   grid-row-start: header-start;
   grid-row-end: header-end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
