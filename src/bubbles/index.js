@@ -28,7 +28,7 @@ export default class Bubbles extends Component {
     const totalContributions = this.props.ads.reduce((acc, ad) => acc + ad.total, 0)
         , maxRadius = Math.min( // get min of minWidth and minHeight
             (this.props.width / 2) - getNavBubbleRadius(), // minWidth
-            this.props.height - getNavBubbleRadius()
+            this.props.height - getNavBubbleRadius() // minHeight
           )
         , maxTotalContributionsForAnyOneAd = this.props.ads.length
             ? Math.max(...this.props.ads.map(ad => ad.total))

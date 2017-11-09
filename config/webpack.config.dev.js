@@ -8,17 +8,33 @@ const path                     = require('path')
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
-const isInNodeModules = path.basename(path.resolve(path.join(__dirname, '..', '..'))) === 'node_modules'
-let relativePath      = isInNodeModules ? '../../..' : '..'
-const isInDebugMode   = process.argv.some(arg => arg.indexOf('--debug-template') > -1)
+// const isInNodeModules = path.basename(path.resolve(path.join(__dirname, '..', '..'))) === 'node_modules'
+// let relativePath      = isInNodeModules ? '../../..' : '..'
+let relativePath = '..'
+// const isInDebugMode   = process.argv.some(arg => arg.indexOf('--debug-template') > -1)
 
-if(isInDebugMode) relativePath = '../template'
+// if(isInDebugMode) relativePath = '../template'
 
 const srcPath         = path.resolve(__dirname, relativePath, 'src')
-const nodeModulesPath = path.join(__dirname, '..', 'node_modules')
-const indexHtmlPath   = path.resolve(__dirname, relativePath, 'index.html')
+// const nodeModulesPath = path.join(__dirname, '..', 'node_modules')
+const indexHtmlPath   = path.resolve(srcPath, 'index.html')
 const faviconPath     = path.resolve(__dirname, relativePath, 'favicon.ico')
-const buildPath       = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build')
+// const buildPath       = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build')
+// const buildPath       = path.join(__dirname, '..', 'build')
+const buildPath       = path.join(__dirname, relativePath, 'build')
+
+// console.log('le nig', indexHtmlPath)
+// console.log('le build path', buildPath)
+// console.log(process.env.NODE_ENV)
+
+// console.log()
+// console.log('You can now serve it with any static server, for example:')
+// console.log('  cd build')
+// console.log('  npm install -g http-server')
+// console.log('  hs')
+// console.log('   http://localhost:8080')
+// console.log()
+// console.log('The bundle is optimized and ready to be deployed to production.')
 
 const provided = {
   'Web3': 'web3'
@@ -27,19 +43,17 @@ const provided = {
 module.exports = {
   devtool: 'eval',
   entry: [
-    require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
+    require.resolve('webpack-dev-server/client') + '?http://localhost.kors.local:3000',
     require.resolve('webpack/hot/dev-server'),
     path.join(srcPath, '/')
   ],
   output: {
-    // Next line is not used in dev but WebpackDevServer crashes without it:
-    path: buildPath,
+    path: buildPath, // not used in dev but WebpackDevServer crashes without it:
     pathinfo: true,
     filename: 'bundle.js',
     publicPath: '/'
   },
   resolve: {
-    // root: srcPath,
     modules: [
       srcPath,
       'node_modules'

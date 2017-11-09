@@ -5,7 +5,8 @@
   "author": "brian",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dashboard -- node ./scripts/start.js",
+    "dashboard_start": "webpack-dashboard -- node ./scripts/start.js",
+    "start": "node ./scripts/start.js",
     "build": "node ./scripts/build.js"
   },
   "standard": {

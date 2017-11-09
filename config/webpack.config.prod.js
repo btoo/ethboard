@@ -1,23 +1,53 @@
-var path = require('path');
-var precss            = require('precss')
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// var path = require('path');
+// var precss            = require('precss')
+// var autoprefixer = require('autoprefixer');
+// var webpack = require('webpack');
+// var HtmlWebpackPlugin = require('html-webpack-plugin');
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+// // TODO: hide this behind a flag and eliminate dead code on eject.
+// // This shouldn't be exposed to the user.
+// var isInNodeModules = 'node_modules' ===
+//   path.basename(path.resolve(path.join(__dirname, '..', '..')));
+// var relativePath = isInNodeModules ? '../../..' : '..';
+// // if (process.argv[2] === '--debug-template') {
+// //   relativePath = '../template';
+// // }
+// var srcPath = path.resolve(__dirname, relativePath, 'src');
+// var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
+// // var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
+// const indexHtmlPath = path.resolve(srcPath, 'index.html')
+// var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
+// var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
+
+// // console.log(buildPath)
+// // console.log(nodeModulesPath, path.resolve('lib/webpack-loaders'))
+// console.log('wowowow', path.join(indexHtmlPath, '..'))
+
+const path                     = require('path')
+    , autoprefixer             = require('autoprefixer')
+    , webpack                  = require('webpack')
+    , HtmlWebpackPlugin        = require('html-webpack-plugin')
+    , ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+    , precss                   = require('precss')
+    , DashboardPlugin          = require('webpack-dashboard/plugin')
 
 // TODO: hide this behind a flag and eliminate dead code on eject.
 // This shouldn't be exposed to the user.
-var isInNodeModules = 'node_modules' ===
-  path.basename(path.resolve(path.join(__dirname, '..', '..')));
-var relativePath = isInNodeModules ? '../../..' : '..';
-if (process.argv[2] === '--debug-template') {
-  relativePath = '../template';
-}
-var srcPath = path.resolve(__dirname, relativePath, 'src');
-var nodeModulesPath = path.join(__dirname, '..', 'node_modules');
-var indexHtmlPath = path.resolve(__dirname, relativePath, 'index.html');
-var faviconPath = path.resolve(__dirname, relativePath, 'favicon.ico');
-var buildPath = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build');
+// const isInNodeModules = path.basename(path.resolve(path.join(__dirname, '..', '..'))) === 'node_modules'
+// let relativePath      = isInNodeModules ? '../../..' : '..'
+let relativePath = '..'
+// const isInDebugMode   = process.argv.some(arg => arg.indexOf('--debug-template') > -1)
+
+// if(isInDebugMode) relativePath = '../template'
+
+const srcPath         = path.resolve(__dirname, relativePath, 'src')
+// const nodeModulesPath = path.join(__dirname, '..', 'node_modules')
+const indexHtmlPath   = path.resolve(srcPath, 'index.html')
+const faviconPath     = path.resolve(__dirname, relativePath, 'favicon.ico')
+// const buildPath       = path.join(__dirname, isInNodeModules ? '../../..' : '..', 'build')
+// const buildPath       = path.join(__dirname, '..', 'build')
+const buildPath       = path.join(__dirname, relativePath, 'build')
 
 module.exports = {
   bail: true,
@@ -27,75 +57,88 @@ module.exports = {
     path: buildPath,
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
-    // TODO: this wouldn't work for e.g. GH Pages.
-    // Good news: we can infer it from package.json :-)
-    publicPath: '/'
+    publicPath: '/build/'
   },
   resolve: {
-    root: srcPath,
-    extensions: ['', '.js'],
+    modules: [
+      srcPath,
+      'node_modules'
+    ],
+    extensions: ['.js'],
     alias: {
       contracts: path.resolve('contracts')
     }
   },
-  resolveLoader: {
-    root: [ nodeModulesPath, path.resolve('lib/webpack-loaders') ],
-    moduleTemplates: ['*-loader'],
-  },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        loader: 'eslint',
-        include: srcPath
-      }
-    ],
-    loaders: [
+
+    // webpack 3
+    rules: [
       {
         test: /\.js$/,
         include: srcPath,
-        loader: 'babel',
-        query: require('./babel.prod')
+        enforce: 'pre',
+        use: [{
+          loader: 'eslint-loader',
+          query: {
+            configFile: path.join(__dirname, 'eslint.js'),
+            useEslintrc: false
+          }
+        }]
+      },
+      {
+        test: /\.js$/,
+        include: srcPath,
+        use: [{
+          loader: 'babel-loader',
+          query: require('./babel.dev')
+        }]
       },
       {
         test: /\.css$/,
         include: srcPath,
-        // Disable autoprefixer in css-loader itself:
-        // https://github.com/webpack/css-loader/issues/281
-        // We already have it thanks to postcss.
-        loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss')
+        use: [
+          'style-loader', // Adds CSS to the DOM by injecting a <style> tag
+          'css-loader', //  interprets @import and url() like import/require() and will resolve them.
+          { loader: 'postcss-loader', options: { plugins: [precss, autoprefixer] } }
+        ],
       },
       {
         test: /\.json$/,
-        loader: 'json'
+        loader: 'json-loader'
       },
+      // {
+      //   test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
+      //   loader: 'file-loader'
+      // },
       {
-        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
-        loader: 'file',
+        test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000
+          }
+        }]
       },
+      // {
+      //   test: /\.sol$/,
+      //   loader: 'truffle-solidity-loader'
+      // },
       {
-        test: /\.(mp4|webm)$/,
-        loader: 'url?limit=10000'
-      },
-      {
-        test: /\.sol/,
-        loader: 'truffle-solidity'
+        test: /\.sol$/,
+        use: {
+          loader: 'truffle-contract-loader',
+          options: {
+            contracts_directory: './contracts'
+          }
+        }
       }
-    ]
-  },
-  eslint: {
-    // TODO: consider separate config for production,
-    // e.g. to enable no-console and no-debugger only in prod.
-    configFile: path.join(__dirname, 'eslint.js'),
-    useEslintrc: false
-  },
-  postcss: function() {
-    return [precss, autoprefixer];
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
       template: indexHtmlPath,
+      filename: '../index.html', // the output index.html needs to be at the root so it can be rendered for github-pages
       favicon: faviconPath,
       minify: {
         removeComments: true,
@@ -129,6 +172,6 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    new ExtractTextPlugin('[name].[contenthash].css')
+    new ExtractTextWebpackPlugin('[name].[contenthash].css')
   ]
-};
+}
