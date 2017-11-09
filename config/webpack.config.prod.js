@@ -21,7 +21,7 @@ module.exports = {
     path: buildPath,
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
-    publicPath: '/build/'
+    publicPath: '/ethboard/build/'
   },
   resolve: {
     modules: [
