@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import {
   scaleLinear,
-  max,
+  min, max,
   select,
   forceSimulation, drag,
   forceX, forceY, forceCollide,
-  scaleSqrt, event
+  event
 } from 'd3'
 import './index.css'
 
@@ -30,10 +30,10 @@ export default class Bubbles extends Component {
             (this.props.width / 2) - getNavBubbleRadius(), // minWidth
             this.props.height - getNavBubbleRadius() // minHeight
           )
-        , maxTotalContributionsForAnyOneAd = this.props.ads.length
-            ? Math.max(...this.props.ads.map(ad => ad.total))
-            : 0
-        , getRadius = d => (d.total / maxTotalContributionsForAnyOneAd) * maxRadius / 2
+        , arrayOfContributionTotals = this.props.ads.map(ad => ad.total)
+        , radiusScale = scaleLinear()
+            .domain([min(arrayOfContributionTotals), max(arrayOfContributionTotals)]) // domain consists of min and max inputs (ads' total contributions)
+            .range([8, maxRadius]) // range consists of min and max outputs (rendered bubble radii)
 
     const boundNode = dimension => d => totalContributions
             ? Math.max(d.r, Math.min(this.props[dimension ? 'width' : 'height'] - d.r, d[dimension ? 'x' : 'y']))
@@ -47,8 +47,7 @@ export default class Bubbles extends Component {
       .force('y', forceY(this.props.height / 2).strength(forcePosition).y(d => d.navBubble ? 0 : this.props.height / 2)) // bring to center on y-axis
       .force('collide', forceCollide(d => d.navBubble
         ? (this.props.height / 2) + 22
-        // : (((d.total / totalContributions) * this.props.width) / 2) + 1 // extra 1px spacing
-        : (d.r = getRadius(d))
+        : (d.r = radiusScale(d.total)) + 1 // extra 1px spacing between bubbles
       ))
       .nodes(data)
       .on('tick', e => { // for every tick of the d3 clock, run this function
@@ -92,12 +91,9 @@ export default class Bubbles extends Component {
     const bubbles = bubblesGroup.selectAll('.ad').data(data)
       .attr('cx', this.props.width / 2)
       .attr('cy', this.props.height / 2)
-      .attr('r', d => d.r = getRadius(d))
+      .attr('r', d => d.r = radiusScale(d.total))
       .attr('fill', d => `url(#ad-${d.address})`)
     
-    // scale radii to fit screen dimensions
-    // const radiusScale = scaleSqrt().domain()
-
   }
 
   componentWillMount(){

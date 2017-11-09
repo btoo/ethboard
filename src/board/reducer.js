@@ -16,7 +16,7 @@ import {
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
 // const initBoardAddress = ''
-const initBoardAddress = '0x26e460bda6a77437eb1f9bc499c2c70b91449a55'
+const initBoardAddress = '0x7c498604cb8fa10eab9fe2e193b593e97fe46e3e'
 
 export default (state = {
   boardContract: initBoardAddress ? Board.at(initBoardAddress) : null,
