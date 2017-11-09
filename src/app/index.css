@@ -25,6 +25,7 @@ html, body, #root, .app {
 .header {
   // shape-outside: circle(30%);
   // z-index: 1;
+  position: relative;
   overflow: hidden;
   grid-column-start: header-start;
   grid-column-end: header-end;
@@ -33,4 +34,15 @@ html, body, #root, .app {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &--bubble {
+    background: turquoise;
+    height: 100vh;
+    width: 100vh;
+    position: absolute;
+    border-radius: 50%;
+    top: -50vh;
+    z-index: -1;
+  }
+  
 }
