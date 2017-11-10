@@ -1,4 +1,5 @@
-pragma solidity ^0.4.17;
+// pragma solidity ^0.4.17;
+pragma solidity ^0.4.8;
 
 import "./Ad.sol";
 
@@ -11,7 +12,7 @@ contract Board {
   Ad[] ads;
   // mapping(address => Ad) adSpaces;
 
-  function Board(string initAdTitle, string initAdImg, string initAdHref) {
+  function Board(string initAdTitle, string initAdImg, string initAdHref) payable {
     owner = msg.sender;
     ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, msg.value));
   }

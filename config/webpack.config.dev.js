@@ -90,19 +90,19 @@ module.exports = {
           }
         }]
       },
-      // {
-      //   test: /\.sol$/,
-      //   loader: 'truffle-solidity-loader'
-      // },
       {
         test: /\.sol$/,
-        use: {
-          loader: 'truffle-contract-loader',
-          options: {
-            contracts_directory: './contracts'
-          }
-        }
-      }
+        loader: 'truffle-solidity-loader'
+      },
+      // {
+      //   test: /\.sol$/,
+      //   use: {
+      //     loader: 'truffle-contract-loader',
+      //     options: {
+      //       contracts_directory: './contracts'
+      //     }
+      //   }
+      // }
     ],
   },
   plugins: [

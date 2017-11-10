@@ -26,15 +26,15 @@ export default class Bubbles extends Component {
         , data = [...this.props.ads, navBubbleDatum]
     
     const totalContributions = this.props.ads.reduce((acc, ad) => acc + ad.total, 0)
-        , maxRadius = Math.min( // get min of minWidth and minHeight
+        , maxRadius = Math.min( // min of minWidth and minHeight = maxDiameter
             (this.props.width / 2) - getNavBubbleRadius(), // minWidth
             this.props.height - getNavBubbleRadius() // minHeight
-          )
+          ) / 2 // radius = diameter / 2
         , arrayOfContributionTotals = this.props.ads.map(ad => ad.total)
         , radiusScale = scaleLinear()
             .domain([min(arrayOfContributionTotals), max(arrayOfContributionTotals)]) // domain consists of min and max inputs (ads' total contributions)
             .range([8, maxRadius]) // range consists of min and max outputs (rendered bubble radii)
-
+    
     const boundNode = dimension => d => totalContributions
             ? Math.max(d.r, Math.min(this.props[dimension ? 'width' : 'height'] - d.r, d[dimension ? 'x' : 'y']))
             : this.props[dimension ? 'width' : 'height'] / 2
@@ -93,10 +93,6 @@ export default class Bubbles extends Component {
       .attr('cy', this.props.height / 2)
       .attr('r', d => d.r = radiusScale(d.total))
       .attr('fill', d => `url(#ad-${d.address})`)
-    
-  }
-
-  componentWillMount(){
     
   }
 

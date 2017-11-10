@@ -1,0 +1,120 @@
+{
+  "contractName": "Contribution",
+  "abi": [],
+  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820f0535a420f559b719d34d3708c75b2c660bea0bd408fc6946631b1b0d284839f0029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820f0535a420f559b719d34d3708c75b2c660bea0bd408fc6946631b1b0d284839f0029",
+  "sourceMap": "25:65:2:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "25:65:2:-;;;;;",
+  "source": "pragma solidity ^0.4.8;\n\ncontract Contribution {\n\n  address contributor;\n  uint amount;\n\n}\n",
+  "sourcePath": "/Users/btu/Documents/btoo/ethboard/contracts/Contribution.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/Users/btu/Documents/btoo/ethboard/contracts/Contribution.sol",
+      "exportedSymbols": {
+        "Contribution": [
+          244
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".8"
+          ]
+        },
+        "id": 239,
+        "name": "PragmaDirective",
+        "src": "0:23:2"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            244
+          ],
+          "name": "Contribution",
+          "scope": 245
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "contributor",
+              "scope": 244,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "address",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "address",
+                  "type": "address"
+                },
+                "id": 240,
+                "name": "ElementaryTypeName",
+                "src": "52:7:2"
+              }
+            ],
+            "id": 241,
+            "name": "VariableDeclaration",
+            "src": "52:19:2"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "amount",
+              "scope": 244,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 242,
+                "name": "ElementaryTypeName",
+                "src": "75:4:2"
+              }
+            ],
+            "id": 243,
+            "name": "VariableDeclaration",
+            "src": "75:11:2"
+          }
+        ],
+        "id": 244,
+        "name": "ContractDefinition",
+        "src": "25:65:2"
+      }
+    ],
+    "id": 245,
+    "name": "SourceUnit",
+    "src": "0:91:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-11-10T16:29:41.904Z"
+}
