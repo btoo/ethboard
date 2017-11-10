@@ -6,7 +6,7 @@ import {
 } from './actions'
 import Board from 'contracts/Board.sol'
 import './index.css'
-import Bubbles from "bubbles"
+import BubblesContainer from 'bubbles'
 
 const mapStateToProps = store => { // set the props for this component
   return {
@@ -33,7 +33,7 @@ export default class BoardContainer extends Component {
   
   render() { return (
     <article className="board">
-      <Bubbles
+      <BubblesContainer
         ads={this.props.ads}
         height={this.props.height}
         width={this.props.width}
