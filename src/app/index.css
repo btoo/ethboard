@@ -32,8 +32,9 @@ html, body, #root, .app {
   // border-bottom-right-radius: calc(var(--header-width) / 2);
   // border-bottom-left-radius: 50vh;
   // border-bottom-right-radius: 50vh;
-  border-radius: 50%;
+  
   // background: turquoise;
+  @media (min-width: 768px){ border-radius: 50% }
 
   position: relative;
   overflow: hidden;
@@ -58,7 +59,7 @@ html, body, #root, .app {
     @media (min-width: 1024px){ font-size: 2rem }
   }
 
-  h2 {
+  &--board-address {
     display: flex;
     justify-content: center;
     font-weight: 100;

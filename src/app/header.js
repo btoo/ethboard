@@ -6,7 +6,12 @@ export default props => (
   <header className="header">
     <h1>ethboard</h1>
     {props.boardContract
-      ? <h2>{props.boardContract.address}</h2>
+      ? <a
+          href={`https://etherscan.io/address/${props.boardContract.address}`} target="_blank"
+          className="header--board-address"
+        >
+          {props.boardContract.address}
+        </a>
       : ''
     }
     <nav>
