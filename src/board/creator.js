@@ -18,11 +18,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default class BoardCreator extends Component { // use class declaration for now because this babel decorator doesnt support decorators on anything else..
   
   render() { return (
-    <div className="board">
+    <article className="board">
       <button onClick={this.props.createBoard(this.props.web3, this.props.txObj)}>
         click here to create a new board and then check your console to view its address
       </button>
-    </div>
+    </article>
   )}
   
 }

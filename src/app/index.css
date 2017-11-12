@@ -8,24 +8,33 @@ html, body, #root, .app {
   padding: 0;
 }
 
+#root {
+  --header-width: 100vh;
+  @media (max-aspect-ratio: 1/1) {
+    --header-width: 100%;
+  }
+}
+
 .app {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica";
   overflow: hidden;
   display: grid;
   
-  --header-width: 100vh;
-  @media (max-aspect-ratio: 1/1) {
-    --header-width: 100%;
-  }
-
-  grid-template-columns: [board-start] 1fr [header-start] var(--header-width) [header-end] 1fr [board-end];
-  grid-template-rows: [board-start header-start] 50vh [header-end] 1fr [board-end];
+  grid-template-columns: [board-start] minmax(8%, 1fr) [header-start] minmax(auto, 420px) [header-end] minmax(8%, 1fr) [board-end];
+  grid-template-rows: [board-start] minmax(8%, 1fr) [header-start] minmax(auto, 420px) [header-end] minmax(8%, 1fr) [board-end];
 
 }
 
 .header {
   // shape-outside: circle(30%);
   // z-index: 1;
+  // border-bottom-left-radius: calc(var(--header-width) / 2);
+  // border-bottom-right-radius: calc(var(--header-width) / 2);
+  // border-bottom-left-radius: 50vh;
+  // border-bottom-right-radius: 50vh;
+  border-radius: 50%;
+  // background: turquoise;
+
   position: relative;
   overflow: hidden;
   grid-column-start: header-start;
@@ -37,10 +46,16 @@ html, body, #root, .app {
   align-items: center;
   justify-content: center;
 
+  > * {
+    margin: 0;
+    + * { margin-top: 8px }
+  }
+
   h1 {
     font-family: 'Roboto', sans-serif;
-    letter-spacing: .6em;
-    font-size: 2rem;
+    letter-spacing: .2em;
+    font-size: 1rem;
+    @media (min-width: 1024px){ font-size: 2rem }
   }
 
   h2 {
@@ -48,6 +63,8 @@ html, body, #root, .app {
     justify-content: center;
     font-weight: 100;
     letter-spacing: .01em;
+    font-size: .5rem;
+    @media (min-width: 1024px){ font-size: 1rem }
   }
 
   &--bubble {
