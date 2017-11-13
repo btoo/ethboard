@@ -1,12 +1,12 @@
 import {
-  scaleLinear,
-  min, max,
+  select,
+  scaleLinear, min, max,
   forceSimulation, drag,
   forceX, forceY, forceCollide,
-  event
+  event, easeCubic, transition, interpolateNumber
 } from 'd3'
 
-const forcePosition = d => d.navBubble ? 1 : 0.1
+const forcePositionStrength = d => d.navBubble ? 1 : 0.1
     , navBubbleRadius = 210 // = 420/2
 
 const generateNavBubbleDatum = bubbles => ({ // dummy data point for nav bubble
@@ -34,7 +34,8 @@ export default bubbles => {
       , radiusScale = scaleLinear()
           .domain([min(arrayOfContributionTotals), max(arrayOfContributionTotals)]) // domain consists of min and max inputs (ads' total contributions)
           .range([8, maxRadius]) // range consists of min and max outputs (rendered bubble radii)
-  
+      , generateCollideRadius = d => d.navBubble ? navBubbleRadius : (d.r = radiusScale(d.total)) + 1 // extra 1px spacing between bubbles
+
   const boundNode = dimension => d => totalContributions
           ? Math.max(d.r, Math.min(bubbles.props[dimension ? 'width' : 'height'] - d.r, d[dimension ? 'x' : 'y']))
           : bubbles.props[dimension ? 'width' : 'height'] / 2
@@ -43,12 +44,9 @@ export default bubbles => {
   
   // the simulation is a collection of forces about where we want our circles to go and how we want our circles to interact
   const simulation = forceSimulation()
-    .force('x', forceX(bubbles.props.width / 2).strength(forcePosition)) // bring to center on x-axis
-    .force('y', forceY(bubbles.props.height / 2).strength(forcePosition).y(d => bubbles.props.height / 2)) // bring to center on y-axis
-    .force('collide', forceCollide(d => d.navBubble
-      ? navBubbleRadius
-      : (d.r = radiusScale(d.total)) + 1 // extra 1px spacing between bubbles
-    ))
+    .force('x', forceX(bubbles.props.width / 2).strength(forcePositionStrength)) // bring to center on x-axis
+    .force('y', forceY(bubbles.props.height / 2).strength(forcePositionStrength)) // bring to center on y-axis
+    .force('collide', forceCollide(generateCollideRadius))
     .nodes(data)
     .on('tick', e => { // for every tick of the d3 clock, run bubbles function
       bubblesGroup.selectAll('.ad')
@@ -63,6 +61,30 @@ export default bubbles => {
     .enter()
     .append('circle')
     .attr('class', d => d.navBubble ? 'nav--bubble' : 'ad')
+    .on('click', (d, i, nodes) => {
+      
+      const interpolateX = interpolateNumber(d.x, bubbles.props.width / 2)
+          , interpolateY = interpolateNumber(d.y, bubbles.props.height / 2)
+          , interpolateR = interpolateNumber(d.r, navBubbleRadius)
+
+      select(nodes[i])
+        .transition()
+        .duration(222)
+        .attrTween('cx', d => t => d.x = interpolateX(t))
+        .attrTween('cy', d => t => d.y = interpolateY(t))
+        .attrTween('r', d => t => {
+          const newRadius = interpolateR(t)
+          simulation.force('collide', forceCollide(d => d.adIndex === i ? newRadius : generateCollideRadius(d)))
+          return d.r = newRadius
+        })
+        .on('end', d => {
+          simulation.alphaTarget(0.3).restart()
+          d.fx = d.x
+          d.fy = d.y
+          simulation.alphaTarget(0)
+        })
+      
+    })
     .call(drag()
       .on('start', d => {
         if(!event.active) simulation.alphaTarget(0.3).restart()

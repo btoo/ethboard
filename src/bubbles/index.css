@@ -1,3 +1,11 @@
 .nav--bubble { // probably should move this over to app index.css because nav--bubble is an element of nav
   z-index: -1;
 }
+
+.bubbles {
+  .ad {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
