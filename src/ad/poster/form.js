@@ -16,7 +16,7 @@ export const field = props => {
   const classesText = classes.join(' ')
 
   return (
-    <label className={classesText} htmlFor={`post-ad-form--field-${props.name}`}>
+    <label className={classesText} htmlFor={`post-ad-form--field-${props.name}`} onKeyPress={props.handleKeyPress}>
       {props.name}
       {props.children}
     </label>

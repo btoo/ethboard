@@ -5,12 +5,17 @@ import { postAd } from 'board/actions'
 import './index.css'
 import AdPosterFormContainer, { field as AdPosterFormField } from './form'
 
-const placeholder = {
-  title: 'Ad title',
-  img: 'Ad image url',
-  href: 'Ad website',
-  contribution: 'Ad contribution (in gwei)'
-}
+const emptyAd = { title: '', img: '', href: '', contribution: '' }
+    , lastFieldIndex = Object.keys(emptyAd).length - 1
+    , placeholder = { title: 'Ad title', img: 'Ad image url', href: 'Ad website', contribution: 'Ad contribution (in gwei)' }
+
+const switchActiveFormField = next => adPoster => { if(next ? (adPoster.state.activeFormField < lastFieldIndex) : (adPoster.state.activeFormField > 0)) {
+  adPoster.setState({
+    ...adPoster.state,
+    activeFormField: adPoster.state.activeFormField + (next ? 1 : -1)
+  })
+  setTimeout(_ => adPoster.fieldNodes[adPoster.state.activeFormField].focus(), 0) // needs a timer just because
+}}
 
 const mapStateToProps = store => { // set the props for this component
   return {
@@ -26,20 +31,19 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class AdPoster extends Component { // use class declaration for now because this babel decorator doesnt support decorators on anything else..
+export default class AdPoster extends Component {
+  // use class declaration for now because this babel decorator doesnt support decorators on anything else..
 
   constructor(props) {
     super(props)
     this.state = {
       activeFormField: 0,
-      ad: {
-        title: '',
-        img: '',
-        href: '',
-        contribution: ''
-      }
+      ad: { ...emptyAd }
     }
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.nextInput = this.nextInput.bind(this)
+    this.prevInput = this.prevInput.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -54,24 +58,25 @@ export default class AdPoster extends Component { // use class declaration for n
     })
   }
 
-  nextInput(fieldsCount){ return event => { if(this.state.activeFormField < (fieldsCount - 1)) {
-    this.setState({
-      ...this.state,
-      activeFormField: this.state.activeFormField + 1
-    })
-  }}}
+  nextInput(event) { switchActiveFormField(true)(this) }
 
-  prevInput(fieldsCount){ return event => { if(this.state.activeFormField > 0) {
-    this.setState({
-      ...this.state,
-      activeFormField: this.state.activeFormField - 1
-    })
-  }}}
+  prevInput(event) { switchActiveFormField(false)(this) }
+
+  handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      this.state.activeFormField === lastFieldIndex
+        ? this.handleSubmit()
+        : this.nextInput()
+
+      event.preventDefault()
+    }
+    // else continue with default behavior
+  }
 
   handleSubmit(event) {
     this.setState({
-      ...this.state,
-      activeFormField: 0
+      activeFormField: 0,
+      ad: { ...emptyAd }
     })
     const postedAdIndex = this.props.ads.length
     this.props.postAd(
@@ -84,35 +89,36 @@ export default class AdPoster extends Component { // use class declaration for n
     event.preventDefault()
   }
 
-  render(){
-    
+  render() {
     const activeFormField = this.state.activeFormField
     const fields = [
-      <AdPosterFormField name="title" key="title" fieldIndex={0} activeFormField={activeFormField}>
-        <input name="title" type="text" value={this.state.ad.title} placeholder={placeholder.title} onChange={this.handleInputChange} />
+      <AdPosterFormField name="title" key="title" fieldIndex={0} activeFormField={activeFormField} handleKeyPress={this.handleKeyPress}>
+        <input name="title" type="text" value={this.state.ad.title} placeholder={placeholder.title} onChange={this.handleInputChange} autoFocus />
       </AdPosterFormField>,
-      <AdPosterFormField name="img" key="img" fieldIndex={1} activeFormField={activeFormField}>
-        <input name="img" type="text" value={this.state.ad.img} placeholder={placeholder.img} onChange={this.handleInputChange} />
+      <AdPosterFormField name="img" key="img" fieldIndex={1} activeFormField={activeFormField} handleKeyPress={this.handleKeyPress}>
+        <input name="img" type="text" value={this.state.ad.img} placeholder={placeholder.img} onChange={this.handleInputChange} autoFocus />
       </AdPosterFormField>,
-      <AdPosterFormField name="href" key="href" fieldIndex={2} activeFormField={activeFormField}>
-        <input name="href" type="text" value={this.state.ad.href} placeholder={placeholder.href} onChange={this.handleInputChange} />
+      <AdPosterFormField name="href" key="href" fieldIndex={2} activeFormField={activeFormField} handleKeyPress={this.handleKeyPress}>
+        <input name="href" type="text" value={this.state.ad.href} placeholder={placeholder.href} onChange={this.handleInputChange} autoFocus />
       </AdPosterFormField>,
-      <AdPosterFormField name="contribution" key="contribution" fieldIndex={3} activeFormField={activeFormField}>
-        <input name="contribution" type="number" value={this.state.ad.contribution} placeholder={placeholder.contribution} onChange={this.handleInputChange} />
+      <AdPosterFormField name="contribution" key="contribution" fieldIndex={3} activeFormField={activeFormField} handleKeyPress={this.handleKeyPress}>
+        <input name="contribution" type="number" value={this.state.ad.contribution} placeholder={placeholder.contribution} onChange={this.handleInputChange} autoFocus />
       </AdPosterFormField>
     ]
 
     return (
-      <form onSubmit={this.handleSubmit} className="post-ad-form">
+      <form onSubmit={this.handleSubmit} className="post-ad-form" ref={node => {
+        if(node) this.fieldNodes = node.querySelectorAll('.post-ad-form--field input')
+      }}>
 
         <AdPosterFormContainer activeFormField={activeFormField}>
           {fields}
         </AdPosterFormContainer>
-        
+
         <div className="post-ad-form--controls">
-          <input type="button" onClick={this.prevInput(fields.length)} className={activeFormField > 0 ? '' : 'disabled'} value="prev" />
-          <input type="button" onClick={this.nextInput(fields.length)} className={activeFormField < (fields.length - 1) ? '' : 'disabled'} value="next" />
-          {activeFormField === (fields.length - 1)
+          <input type="button" onClick={this.prevInput} className={activeFormField > 0 ? '' : 'disabled'} value="prev" />
+          <input type="button" onClick={this.nextInput} className={activeFormField < lastFieldIndex ? '' : 'disabled'} value="next" />
+          {activeFormField === fields.length - 1
             ? <input type="submit" value="submit" />
             : ''
           }
@@ -121,5 +127,4 @@ export default class AdPoster extends Component { // use class declaration for n
       </form>
     )
   }
-
 }

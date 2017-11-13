@@ -1,5 +1,4 @@
 import Board from 'contracts/Board.sol'
-import { boardAddress } from 'app/reducer'
 import {
   SEND_BOARD,
   BOARD_DELIVERED,
@@ -11,12 +10,17 @@ import {
   AD_DELIVERED,
   INVALIDATE_AD_DELIVERY
 } from './actions'
+import { web3 } from 'app/reducer'
+import { isAddress } from 'ethereum-address'
+
+const initBoardAddress = '0x5ede10a2182686530b9e5f85b03e12eb2c5a8377'
+    // , boardAddress = web3.utils.isAddress(initBoardAddress) && web3.eth.getCode(initBoardAddress)  // web3 1.0.0 hasnt been released yet
+    , boardAddress = isAddress(initBoardAddress) && web3.eth.getCode(initBoardAddress)
+        ? initBoardAddress
+        : ''
 
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
-
-// const initBoardAddress = ''
-const initBoardAddress = '0x2fff14233bb7c3761281c755b12ad6003ceb6e77'
 
 export default (state = {
   boardContract: initBoardAddress ? Board.at(initBoardAddress) : null,

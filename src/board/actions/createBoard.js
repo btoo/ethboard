@@ -17,8 +17,6 @@ const invalidateBoardDelivery = error => {
   }
 }
 
-import Web3 from 'web3'
-import truffleConfig from '../../../truffle.js'
 import Board from 'contracts/Board.sol'
 export const createBoard = (web3, txObj) => dispatch => async _ => {
   

@@ -7,7 +7,7 @@ import {
   GET_DIMENSIONS
 } from './actions'
 
-const web3 = typeof window.web3 !== 'undefined' // Supports Metamask and Mist, and other wallets that provide 'web3'.
+export const web3 = typeof window.web3 !== 'undefined' // Supports Metamask and Mist, and other wallets that provide 'web3'.
   ? new Web3(window.web3.currentProvider) // Use the Mist/wallet provider. eslint-disable-next-line
   : new Web3(new Web3.providers.HttpProvider(`http://${truffleConfig.rpc.host}:${truffleConfig.rpc.port}`))
 
