@@ -5,6 +5,7 @@ import {
   forceX, forceY, forceCollide,
   event, easeCubic, transition, interpolateNumber
 } from 'd3'
+import { unfocusBubble } from './focus-bubble'
 
 const forcePositionStrength = d => d.navBubble ? 1 : 0.1
     , navBubbleRadius = 210 // = 420/2
@@ -63,13 +64,16 @@ export default bubbles => {
     .attr('class', d => d.navBubble ? 'nav--bubble' : 'ad')
     .on('click', (d, i, nodes) => {
       
+      // save these for later, when the ad bubble is eventually unfocused and needs to return to its original position
+      d.originalX = d.x
+      d.originalY = d.y
+      d.originalR = d.r
+
       const interpolateX = interpolateNumber(d.x, bubbles.props.width / 2)
           , interpolateY = interpolateNumber(d.y, bubbles.props.height / 2)
           , interpolateR = interpolateNumber(d.r, navBubbleRadius)
 
-      select(nodes[i])
-        .transition()
-        .duration(222)
+      select(nodes[i]).transition().duration(222)
         .attrTween('cx', d => t => d.x = interpolateX(t))
         .attrTween('cy', d => t => d.y = interpolateY(t))
         .attrTween('r', d => t => {
@@ -77,11 +81,10 @@ export default bubbles => {
           simulation.force('collide', forceCollide(d => d.adIndex === i ? newRadius : generateCollideRadius(d)))
           return d.r = newRadius
         })
+        .on('start', unfocusBubble({bubbles, navBubbleRadius, nodes, simulation, generateCollideRadius}))
         .on('end', d => {
-          simulation.alphaTarget(0.3).restart()
           d.fx = d.x
           d.fy = d.y
-          simulation.alphaTarget(0)
         })
       
     })

@@ -1,14 +1,9 @@
 import Board from 'contracts/Board.sol'
 import {
-  SEND_BOARD,
-  BOARD_DELIVERED,
-  INVALIDATE_BOARD_DELIVERY,
-  REQUEST_ADS,
-  RECEIVE_ADS,
-  INVALIDATE_ADS,
-  SEND_AD,
-  AD_DELIVERED,
-  INVALIDATE_AD_DELIVERY
+  SEND_BOARD, BOARD_DELIVERED, INVALIDATE_BOARD_DELIVERY,
+  REQUEST_ADS, RECEIVE_ADS, INVALIDATE_ADS,
+  SEND_AD, AD_DELIVERED, INVALIDATE_AD_DELIVERY,
+  FOCUS_AD, UNFOCUS_AD
 } from './actions'
 import { web3 } from 'app/reducer'
 import { isAddress } from 'ethereum-address'
@@ -30,7 +25,8 @@ export default (state = {
   fetchAdsError: null,
   ads: [],
   height: window.innerHeight,
-  width: window.innerWidth
+  width: window.innerWidth,
+  focusedAd: null
 }, action) => {
   
   switch (action.type){
@@ -40,12 +36,11 @@ export default (state = {
       creatingBoard: true
     }
 
-    case BOARD_DELIVERED:
-      return {
-        ...state,
-        creatingBoard: false,
-        boardContract: action.boardContract
-      }
+    case BOARD_DELIVERED: return {
+      ...state,
+      creatingBoard: false,
+      boardContract: action.boardContract
+    }
 
     case INVALIDATE_BOARD_DELIVERY: return {
       ...state,
@@ -94,6 +89,16 @@ export default (state = {
       ...state,
       postingAd: false,
       postAdError: action.error
+    }
+
+    case FOCUS_AD: return {
+      ...state,
+      focusedAd: action.focusedAd
+    }
+
+    case UNFOCUS_AD: return {
+      ...state,
+      focusedAd: null
     }
 
     default: return state

@@ -3,6 +3,11 @@
 }
 
 .bubbles {
+
+  &--bg {
+    fill: linen;
+  }
+
   .ad {
     &:hover {
       cursor: pointer;
