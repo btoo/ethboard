@@ -1,0 +1,28 @@
+.post-ad-form {
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &--fields {
+    .post-ad-form--field {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      &.disabled {
+        visibility: hidden;
+      }
+    }
+  }
+
+  &--controls {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .disabled {
+      visibility: hidden;
+    }
+  }
+
+}

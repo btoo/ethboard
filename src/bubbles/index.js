@@ -9,7 +9,7 @@ export default class BubblesContainer extends Component {
   constructor(props){
     super(props)
   }
-
+  
   componentDidMount(){ generateBubbles(this) }
   componentDidUpdate(){ generateBubbles(this) }
 

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { postAd } from 'board/actions'
-import AdPosterFormContainer from './form'
+import './index.css'
+import AdPosterFormContainer, { field as AdPosterFormField } from './form'
 
 const placeholder = {
   title: 'Ad title',
@@ -38,10 +39,8 @@ export default class AdPoster extends Component { // use class declaration for n
         contribution: ''
       }
     }
-
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-
   }
 
   handleInputChange(event) {
@@ -86,75 +85,39 @@ export default class AdPoster extends Component { // use class declaration for n
   }
 
   render(){
+    
+    const activeFormField = this.state.activeFormField
     const fields = [
-      <label>
-        Title
-        <input
-          key="title"
-          name="title"
-          type="text"
-          value={this.state.ad.title}
-          placeholder={placeholder.title}
-          onChange={this.handleInputChange}
-        />
-      </label>,
-      <label>
-        Image
-        <input
-          key="img"
-          name="img"
-          type="text"
-          value={this.state.ad.img}
-          placeholder={placeholder.img}
-          onChange={this.handleInputChange}
-        />
-      </label>,
-      <label>
-        Website
-        <input
-          key="href"
-          name="href"
-          type="text"
-          value={this.state.ad.href}
-          placeholder={placeholder.href}
-          onChange={this.handleInputChange}
-        />
-      </label>,
-      <label>
-        Contribution (gwei)
-        <input
-          key="contribution"
-          name="contribution"
-          type="number"
-          value={this.state.ad.contribution}
-          placeholder={placeholder.contribution}
-          onChange={this.handleInputChange}
-        />
-      </label>
+      <AdPosterFormField name="title" key="title" fieldIndex={0} activeFormField={activeFormField}>
+        <input name="title" type="text" value={this.state.ad.title} placeholder={placeholder.title} onChange={this.handleInputChange} />
+      </AdPosterFormField>,
+      <AdPosterFormField name="img" key="img" fieldIndex={1} activeFormField={activeFormField}>
+        <input name="img" type="text" value={this.state.ad.img} placeholder={placeholder.img} onChange={this.handleInputChange} />
+      </AdPosterFormField>,
+      <AdPosterFormField name="href" key="href" fieldIndex={2} activeFormField={activeFormField}>
+        <input name="href" type="text" value={this.state.ad.href} placeholder={placeholder.href} onChange={this.handleInputChange} />
+      </AdPosterFormField>,
+      <AdPosterFormField name="contribution" key="contribution" fieldIndex={3} activeFormField={activeFormField}>
+        <input name="contribution" type="number" value={this.state.ad.contribution} placeholder={placeholder.contribution} onChange={this.handleInputChange} />
+      </AdPosterFormField>
     ]
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        
-        {this.state.activeFormField > 0
-          ? <a onClick={this.prevInput(fields.length)}>prev</a>
-          : ''
-        }
+      <form onSubmit={this.handleSubmit} className="post-ad-form">
 
-        <AdPosterFormContainer activeFormField={this.state.activeFormField}>
+        <AdPosterFormContainer activeFormField={activeFormField}>
           {fields}
         </AdPosterFormContainer>
+        
+        <div className="post-ad-form--controls">
+          <input type="button" onClick={this.prevInput(fields.length)} className={activeFormField > 0 ? '' : 'disabled'} value="prev" />
+          <input type="button" onClick={this.nextInput(fields.length)} className={activeFormField < (fields.length - 1) ? '' : 'disabled'} value="next" />
+          {activeFormField === (fields.length - 1)
+            ? <input type="submit" value="submit" />
+            : ''
+          }
+        </div>
 
-        {this.state.activeFormField < fields.length - 1
-          ? <a onClick={this.nextInput(fields.length)}>next</a>
-          : ''
-        }
-        
-        {this.state.activeFormField === fields.length - 1
-          ? <input type="submit" value="Submit" />
-          : ''
-        }
-        
       </form>
     )
   }

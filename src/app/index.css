@@ -27,13 +27,6 @@ html, body, #root, .app {
 
 .header {
   // shape-outside: circle(30%);
-  // z-index: 1;
-  // border-bottom-left-radius: calc(var(--header-width) / 2);
-  // border-bottom-right-radius: calc(var(--header-width) / 2);
-  // border-bottom-left-radius: 50vh;
-  // border-bottom-right-radius: 50vh;
-  
-  // background: turquoise;
   @media (min-width: 768px){ border-radius: 50% }
 
   position: relative;
@@ -68,14 +61,14 @@ html, body, #root, .app {
     @media (min-width: 1024px){ font-size: 1rem }
   }
 
-  &--bubble {
-    background: turquoise;
-    height: 100vh;
-    width: 100vh;
-    position: absolute;
-    border-radius: 50%;
-    top: -50vh;
-    z-index: -1;
+}
+
+nav {
+  width: 88%
+}
+
+[type=button] {
+  &:hover {
+    cursor: pointer;
   }
-  
 }
