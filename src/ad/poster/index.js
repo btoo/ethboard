@@ -86,7 +86,7 @@ export default class AdPoster extends Component {
       postedAdIndex,
       this.state.ad
     )
-    event.preventDefault()
+    event && event.preventDefault()
   }
 
   render() {
@@ -118,10 +118,7 @@ export default class AdPoster extends Component {
         <div className="post-ad-form--controls">
           <input type="button" onClick={this.prevInput} className={activeFormField > 0 ? '' : 'disabled'} value="prev" />
           <input type="button" onClick={this.nextInput} className={activeFormField < lastFieldIndex ? '' : 'disabled'} value="next" />
-          {activeFormField === fields.length - 1
-            ? <input type="submit" value="submit" />
-            : ''
-          }
+          <input type="submit" value="submit" className={activeFormField === fields.length - 1 ? '' : 'disabled'} />
         </div>
 
       </form>

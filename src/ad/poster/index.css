@@ -10,8 +10,9 @@
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 1;
       &.disabled {
-        visibility: hidden;
+        z-index: 0;
       }
     }
   }
@@ -20,8 +21,23 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    .disabled {
-      visibility: hidden;
+
+    [type=submit]{
+      position: absolute;
+      right: 0;
+    }
+  }
+
+  input, label {
+    transition: all .2s ease;
+    z-index: 1;
+    opacity: 1;
+    &.disabled {
+      opacity: 0;
+      z-index: 0;
+    }
+    &:not(.disabled){
+      transition-delay: .2s;
     }
   }
 

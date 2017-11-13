@@ -17,7 +17,7 @@ export const field = props => {
 
   return (
     <label className={classesText} htmlFor={`post-ad-form--field-${props.name}`} onKeyPress={props.handleKeyPress}>
-      {props.name}
+      {/* {props.name} */}
       {props.children}
     </label>
   )
