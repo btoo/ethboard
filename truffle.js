@@ -14,6 +14,7 @@ module.exports = {
   //   }
   // },
   rpc: {
+    // host: 'localhost',
     host: 'localhost',
     port: 8545,
     gas: 1900000

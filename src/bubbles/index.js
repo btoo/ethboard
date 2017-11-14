@@ -18,20 +18,8 @@ export default class BubblesContainer extends Component {
       <svg className="bubbles" height={this.props.height} width={this.props.width}>
         <defs>
           {this.props.ads.map((ad, i) => (
-            <pattern
-              key={i}
-              id={'ad-' + ad.address}
-              height="100%"
-              width="100%"
-              patternContentUnits="objectBoundingBox"
-            >
-              <image
-                height="1"
-                width="1"
-                preserveAspectRatio="xMidYMid slice"
-                xmlnsXlink="http://www.w3.org/1999/xlink"
-                xlinkHref={ad.img}
-              />
+            <pattern key={i} id={'ad-' + ad.address} height="100%" width="100%" patternContentUnits="objectBoundingBox">
+              <image height="1" width="1" preserveAspectRatio="xMidYMid slice" xmlnsXlink="http://www.w3.org/1999/xlink" xlinkHref={ad.img} />
             </pattern>
           ))}
         </defs>

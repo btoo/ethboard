@@ -14,7 +14,7 @@ export const reducers = combineReducers({
 const middleware = applyMiddleware(
   promise(),
   thunk,
-  // createLogger()
+  createLogger()
 )
 
 export default createStore(reducers, middleware)

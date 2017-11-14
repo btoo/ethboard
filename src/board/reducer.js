@@ -8,17 +8,18 @@ import {
 import { web3 } from 'app/reducer'
 import { isAddress } from 'ethereum-address'
 
-const initBoardAddress = '0x5ede10a2182686530b9e5f85b03e12eb2c5a8377'
-    // , boardAddress = web3.utils.isAddress(initBoardAddress) && web3.eth.getCode(initBoardAddress)  // web3 1.0.0 hasnt been released yet
-    , boardAddress = isAddress(initBoardAddress) && web3.eth.getCode(initBoardAddress)
-        ? initBoardAddress
-        : ''
+const initBoardAddress = '0xf817b4532578e3124b6d85f71c59e4c7055b0ac8'
+// const boardAddress = web3.utils.isAddress(initBoardAddress) && web3.eth.getCode(initBoardAddress)  // web3 1.0.0 hasnt been released yet
+let boardAddress = ''
+try { if(isAddress(initBoardAddress) && (web3.eth.getCode(initBoardAddress) !== '0x0')){
+  boardAddress = initBoardAddress
+}} catch(e) { console.error(e) }
 
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
 export default (state = {
-  boardContract: initBoardAddress ? Board.at(initBoardAddress) : null,
+  boardContract: boardAddress ? Board.at(boardAddress) : null,
   fetchingAdsCount: false,
   fetchAdsCountError: null,
   fetchingAds: false,
@@ -26,7 +27,10 @@ export default (state = {
   ads: [],
   height: window.innerHeight,
   width: window.innerWidth,
-  focusedAd: null
+  focusedAd: {
+    adIndex: null,
+    originalR: 0
+  }
 }, action) => {
   
   switch (action.type){

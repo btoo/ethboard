@@ -1,14 +1,13 @@
+import store from 'store'
 import {
-  select,
   scaleLinear, min, max,
-  forceSimulation, drag,
-  forceX, forceY, forceCollide,
-  event, easeCubic, transition, interpolateNumber
+  forceSimulation, forceX, forceY, forceCollide,
+  easeCubic, transition, interpolateNumber
 } from 'd3'
-import { unfocusBubble } from './focus-bubble'
+import { focusBubble, unfocusBubble } from './focus-bubble'
+import handleDrag from './handle-drag'
 
-const forcePositionStrength = d => d.navBubble ? 1 : 0.1
-    , navBubbleRadius = 210 // = 420/2
+const navBubbleRadius = 210 // = 420/2
 
 const generateNavBubbleDatum = bubbles => ({ // dummy data point for nav bubble
   navBubble: true,
@@ -45,71 +44,30 @@ export default bubbles => {
   
   // the simulation is a collection of forces about where we want our circles to go and how we want our circles to interact
   const simulation = forceSimulation()
-    .force('x', forceX(bubbles.props.width / 2).strength(forcePositionStrength)) // bring to center on x-axis
-    .force('y', forceY(bubbles.props.height / 2).strength(forcePositionStrength)) // bring to center on y-axis
+    .force('x', forceX(bubbles.props.width / 2).strength(0.1)) // bring to center on x-axis
+    .force('y', forceY(bubbles.props.height / 2).strength(0.1)) // bring to center on y-axis
     .force('collide', forceCollide(generateCollideRadius))
     .nodes(data)
     .on('tick', e => { // for every tick of the d3 clock, run bubbles function
+      navBubble
+        .attr('cx', d => d.x = d.fx = (bubbles.props.width / 2))
+        .attr('cy', d => d.y = d.fy = (bubbles.props.height / 2))
+
       bubblesGroup.selectAll('.ad')
         .attr('cx', boundNodeHorizontally)
         .attr('cy', boundNodeVertically)
     })
 
-  bubblesGroup.selectAll('.nav--bubble').data([navBubbleDatum]).enter()
-  bubblesGroup.selectAll('.nav--bubble').data([navBubbleDatum]).exit().remove()
+  const navBubble = bubblesGroup.selectAll('.nav--bubble')
+  navBubble.data([navBubbleDatum]).enter()
+  navBubble.data([navBubbleDatum]).exit().remove()
   
   bubblesGroup.selectAll('.ad').data(data)
     .enter()
     .append('circle')
     .attr('class', d => d.navBubble ? 'nav--bubble' : 'ad')
-    .on('click', (d, i, nodes) => {
-      
-      // save these for later, when the ad bubble is eventually unfocused and needs to return to its original position
-      d.originalX = d.x
-      d.originalY = d.y
-      d.originalR = d.r
-
-      const interpolateX = interpolateNumber(d.x, bubbles.props.width / 2)
-          , interpolateY = interpolateNumber(d.y, bubbles.props.height / 2)
-          , interpolateR = interpolateNumber(d.r, navBubbleRadius)
-
-      select(nodes[i]).transition().duration(222)
-        .attrTween('cx', d => t => d.x = interpolateX(t))
-        .attrTween('cy', d => t => d.y = interpolateY(t))
-        .attrTween('r', d => t => {
-          const newRadius = interpolateR(t)
-          simulation.force('collide', forceCollide(d => d.adIndex === i ? newRadius : generateCollideRadius(d)))
-          return d.r = newRadius
-        })
-        .on('start', unfocusBubble({bubbles, navBubbleRadius, nodes, simulation, generateCollideRadius}))
-        .on('end', d => {
-          d.fx = d.x
-          d.fy = d.y
-        })
-      
-    })
-    .call(drag()
-      .on('start', d => {
-        if(!event.active) simulation.alphaTarget(0.3).restart()
-        if(!d.navBubble){
-          d.fx = d.x
-          d.fy = d.y
-        }
-      })
-      .on('drag', d => {
-        if(!d.navBubble){
-          d.fx = event.x
-          d.fy = event.y
-        }
-      })
-      .on('end', d => {
-        if(!event.active) simulation.alphaTarget(0)
-        if(!d.navBubble){
-          d.fx = null
-          d.fy = null
-        }
-      })
-    )
+    .on('click', focusBubble({bubbles, radiusScale, navBubbleRadius, simulation}))
+    .call(handleDrag(simulation))
   
   bubblesGroup.selectAll('.ad').data(data)
     .exit()
