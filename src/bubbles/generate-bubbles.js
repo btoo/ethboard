@@ -4,7 +4,7 @@ import {
   forceSimulation, forceX, forceY, forceCollide,
   easeCubic, transition, interpolateNumber
 } from 'd3'
-import { focusBubble, unfocusBubble } from './focus-bubble'
+import { focusBubble } from './focus-bubble'
 import handleDrag from './handle-drag'
 
 export const navBubbleRadius = 210 // = 420/2
@@ -66,7 +66,7 @@ export default bubbles => {
     .enter()
     .append('circle')
     .attr('class', d => d.navBubble ? 'nav--bubble' : 'ad')
-    .on('click', focusBubble({bubbles, radiusScale, navBubbleRadius, simulation}))
+    .on('click', focusBubble({bubbles, radiusScale}))
     .call(handleDrag(simulation))
   
   bubblesGroup.selectAll('.ad').data(data)

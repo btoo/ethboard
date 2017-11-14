@@ -6,39 +6,11 @@ import { interpolate } from 'd3-interpolate';
 
 const getAlreadyFocusedAd = _ => store.getState().board.focusedAd
 
-const interpolateRadiiAndUpdateForceSimulation = ({simulation, interpolateR, interpolateRBack, radiusScale, newlyFocusedAd, alreadyFocusedAd}) => isNewlyFocused => d => t => {
 
-  alreadyFocusedAd = alreadyFocusedAd && alreadyFocusedAd.adIndex >= 0 ? alreadyFocusedAd : getAlreadyFocusedAd()
-  const interpolatedRadiusForNewlyFocusedAd = interpolateR(t)
-      , interpolatedRadiusForPreviouslyFocusedAd = typeof interpolateRBack === 'function' ? interpolateRBack(t) : d.originalR
-
-  simulation.force('collide', forceCollide(d => {
-    if(d.adIndex === newlyFocusedAd.adIndex) {
-      return d.r = interpolatedRadiusForNewlyFocusedAd
-    }
-    else if(d.adIndex === alreadyFocusedAd.adIndex) {
-      return d.r = interpolatedRadiusForPreviouslyFocusedAd
-    }
-    else if(d.navBubble) {
-      return d.r = navBubbleRadius
-    }
-    else {
-      return d.r = radiusScale(d.total)
-    }
-  }))
-  
-  return d.r = isNewlyFocused ? interpolatedRadiusForNewlyFocusedAd : interpolatedRadiusForPreviouslyFocusedAd
-}
-
-
-export const unfocusBubble = ({bubbles, nodes, iRAUFS,
-  simulation, interpolateR, radiusScale, newlyFocusedAd // these parameters are only required if and the iRAUFS fn was not provided
-}) => d => {
+const unfocusBubble = ({bubbles, nodes}) => d => {
 
   const alreadyFocusedAd = getAlreadyFocusedAd()
   if (alreadyFocusedAd.adIndex >= 0) {
-
-    iRAUFS = iRAUFS || interpolateRadiiAndUpdateForceSimulation({simulation, interpolateR, radiusScale, newlyFocusedAd, alreadyFocusedAd})
 
     const interpolateXBack = interpolateNumber(bubbles.props.width / 2, alreadyFocusedAd.originalX)
         , interpolateYBack = interpolateNumber(bubbles.props.height / 2, alreadyFocusedAd.originalY)
@@ -49,7 +21,6 @@ export const unfocusBubble = ({bubbles, nodes, iRAUFS,
       .duration(88)
       .attrTween('cx', d => t => (d.x = interpolateXBack(t)))
       .attrTween('cy', d => t => (d.y = interpolateYBack(t)))
-      // .attrTween('r', iRAUFS(false))
       .attrTween('r', d => t => (d.r = interpolateRBack(t)))
       .on('end', d => {
         d.fx = null
@@ -62,7 +33,7 @@ export const unfocusBubble = ({bubbles, nodes, iRAUFS,
 }
 
 
-export const focusBubble = ({bubbles, radiusScale, simulation}) => (d, i, nodes) => {
+export const focusBubble = ({bubbles, radiusScale}) => (d, i, nodes) => {
       
   const newlyFocusedAd = d
   
@@ -75,8 +46,7 @@ export const focusBubble = ({bubbles, radiusScale, simulation}) => (d, i, nodes)
       , interpolateY = interpolateNumber(newlyFocusedAd.y, bubbles.props.height / 2)
       , interpolateR = interpolateNumber(newlyFocusedAd.r, navBubbleRadius)
 
-  const iRAUFS = interpolateRadiiAndUpdateForceSimulation({simulation, interpolateR, radiusScale, newlyFocusedAd})
-      , bubbleUnfocuser = unfocusBubble({bubbles, nodes, iRAUFS})
+  const bubbleUnfocuser = unfocusBubble({bubbles, nodes})
 
   select(nodes[i]).transition().duration(222)
     .attrTween('cx', d => t => d.x = interpolateX(t))
