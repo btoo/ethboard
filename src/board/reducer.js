@@ -18,6 +18,8 @@ try { if(isAddress(initBoardAddress) && (web3.eth.getCode(initBoardAddress) !== 
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work
 
+const dummyFocusedAd = { adIndex: -1, originalR: 0 }
+
 export default (state = {
   boardContract: boardAddress ? Board.at(boardAddress) : null,
   fetchingAdsCount: false,
@@ -27,10 +29,7 @@ export default (state = {
   ads: [],
   height: window.innerHeight,
   width: window.innerWidth,
-  focusedAd: {
-    adIndex: null,
-    originalR: 0
-  }
+  focusedAd: dummyFocusedAd
 }, action) => {
   
   switch (action.type){
@@ -102,7 +101,7 @@ export default (state = {
 
     case UNFOCUS_AD: return {
       ...state,
-      focusedAd: null
+      focusedAd: dummyFocusedAd
     }
 
     default: return state

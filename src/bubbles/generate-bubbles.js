@@ -7,7 +7,7 @@ import {
 import { focusBubble, unfocusBubble } from './focus-bubble'
 import handleDrag from './handle-drag'
 
-const navBubbleRadius = 210 // = 420/2
+export const navBubbleRadius = 210 // = 420/2
 
 const generateNavBubbleDatum = bubbles => ({ // dummy data point for nav bubble
   navBubble: true,
@@ -20,7 +20,7 @@ export default bubbles => {
   
   const navBubbleDatum = generateNavBubbleDatum(bubbles)
       , bubblesGroup = bubbles.bubblesGroup
-      , data = [...bubbles.props.ads, navBubbleDatum]
+      , data = [...bubbles.props.ads, navBubbleDatum] // include dummy navBubble datum in data array
   
   const totalContributions = bubbles.props.ads.reduce((acc, ad) => acc + ad.total, 0)
       , maxRadius = Math.max(

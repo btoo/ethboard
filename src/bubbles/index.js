@@ -23,7 +23,7 @@ export default class BubblesContainer extends Component {
             </pattern>
           ))}
         </defs>
-        <rect className="bubbles--bg" width="100%" height="100%" />
+        <rect className="bubbles--bg" width="100%" height="100%" ref={node => this.bubblesBackground = select(node)} />
         <g className="bubbles--group" ref={node => this.bubblesGroup = select(node)} />
       </svg>
     )
