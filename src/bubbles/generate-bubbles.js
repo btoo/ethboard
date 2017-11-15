@@ -28,7 +28,7 @@ export default bubbles => {
             (bubbles.props.width / 2) - navBubbleRadius, // minWidth
             (bubbles.props.height / 2) - navBubbleRadius // minHeight
           ) / 2, // radius = diameter / 2
-          22 // disallow radius smaller than 22
+          22 // disallow max radius smaller than 22
         )
       , arrayOfContributionTotals = bubbles.props.ads.map(ad => ad.total)
       , radiusScale = scaleLinear()

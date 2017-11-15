@@ -5,7 +5,7 @@
 .bubbles {
 
   &--bg {
-    fill: linen;
+    fill: $color-light;
   }
 
   .ad {

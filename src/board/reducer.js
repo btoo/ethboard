@@ -8,12 +8,14 @@ import {
 import { web3 } from 'app/reducer'
 import { isAddress } from 'ethereum-address'
 
-const initBoardAddress = '0xf817b4532578e3124b6d85f71c59e4c7055b0ac8'
 // const boardAddress = web3.utils.isAddress(initBoardAddress) && web3.eth.getCode(initBoardAddress)  // web3 1.0.0 hasnt been released yet
-let boardAddress = ''
-try { if(isAddress(initBoardAddress) && (web3.eth.getCode(initBoardAddress) !== '0x0')){
-  boardAddress = initBoardAddress
-}} catch(e) { console.error(e) }
+let boardAddress = '0x8ce8e86fbc621b789f773f16d3d63a444c137899'
+try { if(!isAddress(boardAddress) || (web3.eth.getCode(boardAddress) === '0x0'))  // metamask doesnt support getCode without a callback, so use a try-catch
+  boardAddress = ''
+} catch(e) {
+  console.error(e)
+  boardAddress = ''
+}
 
 // console.log(boardContract.AdPosted) // works
 // boardContract.AdPosted((error, result) => console.log(error, result)) // doesnt work

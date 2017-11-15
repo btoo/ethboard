@@ -7,7 +7,7 @@ import AdPosterFormContainer, { field as AdPosterFormField } from './form'
 
 const emptyAd = { title: '', img: '', href: '', contribution: '' }
     , lastFieldIndex = Object.keys(emptyAd).length - 1
-    , placeholder = { title: 'Ad title', img: 'Ad image url', href: 'Ad website', contribution: 'Ad contribution (in gwei)' }
+    , placeholder = { title: 'title', img: 'image url', href: 'website url', contribution: 'contribution (in ETH)' }
 
 const switchActiveFormField = next => adPoster => { if(next ? (adPoster.state.activeFormField < lastFieldIndex) : (adPoster.state.activeFormField > 0)) {
   adPoster.setState({
