@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-// import {
-
-// } from './actions'
 
 import Header from './header'
 import BoardContainer, { BoardCreator } from 'board'
@@ -13,6 +10,7 @@ const mapStateToProps = store => { return {
   web3: store.app.web3,
   txObj: store.app.txObj,
   boardContract: store.board.boardContract,
+  focusedAd: store.board.focusedAd
 }}
 
 const mapDispatchToProps = dispatch => { return bindActionCreators({
@@ -24,8 +22,9 @@ export default class App extends Component {
   
   render() { return (
     <main className="app">
-      <Header boardContract={this.props.boardContract} />
+      <Header boardContract={this.props.boardContract} focusedAd={this.props.focusedAd} />
       {this.props.boardContract ? <BoardContainer /> : ''}
     </main>
   )}
+
 }

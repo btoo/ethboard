@@ -2,24 +2,32 @@ import React from 'react'
 import { BoardCreator } from 'board'
 import { AdPoster } from 'ad'
 
-export default props => (
-  <header className="header">
-    <h1>ethboard</h1>
-    {props.boardContract
-      ? <a
-          href={`https://etherscan.io/address/${props.boardContract.address}`} target="_blank"
-          className="header--board-address"
-        >
-          {props.boardContract.address}
+export default ({boardContract, focusedAd}) => {
+
+  const adIsFocused = focusedAd.adIndex > -1
+      , href = adIsFocused
+          ? focusedAd.href
+          : `https://etherscan.io/address/${boardContract.address}`
+
+  return (
+    <header className="header">
+      {adIsFocused ? '' : (
+        <h1>ethboard</h1>
+      )}
+      {!boardContract ? '' : (
+        <a className="header--board-address" href={href} target="_blank">
+          {adIsFocused ? focusedAd.title : boardContract.address}
         </a>
-      : ''
-    }
-    <nav>
-      {
-        props.boardContract
-          ? <AdPoster />
-          : <BoardCreator />
-      }
-    </nav>
-  </header>
-)
+      )}
+      {adIsFocused ? '' : (
+        <nav>
+          {
+            boardContract
+              ? <AdPoster />
+              : <BoardCreator />
+          }
+        </nav>
+      )}
+    </header>
+  )
+}

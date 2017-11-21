@@ -14,7 +14,7 @@ const switchActiveFormField = next => adPoster => { if(next ? (adPoster.state.ac
     ...adPoster.state,
     activeFormField: adPoster.state.activeFormField + (next ? 1 : -1)
   })
-  setTimeout(_ => adPoster.fieldNodes[adPoster.state.activeFormField].focus(), 0) // needs a timer just because
+  setTimeout(_ => adPoster.fieldNodes[adPoster.state.activeFormField].focus(), 0) // need to wait for call stack to clear up (more info found here: https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 }}
 
 const mapStateToProps = store => { // set the props for this component
