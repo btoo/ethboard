@@ -91,7 +91,7 @@ export default class AdPoster extends Component {
 
   render() {
     const activeFormField = this.state.activeFormField
-    const fields = [
+    const fields = [ // i would use stateless components but i cant allow for the component to be rerendered, so ill have to do this for now
       <AdPosterFormField name="title" key="title" fieldIndex={0} activeFormField={activeFormField} handleKeyPress={this.handleKeyPress}>
         <input name="title" type="text" value={this.state.ad.title} placeholder={placeholder.title} onChange={this.handleInputChange} autoFocus />
       </AdPosterFormField>,
@@ -106,6 +106,8 @@ export default class AdPoster extends Component {
       </AdPosterFormField>
     ]
 
+    const submittable = !Object.values(this.state.ad).some(field => !field) // if any field is empty
+
     return (
       <form onSubmit={this.handleSubmit} className="post-ad-form" ref={node => {
         if(node) this.fieldNodes = node.querySelectorAll('.post-ad-form--field input')
@@ -116,9 +118,9 @@ export default class AdPoster extends Component {
         </AdPosterFormContainer>
 
         <div className="post-ad-form--controls">
-          <input type="button" onClick={this.prevInput} className={activeFormField > 0 ? '' : 'disabled'} value="prev" />
-          <input type="button" onClick={this.nextInput} className={activeFormField < lastFieldIndex ? '' : 'disabled'} value="next" />
-          <input type="submit" value="submit" className={activeFormField === fields.length - 1 ? '' : 'disabled'} />
+          <input type="button" onClick={this.prevInput} className={activeFormField > 0 ? '' : 'inactive'} value="prev" />
+          <input type="button" onClick={this.nextInput} className={activeFormField < lastFieldIndex ? '' : 'inactive'} value="next" />
+          <input type="submit" value="submit" className={activeFormField === fields.length - 1 ? '' : 'inactive'} disabled={!submittable} />
         </div>
 
       </form>

@@ -11,7 +11,7 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 1;
-      &.disabled {
+      &.inactive {
         z-index: 0;
       }
       input {
@@ -41,17 +41,22 @@
     [type=submit]{
       position: absolute;
       right: 0;
+      color: $color-light;
+      &:not(.inactive)[disabled] {
+        opacity: .2;
+      }
     }
   }
 
   input {
     border: none;
     background: $color-dark-mid;
-    color: $color-light;
+    color: $color-dark;
     padding: 8px;
     font-size: 1rem;
     &[type=button] {
       border-radius: 4px;
+      color: $color-light;
     }
   }
 
@@ -59,11 +64,11 @@
     transition: all .2s ease;
     z-index: 1;
     opacity: 1;
-    &.disabled {
+    &.inactive {
       opacity: 0;
       z-index: 0;
     }
-    &:not(.disabled){
+    &:not(.inactive){
       transition-delay: .2s;
     }
   }

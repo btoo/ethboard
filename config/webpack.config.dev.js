@@ -1,26 +1,20 @@
 const path                     = require('path')
-    , autoprefixer             = require('autoprefixer')
     , webpack                  = require('webpack')
     , HtmlWebpackPlugin        = require('html-webpack-plugin')
     , ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
-    , precss                   = require('precss')
     , DashboardPlugin          = require('webpack-dashboard/plugin')
 
-let relativePath = '..'
-
-const srcPath         = path.resolve(__dirname, relativePath, 'src')
+const relativePath    = '..'
+    , srcPath         = path.resolve(__dirname, relativePath, 'src')
     , indexHtmlPath   = path.resolve(srcPath, 'index.html')
     , faviconPath     = path.resolve(__dirname, relativePath, 'favicon.ico')
     , buildPath       = path.join(__dirname, relativePath, 'build')
-
-const provided = {
-  'Web3': 'web3'
-}
 
 module.exports = {
   devtool: 'eval',
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
+    // require.resolve('webpack-dev-server/client') + '?http://localhost.kors.local:3000',
     require.resolve('webpack/hot/dev-server'),
     path.join(srcPath, '/')
   ],
@@ -70,7 +64,20 @@ module.exports = {
         use: [
           'style-loader', // Adds CSS to the DOM by injecting a <style> tag
           'css-loader', //  interprets @import and url() like import/require() and will resolve them.
-          { loader: 'postcss-loader', options: { plugins: [precss, autoprefixer] } }
+          { loader: 'postcss-loader', options: {
+            plugins: [
+              require('precss'),
+              require('postcss-advanced-variables')({ variables: { // global css variables
+                'color-light':      '#EFF0E5', // mintcream lol
+                'color-light-mid':  '#889F77',
+                'color-mid':        '#6A551F',
+                'color-dark-mid':   '#466167',
+                'color-dark':       '#2A290A',
+                'transition':       'all .222s'
+              }}),
+              require('autoprefixer')
+            ]
+          }}
         ],
       },
       {
@@ -112,7 +119,9 @@ module.exports = {
       favicon: faviconPath
     }),
     new ExtractTextWebpackPlugin({ filename: 'css/style.css', disable: false, allChunks: true }), // this means dist/css/style.css    
-    new webpack.ProvidePlugin(provided),
+    new webpack.ProvidePlugin({
+      'Web3': 'web3'
+    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"development"'
     }),

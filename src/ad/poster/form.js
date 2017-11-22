@@ -10,8 +10,8 @@ export default props => (
 export const field = props => {
   let classes = ['post-ad-form--field', `post-ad-form--field-${props.name}`]
   
-  const disabled = props.activeFormField !== props.fieldIndex
-  disabled && classes.push('disabled')
+  const inactive = props.activeFormField !== props.fieldIndex
+  inactive && classes.push('inactive')
 
   const classesText = classes.join(' ')
 
