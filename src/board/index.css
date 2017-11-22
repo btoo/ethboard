@@ -21,8 +21,7 @@
     flex: 1;
   }
 
-  transition: all .222s ease;
-  // filter: brightness(1);
+  transition: $transition;
   .ad-is-focused & {
     filter: brightness(.2);
   }

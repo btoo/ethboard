@@ -34,3 +34,7 @@ html, body, #root, .app {
   grid-template-rows: [board-start] minmax(8%, 1fr) [header-start] minmax(auto, 420px) [header-end] minmax(8%, 1fr) [board-end];
 
 }
+
+a {
+  text-decoration: none !important;
+}

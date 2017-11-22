@@ -19,7 +19,7 @@
         border: none;
         display: flex;
         text-align: center;
-        border-bottom: dotted $color-dark 2px;
+        border-bottom: dotted $color-mid 2px;
         &, &:placeholder {
           font-family: 'Roboto', sans-serif;
           letter-spacing: .2em;
@@ -37,9 +37,21 @@
     display: flex;
     justify-content: space-between;
 
+
     [type=submit]{
       position: absolute;
       right: 0;
+    }
+  }
+
+  input {
+    border: none;
+    background: $color-dark-mid;
+    color: $color-light;
+    padding: 8px;
+    font-size: 1rem;
+    &[type=button] {
+      border-radius: 4px;
     }
   }
 
