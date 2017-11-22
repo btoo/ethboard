@@ -10,16 +10,21 @@
   justify-content: center;
   align-items: center;
 
-}
 
-article {
-  display: flex;
   > * {
     margin: 0;
     padding: 0;
     font-size: 12px;
   }
+  
   h2 {
     flex: 1;
   }
+
+  transition: all .222s ease;
+  // filter: brightness(1);
+  .ad-is-focused & {
+    filter: brightness(.2);
+  }
+
 }

@@ -19,6 +19,7 @@
         border: none;
         display: flex;
         text-align: center;
+        border-bottom: dotted $color-dark 2px;
         &, &:placeholder {
           font-family: 'Roboto', sans-serif;
           letter-spacing: .2em;

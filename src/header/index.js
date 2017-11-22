@@ -1,8 +1,9 @@
 import React from 'react'
 import { BoardCreator } from 'board'
 import { AdPoster } from 'ad'
+import './index.css'
 
-const Link = ({boardContract, adIsFocused, focusedAd}) => {
+const HeaderLink = ({boardContract, adIsFocused, focusedAd}) => {
 
   const href = adIsFocused
     ? focusedAd.href
@@ -15,20 +16,20 @@ const Link = ({boardContract, adIsFocused, focusedAd}) => {
   )
 }
 
-export default ({boardContract, focusedAd}) => {
+export default props => {
 
-  const adIsFocused = focusedAd.adIndex > -1
+  const adIsFocused = props.focusedAd.adIndex > -1
 
   return (
     <header className="header">
       {adIsFocused ? '' : (
         <h1>ethboard</h1>
       )}
-      {boardContract ? <Link boardContract={boardContract} focusedAd={focusedAd} /> : ''}
+      {props.boardContract ? <HeaderLink {...props} adIsFocused={adIsFocused} /> : ''}
       {adIsFocused ? '' : (
         <nav>
           {
-            boardContract
+            props.boardContract
               ? <AdPoster />
               : <BoardCreator />
           }

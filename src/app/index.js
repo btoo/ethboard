@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import Header from './header'
+import Header from 'header'
 import BoardContainer, { BoardCreator } from 'board'
 import './index.css'
 
@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => { return bindActionCreators({
 export default class App extends Component {
   
   render() { return (
-    <main className="app">
+    <main className={`app${this.props.focusedAd.adIndex > -1 ? ' ad-is-focused' : ''}`}>
       <Header boardContract={this.props.boardContract} focusedAd={this.props.focusedAd} />
       {this.props.boardContract ? <BoardContainer /> : ''}
     </main>

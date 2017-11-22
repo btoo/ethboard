@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { createBoard } from './actions'
+import { createBoard } from 'app/actions'
 
 const mapStateToProps = store => { // set the props for this component
   return {
