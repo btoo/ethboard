@@ -107,6 +107,7 @@ export default class AdPoster extends Component {
     ]
 
     const submittable = !Object.values(this.state.ad).some(field => !field) // if any field is empty
+        , buttonClass = c => `button ${c}`
 
     return (
       <form onSubmit={this.handleSubmit} className="post-ad-form" ref={node => {
@@ -118,9 +119,9 @@ export default class AdPoster extends Component {
         </AdPosterFormContainer>
 
         <div className="post-ad-form--controls">
-          <input type="button" onClick={this.prevInput} className={activeFormField > 0 ? '' : 'inactive'} value="prev" />
-          <input type="button" onClick={this.nextInput} className={activeFormField < lastFieldIndex ? '' : 'inactive'} value="next" />
-          <input type="submit" value="submit" className={activeFormField === fields.length - 1 ? '' : 'inactive'} disabled={!submittable} />
+          <input type="button" onClick={this.prevInput} className={buttonClass(activeFormField > 0 ? '' : 'inactive')} value="prev" />
+          <input type="button" onClick={this.nextInput} className={buttonClass(activeFormField < lastFieldIndex ? '' : 'inactive')} value="next" />
+          <input type="submit" value="submit" className={buttonClass(activeFormField === fields.length - 1 ? '' : 'inactive')} disabled={!submittable} />
         </div>
 
       </form>

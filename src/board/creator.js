@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { createBoard } from 'app/actions'
+import { createBoard } from './actions'
 
 const mapStateToProps = store => { // set the props for this component
   return {
@@ -19,8 +19,8 @@ export default class BoardCreator extends Component { // use class declaration f
   
   render() { return (
     <article className="board">
-      <button onClick={this.props.createBoard(this.props.web3, this.props.txObj)}>
-        click here to create a new board and then check your console to view its address
+      <button onClick={this.props.createBoard(this.props.web3, this.props.txObj)} className="button">
+        click here to create a new board
       </button>
     </article>
   )}
