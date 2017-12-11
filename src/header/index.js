@@ -20,21 +20,26 @@ export default props => {
 
   const adIsFocused = props.focusedAd.adIndex > -1
 
+  console.log(props)
+
   return (
     <header className="header">
       {adIsFocused ? '' : (
         <h1>ethboard</h1>
       )}
       {props.boardContract ? <HeaderLink {...props} adIsFocused={adIsFocused} /> : ''}
-      {adIsFocused ? '' : (
-        <nav>
-          {
-            props.boardContract
-              ? <AdPoster />
-              : <BoardCreator />
-          }
-        </nav>
-      )}
+      {adIsFocused
+        ? <a href="#">add contribution</a>
+        : (
+          <nav>
+            {
+              props.boardContract
+                ? <AdPoster />
+                : <BoardCreator />
+            }
+          </nav>
+        )
+      }
     </header>
   )
 }

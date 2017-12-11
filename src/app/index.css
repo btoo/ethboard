@@ -42,9 +42,7 @@ a {
   cursor: pointer;
   border: none;
   background: $color-dark-mid;
-  color: $color-dark;
   color: $color-light;
   padding: 8px;
-  font-size: 1rem;
   border-radius: 4px;
 }
