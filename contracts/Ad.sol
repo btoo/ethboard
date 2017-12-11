@@ -35,7 +35,6 @@ contract Ad {
       throw;
     }
     total += msg.value;
-    return total;
   }
 
 }
