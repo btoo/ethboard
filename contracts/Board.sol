@@ -12,9 +12,9 @@ contract Board {
   Ad[] ads;
   // mapping(address => Ad) adSpaces;
 
-  function Board(string initAdTitle, string initAdImg, string initAdHref) payable {
+  function Board(/* string initAdTitle, string initAdImg, string initAdHref */) payable {
     owner = msg.sender;
-    ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, msg.value));
+    // ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, msg.value));
   }
 
   // event AdPosted(

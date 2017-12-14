@@ -23,7 +23,8 @@ export const createBoard = (web3, txObj) => dispatch => async _ => {
   try {
     Board.setProvider(web3.currentProvider)
     Board.defaults(txObj)
-    const boardContract = await Board.new('test init title', 'test init img', 'test init href')
+    // const boardContract = await Board.new('test init title', 'test init img', 'test init href')
+    const boardContract = await Board.new() // no init data in creation
     console.log('new EthBoard address:', boardContract.address)
     dispatch(boardDelivered(boardContract))
   } catch(error) {
