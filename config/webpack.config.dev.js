@@ -14,7 +14,6 @@ module.exports = {
   devtool: 'eval',
   entry: [
     require.resolve('webpack-dev-server/client') + '?http://localhost:3000',
-    // require.resolve('webpack-dev-server/client') + '?http://localhost.kors.local:3000',
     require.resolve('webpack/hot/dev-server'),
     path.join(srcPath, '/')
   ],
@@ -118,7 +117,11 @@ module.exports = {
       template: indexHtmlPath,
       favicon: faviconPath
     }),
-    new ExtractTextWebpackPlugin({ filename: 'css/style.css', disable: false, allChunks: true }), // this means dist/css/style.css    
+    new ExtractTextWebpackPlugin({
+      filename: 'css/style.css',
+      disable: false,
+      allChunks: true
+    }), // this means dist/css/style.css    
     new webpack.ProvidePlugin({
       'Web3': 'web3'
     }),
