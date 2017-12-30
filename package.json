@@ -64,7 +64,7 @@
     "react-dom": "^15.2.1",
     "rimraf": "2.5.3",
     "style-loader": "0.13.1",
-    "truffle-solidity-loader": "0.0.8",
+    "truffle-solidity-loader": "git+https://github.com/btoo/truffle-solidity-loader.git",
     "url-loader": "0.5.7",
     "webpack-dashboard": "^1.0.0",
     "webpack-dev-server": "1.14.1"

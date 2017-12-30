@@ -1,23 +1,20 @@
 module.exports = {
-  // networks: {
-  //   localhost: {
-  //     host: "localhost", 
-  //     port: 8546,
-  //     network_id: "*" 
-  //   },  
-  //   ropsten: {
-  //     host: "localhost",
-  //     port: 8545,
-  //     network_id: "3",
-  //     from: "0xe840618b44652f8b9d44ddc46d0e7e674b5122e4",
-  //     gas: 4612388
-  //   }
-  // },
-  rpc: {
-    // host: 'localhost',
-    host: 'localhost',
-    port: 8545,
-    gas: 1900000
-  },
-  migrations_directory: './migrations'
+  networks: {
+    development: {
+      host: "localhost",
+      port: 8545,
+      network_id: "*"
+    },
+    staging: {
+      host: "localhost",
+      port: 8546,
+      network_id: 1337
+    },
+    ropsten: {
+      host: "158.253.8.12",
+      port: 8545,
+      network_id: 3
+    }
+  }
+  // migrations_directory: './migrations'
 }
