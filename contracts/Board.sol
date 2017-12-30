@@ -1,5 +1,5 @@
-// pragma solidity ^0.4.17;
-pragma solidity ^0.4.8;
+pragma solidity ^0.4.18;
+// pragma solidity ^0.4.8;
 
 import "./Ad.sol";
 
@@ -11,7 +11,7 @@ contract Board {
   Ad[] ads; // storing as array instead because returning a mapping is impractical
   // mapping(address => Ad) adSpaces;
 
-  function Board(/* string initAdTitle, string initAdImg, string initAdHref */) payable {
+  function Board(/* string initAdTitle, string initAdImg, string initAdHref */) public payable {
     owner = msg.sender;
   }
 
@@ -23,15 +23,13 @@ contract Board {
   //   bytes32 postedAdHref
   // );
 
-  function postAd(string postedAdTitle, string postedAdImg, string postedAdHref) payable returns (address) {
-    if (!owner.send(msg.value)) {
-      throw;
-    }
+  function postAd(string postedAdTitle, string postedAdImg, string postedAdHref) public payable returns (address) {
+    require(!owner.send(msg.value));
     ads.push(new Ad(owner, postedAdTitle, postedAdImg, postedAdHref, msg.value));
     return address(ads[ads.length - 1]);
   }
 
-  function getAdsCount() constant returns (uint) {
+  function getAdsCount() view public returns (uint) {
     return ads.length;
   }
 
@@ -41,11 +39,11 @@ contract Board {
     }
   }
 
-  function getAdAddress(uint index) published(index) returns (address ad) {
+  function getAdAddress(uint index) constant public published(index) returns (address ad) {
     return address(ads[index]);
   }
 
-  function getOwner() returns (address) {
+  function getOwner() constant public returns (address) {
     return owner;
   }
 
