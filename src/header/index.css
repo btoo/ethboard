@@ -28,6 +28,7 @@
   }
 
   &--board-address {
+    text-align: center;
     display: flex;
     justify-content: center;
     font-weight: 100;

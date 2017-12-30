@@ -22,7 +22,7 @@ export default class App extends Component {
   
   render() { return (
     <main className={`app${this.props.focusedAd.adIndex > -1 ? ' ad-is-focused' : ''}`}>
-      <Header boardContract={this.props.boardContract} focusedAd={this.props.focusedAd} />
+      <Header boardContract={this.props.boardContract} focusedAd={this.props.focusedAd} txObj={this.props.txObj} eth={this.props.web3.eth}/>
       {this.props.boardContract ? <BoardContainer /> : ''}
     </main>
   )}

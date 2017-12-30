@@ -28,10 +28,8 @@
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^4.4.1",
     "redux-thunk": "^2.2.0",
-    "solc": "^0.4.17",
-    "truffle": "^3.4.11",
     "truffle-contract-loader": "^1.0.6",
-    "web3": "0.20.1",
+    "web3": "0.20.3",
     "webpack": "^3.7.1"
   },
   "devDependencies": {

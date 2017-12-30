@@ -8,13 +8,11 @@ import "./Ad.sol";
 contract Board {
 
   address owner;
-  // address[] ads;
-  Ad[] ads;
+  Ad[] ads; // storing as array instead because returning a mapping is impractical
   // mapping(address => Ad) adSpaces;
 
   function Board(/* string initAdTitle, string initAdImg, string initAdHref */) payable {
     owner = msg.sender;
-    // ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, msg.value));
   }
 
   // event AdPosted(
@@ -30,14 +28,6 @@ contract Board {
       throw;
     }
     ads.push(new Ad(owner, postedAdTitle, postedAdImg, postedAdHref, msg.value));
-    // adSpaces[address(ads[ads.length - 1])] = ads[ads.length - 1];
-    // AdPosted( // events arent working atm.. like why
-    //   address(ads[ads.length - 1]),
-    //   ads.length - 1,
-    //   postedAdTitle,
-    //   postedAdImg,
-    //   postedAdHref
-    // );
     return address(ads[ads.length - 1]);
   }
 
