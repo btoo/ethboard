@@ -7179,7 +7179,7 @@ truffle-resolver@^4.0.1:
 
 "truffle-solidity-loader@git+https://github.com/btoo/truffle-solidity-loader.git":
   version "0.0.8"
-  resolved "git+https://github.com/btoo/truffle-solidity-loader.git#f54d134c5e427ce1d7c5ebe294e5e0e8bcb7b2fc"
+  resolved "git+https://github.com/btoo/truffle-solidity-loader.git#bcf969f25fb661e6da23e7a60d2681cdfb388bc6"
   dependencies:
     chalk "^1.1.3"
     ether-pudding "^3.2.0"
