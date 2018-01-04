@@ -1,12 +1,10 @@
-// pragma solidity ^0.4.17;
-pragma solidity ^0.4.8;
+pragma solidity ^0.4.18;
 
 // import "./Contribution.sol";
 
 contract Ad {
 
   address owner; // owner of billboard
-
   address publisher; // make private?
   string title;
   string img;
@@ -14,7 +12,7 @@ contract Ad {
   uint256 total;
   // Contribution[] contributions;
 
-  function Ad(address newAdOwner, string newAdTitle, string newAdImg, string newAdHref, uint256 contribution) {
+  function Ad(address newAdOwner, string newAdTitle, string newAdImg, string newAdHref, uint256 contribution) public {
     owner = newAdOwner;
     publisher = tx.origin;
     title = newAdTitle;
@@ -23,17 +21,16 @@ contract Ad {
     total = contribution;
   }
 
-  function getState() constant returns (string adTitle, string adImg, string adHref, uint256 adTotal) {
+  function getState() public view returns (string adTitle, string adImg, string adHref, uint256 adTotal) {
     adTitle = title;
     adImg = img;
     adHref = href;
     adTotal = total;
   }
 
-  function addContribution() payable returns (uint256) {
-    if (!owner.send(msg.value)) {
-      throw;
-    }
+  // @TODO: should added contributions go to the owner of the ad or the owner of the billboard? ill make it go to the owner of the billboard for now heheh
+  function addContribution() public payable returns (uint256) {
+    require(owner.send(msg.value));
     total += msg.value;
   }
 

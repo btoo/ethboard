@@ -20,7 +20,7 @@ export default props => {
 
   const adIsFocused = props.focusedAd.adIndex > -1
 
-  console.log(props)
+  // console.log(props)
 
   return (
     <header className="header">
@@ -29,16 +29,28 @@ export default props => {
       )}
       {props.boardContract ? <HeaderLink {...props} adIsFocused={adIsFocused} /> : ''}
       {adIsFocused
-        ? <a href="#">add contribution</a>
+        ? (
+            <a href="#" onClick={_ => {
+              console.log('hi there', props)
+              const txObjForAddingContribution = {
+                ...props.txObj,
+                // to: 
+              }
+              props.focusedAd.contract.addContribution(txObjForAddingContribution, props.eth.defaultBlock, (err, result) => {
+                console.log('plox', err, result)
+              })
+              
+            }}>add contribution</a>
+          )
         : (
-          <nav>
-            {
-              props.boardContract
-                ? <AdPoster />
-                : <BoardCreator />
-            }
-          </nav>
-        )
+            <nav>
+              {
+                props.boardContract
+                  ? <AdPoster />
+                  : <BoardCreator />
+              }
+            </nav>
+          )
       }
     </header>
   )

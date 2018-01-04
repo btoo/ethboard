@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import {
   fetchAdsIfNeeded as fetchAds
 } from './actions'
-import Board from 'contracts/Board.sol'
 import './index.css'
 import BubblesContainer from 'bubbles'
 

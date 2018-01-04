@@ -1,8 +1,7 @@
 import store from 'store'
 import {
   scaleLinear, min, max,
-  forceSimulation, forceX, forceY, forceCollide,
-  easeCubic, transition, interpolateNumber
+  forceSimulation, forceX, forceY, forceCollide
 } from 'd3'
 import { focusBubble } from './focus-bubble'
 import handleDrag from './handle-drag'

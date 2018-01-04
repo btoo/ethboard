@@ -12,7 +12,7 @@
       "absolutePath": "/Users/btu/Documents/btoo/ethboard/ethboard/contracts/Contribution.sol",
       "exportedSymbols": {
         "Contribution": [
-          222
+          220
         ]
       }
     },
@@ -26,7 +26,7 @@
             ".8"
           ]
         },
-        "id": 217,
+        "id": 215,
         "name": "PragmaDirective",
         "src": "0:23:2"
       },
@@ -42,17 +42,17 @@
           "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            222
+            220
           ],
           "name": "Contribution",
-          "scope": 223
+          "scope": 221
         },
         "children": [
           {
             "attributes": {
               "constant": false,
               "name": "contributor",
-              "scope": 222,
+              "scope": 220,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "address",
@@ -65,12 +65,12 @@
                   "name": "address",
                   "type": "address"
                 },
-                "id": 218,
+                "id": 216,
                 "name": "ElementaryTypeName",
                 "src": "52:7:2"
               }
             ],
-            "id": 219,
+            "id": 217,
             "name": "VariableDeclaration",
             "src": "52:19:2"
           },
@@ -78,7 +78,7 @@
             "attributes": {
               "constant": false,
               "name": "amount",
-              "scope": 222,
+              "scope": 220,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "uint256",
@@ -91,22 +91,22 @@
                   "name": "uint",
                   "type": "uint256"
                 },
-                "id": 220,
+                "id": 218,
                 "name": "ElementaryTypeName",
                 "src": "75:4:2"
               }
             ],
-            "id": 221,
+            "id": 219,
             "name": "VariableDeclaration",
             "src": "75:11:2"
           }
         ],
-        "id": 222,
+        "id": 220,
         "name": "ContractDefinition",
         "src": "25:65:2"
       }
     ],
-    "id": 223,
+    "id": 221,
     "name": "SourceUnit",
     "src": "0:91:2"
   },
@@ -116,5 +116,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-04T08:10:13.189Z"
+  "updatedAt": "2018-01-04T08:12:01.471Z"
 }

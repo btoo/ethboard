@@ -1,5 +1,4 @@
-// pragma solidity ^0.4.17;
-pragma solidity ^0.4.8;
+pragma solidity ^0.4.18;
 
 import "./Ad.sol";
 
@@ -8,13 +7,11 @@ import "./Ad.sol";
 contract Board {
 
   address owner;
-  // address[] ads;
-  Ad[] ads;
+  Ad[] ads; // storing as array instead because returning a mapping is impractical
   // mapping(address => Ad) adSpaces;
 
-  function Board(/* string initAdTitle, string initAdImg, string initAdHref */) payable {
+  function Board(/* string initAdTitle, string initAdImg, string initAdHref */) public payable {
     owner = msg.sender;
-    // ads.push(new Ad(owner, initAdTitle, initAdImg, initAdHref, msg.value));
   }
 
   // event AdPosted(
@@ -25,37 +22,28 @@ contract Board {
   //   bytes32 postedAdHref
   // );
 
-  function postAd(string postedAdTitle, string postedAdImg, string postedAdHref) payable returns (address) {
-    if (!owner.send(msg.value)) {
-      throw;
-    }
+  function postAd(string postedAdTitle, string postedAdImg, string postedAdHref) public payable returns (address) {
+    require(owner.send(msg.value));
     ads.push(new Ad(owner, postedAdTitle, postedAdImg, postedAdHref, msg.value));
-    // adSpaces[address(ads[ads.length - 1])] = ads[ads.length - 1];
-    // AdPosted( // events arent working atm.. like why
-    //   address(ads[ads.length - 1]),
-    //   ads.length - 1,
-    //   postedAdTitle,
-    //   postedAdImg,
-    //   postedAdHref
-    // );
     return address(ads[ads.length - 1]);
   }
 
-  function getAdsCount() constant returns (uint) {
+  function getAdsCount() view public returns (uint) {
     return ads.length;
   }
 
+  // if at least one ad has been published on this billboard
   modifier published (uint index) {
     if (index >= 0 && index <= ads.length - 1) {
       _;
     }
   }
 
-  function getAdAddress(uint index) published(index) returns (address ad) {
+  function getAdAddress(uint index) constant public published(index) returns (address ad) {
     return address(ads[index]);
   }
 
-  function getOwner() returns (address) {
+  function getOwner() constant public returns (address) {
     return owner;
   }
 

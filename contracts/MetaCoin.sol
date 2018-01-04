@@ -9,12 +9,12 @@ import "./ConvertLib.sol";
 contract MetaCoin {
 	mapping (address => uint) balances;
 
-	function MetaCoin() {
+	function MetaCoin() public {
 		balances[tx.origin] = 10000;
 	}
 
-	function sendCoin(address receiver, uint amount) returns(bool sufficient) {
-		if(balances[msg.sender] < amount) {
+	function sendCoin(address receiver, uint amount) public returns(bool sufficient) {
+		if (balances[msg.sender] < amount) {
 			return false;
 		}
 		balances[msg.sender] -= amount;
@@ -22,11 +22,11 @@ contract MetaCoin {
 		return true;
 	}
 
-	function getBalanceInEth(address addr) returns(uint) {
+	function getBalanceInEth(address addr) view public returns(uint) {
 		return ConvertLib.convert(getBalance(addr),2);
 	}
 
-	function getBalance(address addr) returns(uint) {
+	function getBalance(address addr) view public returns(uint) {
   	return balances[addr];
 	}
 }
