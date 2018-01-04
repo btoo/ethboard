@@ -1,5 +1,4 @@
 pragma solidity ^0.4.18;
-// pragma solidity ^0.4.8;
 
 import "./Ad.sol";
 
@@ -33,6 +32,7 @@ contract Board {
     return ads.length;
   }
 
+  // if at least one ad has been published on this billboard
   modifier published (uint index) {
     if (index >= 0 && index <= ads.length - 1) {
       _;

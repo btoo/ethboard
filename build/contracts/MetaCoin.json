@@ -1187,11 +1187,11 @@
     "default": {
       "events": {},
       "links": {
-        "ConvertLib": "0x4a3574ad16dbc311bc857c68b37badbeece294aa"
+        "ConvertLib": "0xe22d31a5b85cb1e194293d756bbcc23077aa490d"
       },
-      "address": "0x8874836952c3c0dd02606123c5b7bf9c5f504dba"
+      "address": "0x93fb516ef4e073a9fe1fbe2b78558f1ef71ce1bb"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-04T08:02:11.014Z"
+  "updatedAt": "2018-01-04T08:09:31.002Z"
 }
