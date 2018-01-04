@@ -24,7 +24,7 @@ contract Board {
   // );
 
   function postAd(string postedAdTitle, string postedAdImg, string postedAdHref) public payable returns (address) {
-    require(!owner.send(msg.value));
+    require(owner.send(msg.value));
     ads.push(new Ad(owner, postedAdTitle, postedAdImg, postedAdHref, msg.value));
     return address(ads[ads.length - 1]);
   }

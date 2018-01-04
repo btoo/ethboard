@@ -7177,9 +7177,9 @@ truffle-resolver@^4.0.1:
     truffle-expect "0.0.3"
     truffle-provisioner "^0.1.0"
 
-"truffle-solidity-loader@git+https://github.com/btoo/truffle-solidity-loader.git":
+"truffle-solidity-loader@https://github.com/btoo/truffle-solidity-loader.git":
   version "0.0.8"
-  resolved "git+https://github.com/btoo/truffle-solidity-loader.git#bcf969f25fb661e6da23e7a60d2681cdfb388bc6"
+  resolved "https://github.com/btoo/truffle-solidity-loader.git#372aa2fb2189f07e6080087ba1370ee9badde5dc"
   dependencies:
     chalk "^1.1.3"
     ether-pudding "^3.2.0"
@@ -7190,6 +7190,7 @@ truffle-resolver@^4.0.1:
     temp "^0.8.3"
     truffle-artifactor "^3.0.2"
     truffle-config "^1.0.4"
+    truffle-contract "^3.0.1"
     truffle-core "^4.0.4"
     truffle-migrate "^2.0.1"
     truffle-resolver "^4.0.1"

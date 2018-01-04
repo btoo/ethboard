@@ -30,6 +30,7 @@
     "redux-promise-middleware": "^4.4.1",
     "redux-thunk": "^2.2.0",
     "truffle-contract-loader": "^1.0.6",
+    "truffle-solidity-loader": "https://github.com/btoo/truffle-solidity-loader.git",
     "web3": "0.20.3",
     "webpack": "^3.7.1"
   },
@@ -65,7 +66,6 @@
     "react-dom": "^15.2.1",
     "rimraf": "2.5.3",
     "style-loader": "0.13.1",
-    "truffle-solidity-loader": "git+https://github.com/btoo/truffle-solidity-loader.git",
     "url-loader": "0.5.7",
     "webpack-dashboard": "^1.0.0",
     "webpack-dev-server": "1.14.1"
