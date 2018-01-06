@@ -1,8 +1,8 @@
 var ConvertLib = artifacts.require("./ConvertLib.sol");
 var MetaCoin = artifacts.require("./MetaCoin.sol");
 
-// var Ad = artifacts.require("./Ad.sol")
-// var Board = artifacts.require("./Board.sol")
+var Ad = artifacts.require("./Ad.sol")
+var Board = artifacts.require("./Board.sol")
 
 module.exports = function(deployer) {
   
@@ -11,9 +11,9 @@ module.exports = function(deployer) {
   deployer.link(ConvertLib, MetaCoin)
   deployer.deploy(MetaCoin)
 
-  // deployer.deploy(Ad)
-  // deployer.link(Ad, Board)
-  // deployer.deploy(Board)
-  // deployer.link(Board, Ad)
+  deployer.deploy(Ad)
+  deployer.link(Ad, Board)
+  deployer.deploy(Board)
+  deployer.link(Board, Ad)
 
 }
